@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 22:12:26 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 22:35:56 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,16 @@
 
 t_state	default_state(t_tokenizer *tokenizer, int i)
 {
-	if (tokenizer->line[i] == '<')
-	{
-		if (i > 0 && tokenizer->line[i - 1] == '<')
-			list_append(tokenizer->tokens, HEREDOC, NULL);
-		else if (tokenizer->line[i + 1] != '<')
-			list_append(tokenizer->tokens, REDIR_IN, NULL);
-	}
-	else if (tokenizer->line[i] == '>')
-	{
-		if (i > 0 && tokenizer->line[i - 1] == '>')
-			list_append(tokenizer->tokens, REDIR_OUT_APPEND, NULL);
-		else if (tokenizer->line[i + 1] != '>')
-			list_append(tokenizer->tokens, REDIR_OUT, NULL);
-	}
+	if (i > 0 && tokenizer->line[i] == '<'
+		&& tokenizer->line[i - 1] == '<')
+		list_append(tokenizer->tokens, HEREDOC, NULL);
+	else if (tokenizer->line[i] == '<' && tokenizer->line[i + 1] != '<')
+		list_append(tokenizer->tokens, REDIR_IN, NULL);
+	else if (tokenizer->line[i] == '>'
+		&& i > 0 && tokenizer->line[i - 1] == '>')
+		list_append(tokenizer->tokens, REDIR_OUT_APPEND, NULL);
+	else if (tokenizer->line[i] == '>' && tokenizer->line[i + 1] != '>')
+		list_append(tokenizer->tokens, REDIR_OUT, NULL);
 	else if (tokenizer->line[i] == ' ')
 		return (list_append(tokenizer->tokens, SPACE, NULL), DEFAULT);
 	else if (tokenizer->line[i] == '|')
