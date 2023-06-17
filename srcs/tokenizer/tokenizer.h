@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 14:19:31 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 15:12:15 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 typedef enum e_type
 {
 	UNSET,
+	SPACE,
 	COMMAND,
+	ENV_VAR,
 	RAW_STRING,
 	STRING,
 	REDIR_IN,
@@ -31,6 +33,7 @@ typedef enum e_type
 typedef enum e_state
 {
 	DEFAULT,
+	IN_COMMAND,
 	IN_RAW_STRING,
 	IN_STRING,
 	IN_ENV_VAR

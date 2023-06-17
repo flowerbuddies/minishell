@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 13:56:58 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 15:02:03 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,16 @@ void	list_print(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == COMMAND)
+		if (tokens->type == SPACE)
+			printf("sp ");
+		else if (tokens->type == COMMAND)
 			printf("cmd ");
+		else if (tokens->type == ENV_VAR)
+			printf("$%s ", tokens->data);
 		else if (tokens->type == RAW_STRING)
-			printf("' ");
+			printf("'%s' ", tokens->data);
 		else if (tokens->type == STRING)
-			printf("\" ");
+			printf("\"%s\" ", tokens->data);
 		else if (tokens->type == REDIR_IN)
 			printf("< ");
 		else if (tokens->type == REDIR_OUT)
@@ -79,8 +83,6 @@ void	list_print(t_token *tokens)
 			printf(">> ");
 		else if (tokens->type == PIPE)
 			printf("| ");
-		if (tokens->data)
-			printf("(%s) ", tokens->data);
 		tokens = tokens->next;
 	}
 	printf("\n");
