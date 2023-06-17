@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 22:01:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 22:12:43 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	list_print(t_token *tokens);
 t_token	*tokenize(const char *line);
 
 //states.c
-t_state	state_default(t_tokenizer *tokenizer, int i);
+t_state	default_state(t_tokenizer *tokenizer, int i);
 t_state	in_command_state(t_tokenizer *tokenizer, int i);
 t_state	in_raw_string_state(t_tokenizer *tokenizer, int i);
 t_state	in_string_state(t_tokenizer *tokenizer, int i);

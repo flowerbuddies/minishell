@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 21:40:04 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 22:12:40 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*tokenize(const char *line)
 	while (line[++tokenizer.i])
 	{
 		if (tokenizer.state == DEFAULT)
-			tokenizer.state = state_default(&tokenizer, tokenizer.i);
+			tokenizer.state = default_state(&tokenizer, tokenizer.i);
 		else if (tokenizer.state == IN_COMMAND)
 			tokenizer.state = in_command_state(&tokenizer, tokenizer.i);
 		else if (tokenizer.state == IN_RAW_STRING)

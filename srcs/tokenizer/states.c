@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 22:00:31 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 22:12:26 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-t_state	state_default(t_tokenizer *tokenizer, int i)
+t_state	default_state(t_tokenizer *tokenizer, int i)
 {
 	if (tokenizer->line[i] == '<')
 	{
