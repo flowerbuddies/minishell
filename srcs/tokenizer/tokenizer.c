@@ -6,14 +6,27 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 22:12:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/18 00:23:25 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "tokenizer.h"
+#include "libft.h"
 
 //TODO: think about merging COMMAND, RAW_STRING and STRING as we already get the env vars at this stage, they all just become strings
+
+//TODO: think about a better name
+static void	end(t_tokenizer *tokenizer, int i)
+{
+	if (tokenizer->str_start_idx != -1)
+		list_append(tokenizer->tokens, tokenizer->state + 6, ft_substr(
+				tokenizer->line, tokenizer->str_start_idx,
+				i - tokenizer->str_start_idx));
+	else if (tokenizer->state == IN_ENV_VAR)
+		list_append(tokenizer->tokens, ENV_VAR, ft_substr(tokenizer->line,
+				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
+}
 
 t_token	*tokenize(const char *line)
 {
@@ -37,5 +50,6 @@ t_token	*tokenize(const char *line)
 		else if (tokenizer.state == IN_ENV_VAR)
 			tokenizer.state = in_env_var_state(&tokenizer, tokenizer.i);
 	}
+	end(&tokenizer, tokenizer.i);
 	return (tokenizer.tokens);
 }
