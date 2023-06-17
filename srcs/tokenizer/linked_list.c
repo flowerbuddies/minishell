@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/16 03:21:10 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 13:25:46 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	list_append(t_token *tokens, t_type type, char *data)
 	}
 	while (tokens->next)
 		tokens = tokens->next;
-	tokens->next = new_list();
+	tokens->next = list_new();
 	if (!tokens->next)
 		return (false);
 	tokens->next->type = type;
@@ -51,7 +51,7 @@ t_token	*list_at(t_token *tokens, int idx)
 void	list_free(t_token *tokens)
 {
 	if (tokens->next)
-		free_list(tokens->next);
+		list_free(tokens->next);
 	if (tokens->data)
 		free(tokens->data);
 	free(tokens);
