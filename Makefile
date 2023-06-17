@@ -5,6 +5,7 @@ FLAGS := -Wall -Wextra -Werror -lreadline -I libft -I srcs/tokenizer -g #TODO: r
 SRCS := $(addprefix srcs/,\
 	minishell.c \
 	prompt.c \
+	tokenizer/states.c \
 	tokenizer/tokenizer.c \
 	tokenizer/linked_list.c \
 )

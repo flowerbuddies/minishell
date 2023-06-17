@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 15:12:15 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/17 22:01:16 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 typedef enum e_type
 {
 	UNSET,
+	REDIR_IN,
+	HEREDOC,
+	REDIR_OUT,
+	REDIR_OUT_APPEND,
 	SPACE,
-	COMMAND,
-	ENV_VAR,
+	PIPE,
 	RAW_STRING,
 	STRING,
-	REDIR_IN,
-	REDIR_OUT,
-	HEREDOC,
-	REDIR_OUT_APPEND,
-	PIPE
+	ENV_VAR,
+	COMMAND
 }	t_type;
 
 typedef enum e_state
@@ -46,6 +46,16 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_tokenizer
+{
+	t_token		*tokens;
+	const char	*line;
+	int			i;
+	t_state		state;
+	int			str_start_idx;
+	int			env_start_idx;
+}	t_tokenizer;
+
 //linked_list.c
 t_token	*list_new(void);
 bool	list_append(t_token *tokens, t_type type, char *data);
@@ -55,5 +65,12 @@ void	list_print(t_token *tokens);
 
 //tokenizer.c
 t_token	*tokenize(const char *line);
+
+//states.c
+t_state	state_default(t_tokenizer *tokenizer, int i);
+t_state	in_command_state(t_tokenizer *tokenizer, int i);
+t_state	in_raw_string_state(t_tokenizer *tokenizer, int i);
+t_state	in_string_state(t_tokenizer *tokenizer, int i);
+t_state	in_env_var_state(t_tokenizer *tokenizer, int i);
 
 #endif
