@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   states.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 18:11:42 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:30:15 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_state	in_command_state(t_tokenizer *tokenizer, int i)
 {
 	if (tokenizer->line[i] == ' ')
 	{
-		list_append(tokenizer->tokens, COMMAND, ft_substr(tokenizer->line,
+		list_append(tokenizer->tokens, STRING, ft_substr(tokenizer->line,
 				tokenizer->str_start_idx, i - tokenizer->str_start_idx));
 		list_append(tokenizer->tokens, SPACE, NULL);
 		tokenizer->str_start_idx = -1;
@@ -58,7 +58,7 @@ t_state	in_raw_string_state(t_tokenizer *tokenizer, int i)
 {
 	if (tokenizer->line[i] == '\'')
 	{
-		list_append(tokenizer->tokens, RAW_STRING, ft_substr(tokenizer->line,
+		list_append(tokenizer->tokens, STRING, ft_substr(tokenizer->line,
 				tokenizer->str_start_idx, i - tokenizer->str_start_idx));
 		tokenizer->str_start_idx = -1;
 		return (IN_DEFAULT);

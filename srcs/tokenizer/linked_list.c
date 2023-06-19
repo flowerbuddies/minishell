@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 21:42:51 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:24:41 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,8 @@ void	list_print(t_token *tokens)
 	{
 		if (tokens->type == SPACE)
 			printf("sp ");
-		else if (tokens->type == COMMAND)
-			printf("%s ", tokens->data);
 		else if (tokens->type == ENV_VAR)
 			printf("$%s ", tokens->data);
-		else if (tokens->type == RAW_STRING)
-			printf("'%s' ", tokens->data);
 		else if (tokens->type == STRING)
 			printf("\"%s\" ", tokens->data);
 		else if (tokens->type == REDIR_IN)

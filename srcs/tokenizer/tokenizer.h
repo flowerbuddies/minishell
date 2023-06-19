@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 18:01:56 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:30:38 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ typedef enum e_type
 	REDIR_OUT_APPEND,
 	SPACE,
 	PIPE,
-	RAW_STRING,
 	STRING,
 	ENV_VAR,
-	COMMAND
 }	t_type;
 
 typedef enum e_state

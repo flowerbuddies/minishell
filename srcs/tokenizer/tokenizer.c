@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 18:17:03 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:26:58 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "tokenizer.h"
 #include "libft.h"
-
-//TODO: think about merging COMMAND, RAW_STRING and STRING as we already get the env vars at this stage, they all just become strings
 
 //TODO: think about a better name
 static void	end(t_tokenizer *tokenizer, int i)
