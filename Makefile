@@ -1,10 +1,11 @@
 NAME := minishell
 LIBFT := libft.a
-FLAGS := -Wall -Wextra -Werror -lreadline -I libft -I srcs/tokenizer -g #TODO: remove -g
+FLAGS := -Wall -Wextra -lreadline -I libft -I srcs/tokenizer -g #TODO: remove -g & add -Werror
 
 SRCS := $(addprefix srcs/,\
 	minishell.c \
 	prompt.c \
+	tokenizer/states.c \
 	tokenizer/tokenizer.c \
 	tokenizer/linked_list.c \
 )

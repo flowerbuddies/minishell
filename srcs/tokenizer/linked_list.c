@@ -6,10 +6,12 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 13:25:46 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:24:41 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "tokenizer.h"
 
 t_token	*list_new(void)
@@ -55,4 +57,29 @@ void	list_free(t_token *tokens)
 	if (tokens->data)
 		free(tokens->data);
 	free(tokens);
+}
+
+void	list_print(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->type == SPACE)
+			printf("sp ");
+		else if (tokens->type == ENV_VAR)
+			printf("$%s ", tokens->data);
+		else if (tokens->type == STRING)
+			printf("\"%s\" ", tokens->data);
+		else if (tokens->type == REDIR_IN)
+			printf("< ");
+		else if (tokens->type == REDIR_OUT)
+			printf("> ");
+		else if (tokens->type == HEREDOC)
+			printf("<< ");
+		else if (tokens->type == REDIR_OUT_APPEND)
+			printf(">> ");
+		else if (tokens->type == PIPE)
+			printf("| ");
+		tokens = tokens->next;
+	}
+	printf("\n");
 }
