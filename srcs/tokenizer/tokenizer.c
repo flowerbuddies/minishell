@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 18:26:58 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:42:02 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "tokenizer.h"
 #include "libft.h"
 
-//TODO: think about a better name
-static void	end(t_tokenizer *tokenizer, int i)
+static void	emit_last_token(t_tokenizer *tokenizer, int i)
 {
 	if ((tokenizer->state == IN_RAW_STRING && tokenizer->line[i - 1] == '\'')
 		|| (tokenizer->state == IN_STRING && tokenizer->line[i - 1] == '"'))
@@ -26,10 +25,8 @@ static void	end(t_tokenizer *tokenizer, int i)
 		tokenizer->str_start_idx = -1;
 	}
 	else if (tokenizer->state == IN_ENV_VAR)
-	{
 		list_append(tokenizer->tokens, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
-	}
 }
 
 t_token	*tokenize(const char *line)
