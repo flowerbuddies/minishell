@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   linked_list_setter.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 18:24:41 by hunam            ###   ########.fr       */
+/*   Created: 2023/06/19 19:21:21 by marmulle          #+#    #+#             */
+/*   Updated: 2023/06/19 19:27:27 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "tokenizer.h"
 
 t_token	*list_new(void)
@@ -20,13 +19,13 @@ t_token	*list_new(void)
 
 	out = malloc(sizeof(t_token));
 	out->next = NULL;
-	out->type = UNSET;
+	out->type = _NOT_SET;
 	return (out);
 }
 
 bool	list_append(t_token *tokens, t_type type, char *data)
 {
-	if (tokens->type == UNSET)
+	if (tokens->type == _NOT_SET)
 	{
 		tokens->type = type;
 		tokens->data = data;
@@ -43,11 +42,23 @@ bool	list_append(t_token *tokens, t_type type, char *data)
 	return (true);
 }
 
-t_token	*list_at(t_token *tokens, int idx)
+void	list_delete_at(t_token *tokens, int idx)
 {
-	while (idx--)
-		tokens = tokens->next;
-	return (tokens);
+	t_token	*link;
+
+	link = list_at(tokens, idx);
+	if (link->data)
+		free(link->data);
+	if (link->next)
+	{
+		link->type = link->next->type;
+		link->next = link->next->next;
+	}
+	else
+	{
+		link->type = _NOT_SET;
+		link->next = NULL;
+	}
 }
 
 void	list_free(t_token *tokens)
@@ -57,29 +68,4 @@ void	list_free(t_token *tokens)
 	if (tokens->data)
 		free(tokens->data);
 	free(tokens);
-}
-
-void	list_print(t_token *tokens)
-{
-	while (tokens)
-	{
-		if (tokens->type == SPACE)
-			printf("sp ");
-		else if (tokens->type == ENV_VAR)
-			printf("$%s ", tokens->data);
-		else if (tokens->type == STRING)
-			printf("\"%s\" ", tokens->data);
-		else if (tokens->type == REDIR_IN)
-			printf("< ");
-		else if (tokens->type == REDIR_OUT)
-			printf("> ");
-		else if (tokens->type == HEREDOC)
-			printf("<< ");
-		else if (tokens->type == REDIR_OUT_APPEND)
-			printf(">> ");
-		else if (tokens->type == PIPE)
-			printf("| ");
-		tokens = tokens->next;
-	}
-	printf("\n");
 }

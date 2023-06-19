@@ -7,7 +7,8 @@ SRCS := $(addprefix srcs/,\
 	prompt.c \
 	tokenizer/states.c \
 	tokenizer/tokenizer.c \
-	tokenizer/linked_list.c \
+	tokenizer/linked_list_getter.c \
+	tokenizer/linked_list_setter.c \
 )
 
 .PHONY: all bonus clean fclean re
