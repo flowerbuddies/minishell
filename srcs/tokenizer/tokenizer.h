@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/17 23:39:00 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:01:56 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum e_type
 
 typedef enum e_state
 {
-	DEFAULT,
+	IN_DEFAULT,
 	IN_RAW_STRING,
 	IN_STRING,
 	IN_ENV_VAR,

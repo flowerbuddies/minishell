@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   states.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/18 00:07:35 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:11:42 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_state	default_state(t_tokenizer *tokenizer, int i)
 	else if (tokenizer->line[i] == '>' && tokenizer->line[i + 1] != '>')
 		list_append(tokenizer->tokens, REDIR_OUT, NULL);
 	else if (tokenizer->line[i] == ' ')
-		return (list_append(tokenizer->tokens, SPACE, NULL), DEFAULT);
+		return (list_append(tokenizer->tokens, SPACE, NULL), IN_DEFAULT);
 	else if (tokenizer->line[i] == '|')
 		list_append(tokenizer->tokens, PIPE, NULL);
 	else if (tokenizer->line[i] == '\'')
@@ -38,7 +38,7 @@ t_state	default_state(t_tokenizer *tokenizer, int i)
 		return (tokenizer->env_start_idx = i + 1, IN_ENV_VAR);
 	else
 		return (tokenizer->str_start_idx = i, IN_COMMAND);
-	return (DEFAULT);
+	return (IN_DEFAULT);
 }
 
 t_state	in_command_state(t_tokenizer *tokenizer, int i)
@@ -49,7 +49,7 @@ t_state	in_command_state(t_tokenizer *tokenizer, int i)
 				tokenizer->str_start_idx, i - tokenizer->str_start_idx));
 		list_append(tokenizer->tokens, SPACE, NULL);
 		tokenizer->str_start_idx = -1;
-		return (DEFAULT);
+		return (IN_DEFAULT);
 	}
 	return (IN_COMMAND);
 }
@@ -61,7 +61,7 @@ t_state	in_raw_string_state(t_tokenizer *tokenizer, int i)
 		list_append(tokenizer->tokens, RAW_STRING, ft_substr(tokenizer->line,
 				tokenizer->str_start_idx, i - tokenizer->str_start_idx));
 		tokenizer->str_start_idx = -1;
-		return (DEFAULT);
+		return (IN_DEFAULT);
 	}
 	return (IN_RAW_STRING);
 }
@@ -73,7 +73,7 @@ t_state	in_string_state(t_tokenizer *tokenizer, int i)
 		list_append(tokenizer->tokens, STRING, ft_substr(tokenizer->line,
 				tokenizer->str_start_idx, i - tokenizer->str_start_idx));
 		tokenizer->str_start_idx = -1;
-		return (DEFAULT);
+		return (IN_DEFAULT);
 	}
 	else if (tokenizer->line[i] == '$')
 	{
@@ -94,11 +94,11 @@ t_state	in_env_var_state(t_tokenizer *tokenizer, int i)
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
 		list_append(tokenizer->tokens, SPACE, NULL);
 		if (tokenizer->str_start_idx == -1)
-			return (DEFAULT);
+			return (IN_DEFAULT);
 		else
 			return (tokenizer->str_start_idx = i + 1, IN_STRING);
 	}
-	if (tokenizer->line[i] == '"')
+	else if (tokenizer->line[i] == '"')
 	{
 		list_append(tokenizer->tokens, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));

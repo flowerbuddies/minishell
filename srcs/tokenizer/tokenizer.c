@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/18 00:23:25 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/19 18:17:03 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,19 @@
 //TODO: think about a better name
 static void	end(t_tokenizer *tokenizer, int i)
 {
-	if (tokenizer->str_start_idx != -1)
+	if ((tokenizer->state == IN_RAW_STRING && tokenizer->line[i - 1] == '\'')
+		|| (tokenizer->state == IN_STRING && tokenizer->line[i - 1] == '"'))
+	{
 		list_append(tokenizer->tokens, tokenizer->state + 6, ft_substr(
 				tokenizer->line, tokenizer->str_start_idx,
 				i - tokenizer->str_start_idx));
+		tokenizer->str_start_idx = -1;
+	}
 	else if (tokenizer->state == IN_ENV_VAR)
+	{
 		list_append(tokenizer->tokens, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
+	}
 }
 
 t_token	*tokenize(const char *line)
@@ -35,11 +41,11 @@ t_token	*tokenize(const char *line)
 	tokenizer.tokens = list_new();
 	tokenizer.line = line;
 	tokenizer.i = -1;
-	tokenizer.state = DEFAULT;
+	tokenizer.state = IN_DEFAULT;
 	tokenizer.str_start_idx = -1;
 	while (line[++tokenizer.i])
 	{
-		if (tokenizer.state == DEFAULT)
+		if (tokenizer.state == IN_DEFAULT)
 			tokenizer.state = default_state(&tokenizer, tokenizer.i);
 		else if (tokenizer.state == IN_COMMAND)
 			tokenizer.state = in_command_state(&tokenizer, tokenizer.i);
