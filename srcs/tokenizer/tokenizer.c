@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 18:42:02 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:27:10 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ t_token	*tokenize(const char *line)
 		else if (tokenizer.state == IN_ENV_VAR)
 			tokenizer.state = in_env_var_state(&tokenizer, tokenizer.i);
 	}
-	end(&tokenizer, tokenizer.i);
+	emit_last_token(&tokenizer, tokenizer.i);
 	return (tokenizer.tokens);
 }

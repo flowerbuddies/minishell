@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 18:30:38 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/19 19:24:29 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef enum e_type
 {
-	UNSET,
+	_NOT_SET,
 	REDIR_IN,
 	HEREDOC,
 	REDIR_OUT,
@@ -54,11 +54,14 @@ typedef struct s_tokenizer
 	int			env_start_idx;
 }	t_tokenizer;
 
-//linked_list.c
+//linked_list_setter.c
 t_token	*list_new(void);
 bool	list_append(t_token *tokens, t_type type, char *data);
-t_token	*list_at(t_token *tokens, int idx);
+void	list_delete_at(t_token *tokens, int idx);
 void	list_free(t_token *tokens);
+
+//linked_list_getter.c
+t_token	*list_at(t_token *tokens, int idx);
 void	list_print(t_token *tokens);
 
 //tokenizer.c
