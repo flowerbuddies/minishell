@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/19 19:24:29 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:11:02 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,17 @@ typedef struct s_token
 typedef struct s_tokenizer
 {
 	t_token		*tokens;
-	const char	*line;
+	char		*line;
 	int			i;
 	t_state		state;
 	int			str_start_idx;
 	int			env_start_idx;
+	bool		errored;
 }	t_tokenizer;
 
 //linked_list_setter.c
-t_token	*list_new(void);
-bool	list_append(t_token *tokens, t_type type, char *data);
+t_token	*list_new(t_tokenizer *tokenizer);
+void	list_append(t_tokenizer *tokenizer, t_type type, char *data);
 void	list_delete_at(t_token *tokens, int idx);
 void	list_free(t_token *tokens);
 
@@ -65,7 +66,8 @@ t_token	*list_at(t_token *tokens, int idx);
 void	list_print(t_token *tokens);
 
 //tokenizer.c
-t_token	*tokenize(const char *line);
+void	tokenize(t_tokenizer *tokenizer);
+void	concat_string_tokens(t_token *tokens);
 
 //states.c
 t_state	default_state(t_tokenizer *tokenizer, int i);
