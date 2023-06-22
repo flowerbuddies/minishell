@@ -3,61 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_setter.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:21 by marmulle          #+#    #+#             */
-/*   Updated: 2023/06/19 19:27:27 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:16:03 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "tokenizer.h"
 
-t_token	*list_new(void)
+t_token	*list_new(t_tokenizer *tokenizer)
 {
 	t_token	*out;
 
 	out = malloc(sizeof(t_token));
-	out->next = NULL;
+	if (!out)
+	{
+		tokenizer->errored = true;
+		return (NULL);
+	}
 	out->type = _NOT_SET;
+	out->data = NULL;
+	out->next = NULL;
 	return (out);
 }
 
-bool	list_append(t_token *tokens, t_type type, char *data)
+void	list_append(t_tokenizer *tokenizer, t_type type, char *data)
 {
-	if (tokens->type == _NOT_SET)
+	t_token	*current;
+
+	current = tokenizer->tokens;
+	if (current->type == _NOT_SET)
 	{
-		tokens->type = type;
-		tokens->data = data;
-		return (true);
+		current->type = type;
+		current->data = data;
+		return ;
 	}
-	while (tokens->next)
-		tokens = tokens->next;
-	tokens->next = list_new();
-	if (!tokens->next)
-		return (false);
-	tokens->next->type = type;
-	tokens->next->data = data;
-	tokens->next->next = NULL;
-	return (true);
+	while (current->next)
+		current = current->next;
+	current->next = list_new(tokenizer);
+	if (tokenizer->errored)
+		return ;
+	current->next->type = type;
+	current->next->data = data;
+	current->next->next = NULL;
 }
 
 void	list_delete_at(t_token *tokens, int idx)
 {
-	t_token	*link;
+	t_token	*current;
 
-	link = list_at(tokens, idx);
-	if (link->data)
-		free(link->data);
-	if (link->next)
+	current = list_at(tokens, idx);
+	if (current->data)
+		free(current->data);
+	if (current->next)
 	{
-		link->type = link->next->type;
-		link->next = link->next->next;
+		current->type = current->next->type;
+		current->next = current->next->next;
 	}
 	else
 	{
-		link->type = _NOT_SET;
-		link->next = NULL;
+		current->type = _NOT_SET;
+		current->next = NULL;
 	}
 }
 

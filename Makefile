@@ -1,6 +1,6 @@
 NAME := minishell
 LIBFT := libft.a
-FLAGS := -Wall -Wextra -lreadline -I libft -I srcs/tokenizer -g #TODO: remove -g & add -Werror
+FLAGS := -Wall -Wextra -lreadline -I libft -I srcs/tokenizer -g -fsanitize=address,undefined #TODO: remove debug flags & add -Werror
 
 SRCS := $(addprefix srcs/,\
 	minishell.c \
@@ -9,6 +9,7 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/tokenizer.c \
 	tokenizer/linked_list_getter.c \
 	tokenizer/linked_list_setter.c \
+	tokenizer/concat_strings.c \
 )
 
 .PHONY: all bonus clean fclean re
