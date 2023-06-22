@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/22 18:39:38 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/22 18:55:52 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	tokenize(t_tokenizer *tokenizer)
 		if (tokenizer->errored)
 			return ;
 	}
+	concat_string_tokens(tokenizer->tokens);
 }
