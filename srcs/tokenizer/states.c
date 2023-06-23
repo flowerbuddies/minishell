@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/22 18:25:43 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/23 15:57:58 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ t_state	default_state(t_tokenizer *tokenizer, int i)
 		return (tokenizer->str_start_idx = i + 1, IN_RAW_STRING);
 	else if (tokenizer->line[i] == '"')
 		return (tokenizer->str_start_idx = i + 1, IN_STRING);
-	else if (tokenizer->line[i] == '$')
+	else if (tokenizer->line[i] == '$' && tokenizer->line[i + 1] != ' '
+		&& tokenizer->line[i + 1] != '\'' && tokenizer->line[i + 1] != '"'
+		&& tokenizer->line[i + 1] != '\0')
 		return (tokenizer->env_start_idx = i + 1, IN_ENV_VAR);
+	else if (tokenizer->line[i] == '$')
+		return (list_append(tokenizer, STRING, ft_strdup("$")), IN_DEFAULT);
 	else if (tokenizer->line[i] != '<' && tokenizer->line[i] != '>')
 		return (tokenizer->str_start_idx = i, IN_COMMAND);
 	return (IN_DEFAULT);
