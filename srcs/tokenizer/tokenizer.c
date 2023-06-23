@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
 /*   Updated: 2023/06/23 16:50:27 by hunam            ###   ########.fr       */
@@ -43,5 +43,5 @@ void	tokenize(t_tokenizer *tokenizer)
 		if (tokenizer->errored)
 			return ;
 	}
-	concat_string_tokens(tokenizer->tokens);
+	concat_string_tokens(tokenizer);
 }
