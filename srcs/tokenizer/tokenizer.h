@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/22 16:11:02 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/23 17:16:10 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	list_print(t_token *tokens);
 
 //tokenizer.c
 void	tokenize(t_tokenizer *tokenizer);
-void	concat_string_tokens(t_token *tokens);
+void	concat_string_tokens(t_tokenizer *tokenizer);
 
 //states.c
 t_state	default_state(t_tokenizer *tokenizer, int i);
