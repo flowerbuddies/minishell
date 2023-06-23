@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 20:19:33 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/23 18:02:59 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:54:37 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,36 @@ static void	free_remaining_string_tokens(t_token *tokens)
 	}
 }
 
+static void	free_strings_reattach(t_token *first_string_token, t_token *attach)
+{
+	free_remaining_string_tokens(first_string_token->next);
+	first_string_token->next = attach;
+}
+
 void	concat_string_tokens(t_tokenizer *tokenizer)
 {
-	t_token	*tokens;
-	t_token	*first_string_token;
 	t_token	*current;
+	t_token	*current_string;
+	t_token	*first_string_token;
 	char	*total_str;
 
-	tokens = tokenizer->tokens;
-	while (tokens)
+	current = tokenizer->tokens;
+	while (current)
 	{
-		if (tokens->type == STRING)
+		if (current->type == STRING)
 		{
-			first_string_token = tokens;
-			current = tokens;
-			while (current->next && current->next->type == STRING)
-				current = current->next;
-			if (first_string_token != current)
+			first_string_token = current;
+			current_string = current;
+			while (current_string->next && current_string->next->type == STRING)
+				current_string = current_string->next;
+			if (first_string_token != current_string)
 			{
 				total_str = get_total_str(tokenizer, first_string_token);
 				free(first_string_token->data);
 				first_string_token->data = total_str;
-				free_remaining_string_tokens(first_string_token->next);
-				first_string_token->next = current->next;
+				free_strings_reattach(first_string_token, current_string->next);
 			}
 		}
-		tokens = tokens->next;
+		current = current->next;
 	}
 }
