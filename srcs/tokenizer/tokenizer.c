@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/23 17:15:30 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:50:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "tokenizer.h"
 #include "libft.h"
 
-void	tokenize(t_tokenizer *tokenizer)
+static void	init_tokenizer(t_tokenizer *tokenizer)
 {
 	tokenizer->errored = false;
 	tokenizer->tokens = list_new(tokenizer);
@@ -23,6 +23,11 @@ void	tokenize(t_tokenizer *tokenizer)
 	tokenizer->i = -1;
 	tokenizer->state = IN_DEFAULT;
 	tokenizer->str_start_idx = -1;
+}
+
+void	tokenize(t_tokenizer *tokenizer)
+{
+	init_tokenizer(tokenizer);
 	while (tokenizer->line[++tokenizer->i])
 	{
 		if (tokenizer->state == IN_DEFAULT)

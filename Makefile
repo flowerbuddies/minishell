@@ -1,15 +1,21 @@
 NAME := minishell
 LIBFT := libft.a
-FLAGS := -Wall -Wextra -lreadline -I libft -I srcs/tokenizer -g -fsanitize=address,undefined #TODO: remove debug flags & add -Werror
+FLAGS := -Wall -Werror -Wextra -lreadline -I libft -I srcs/tokenizer
+DEBUG := -Wno-error -g -fsanitize=address,undefined
 
 SRCS := $(addprefix srcs/,\
-	minishell.c \
 	prompt.c \
 	tokenizer/states.c \
 	tokenizer/tokenizer.c \
 	tokenizer/linked_list_getter.c \
 	tokenizer/linked_list_setter.c \
 	tokenizer/concat_strings.c \
+)
+
+TESTS_SRCS := $(addprefix tests/,\
+	munit/munit.c \
+	test.c \
+	test_tokenizer.c \
 )
 
 .PHONY: all bonus clean fclean re
@@ -22,7 +28,7 @@ $(LIBFT):
 
 $(NAME):
 	@echo "Compiling $(NAME)..."
-	@cc $(FLAGS) $(LIBFT) $(SRCS) -o $(NAME)
+	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME) #TODO: rm DEBUG
 
 clean:
 
@@ -30,3 +36,9 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+test: re
+	@echo "Compiling tests..."
+	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) $(TESTS_SRCS) -o test
+	@./test
+	@rm -f test
