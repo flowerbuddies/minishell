@@ -39,6 +39,12 @@ t_state	default_state(t_tokenizer *tokenizer, int i)
 	else if (tokenizer->line[i + 1] == '\0')
 		return (list_append(tokenizer, STRING,
 				ft_substr(tokenizer->line, i, 1)), IN_DEFAULT);
+	else if (tokenizer->line[i] == '$' && tokenizer->line[i + 1] != ' '
+		&& tokenizer->line[i + 1] != '\'' && tokenizer->line[i + 1] != '"'
+		&& tokenizer->line[i + 1] != '\0')
+		return (tokenizer->env_start_idx = i + 1, IN_ENV_VAR);
+	else if (tokenizer->line[i] == '$')
+		return (list_append(tokenizer, STRING, ft_strdup("$")), IN_DEFAULT);
 	else if (tokenizer->line[i] != '<' && tokenizer->line[i] != '>')
 		return (tokenizer->str_start_idx = i, IN_COMMAND);
 	return (IN_DEFAULT);
