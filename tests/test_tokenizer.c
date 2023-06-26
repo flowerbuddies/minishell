@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/23 19:30:57 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/26 15:24:48 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,53 @@ MunitResult	test_demo(const MunitParameter params[], void *user_data_or_fixture)
 		(t_type []){PIPE, SPACE, REDIR_OUT, SPACE, STRING, SPACE, REDIR_OUT_APPEND},
 		(char *[]){ NULL, NULL,  NULL,      NULL,  "abcdefghi", NULL, NULL},
 		7);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_raw_string_1(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"'a'",
+		(t_type []){STRING},
+		(char *[]){"a"},
+		1);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_raw_string_2(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"'abc'",
+		(t_type []){STRING},
+		(char *[]){"abc"},
+		1);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_raw_string_3(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"'abc''def'",
+		(t_type []){STRING},
+		(char *[]){"abcdef"},
+		1);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_raw_string_4(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"| 'abc'>'def'",
+		(t_type []){PIPE, SPACE, STRING, REDIR_OUT, STRING},
+		(char *[]){NULL, NULL,   "abc", NULL,       "def"},
+		5);
 	return (MUNIT_OK);
 }
