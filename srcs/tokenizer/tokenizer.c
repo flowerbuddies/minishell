@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 23:05:26 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/23 16:50:27 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/26 17:26:52 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	tokenize(t_tokenizer *tokenizer)
 	while (tokenizer->line[++tokenizer->i])
 	{
 		if (tokenizer->state == IN_DEFAULT)
-			tokenizer->state = default_state(tokenizer, tokenizer->i);
+			tokenizer->state = in_default_state(tokenizer, tokenizer->i);
 		else if (tokenizer->state == IN_COMMAND)
 			tokenizer->state = in_command_state(tokenizer, tokenizer->i);
 		else if (tokenizer->state == IN_RAW_STRING)
