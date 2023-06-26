@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 19:14:11 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 17:24:02 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/26 18:33:19 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ MunitResult	test_command_5(const MunitParameter[], void *);
 MunitResult	test_command_6(const MunitParameter[], void *);
 MunitResult	test_command_7(const MunitParameter[], void *);
 MunitResult	test_command_8(const MunitParameter[], void *);
+MunitResult	test_command_9(const MunitParameter[], void *);
 
 MunitResult	test_pipe_1(const MunitParameter[], void *);
 MunitResult	test_pipe_2(const MunitParameter[], void *);
@@ -93,6 +94,7 @@ const MunitSuite	tokenizer_suite = {
 		{"/test_command_6", test_command_6, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_command_7", test_command_7, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_command_8", test_command_8, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_command_9", test_command_9, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
 		{"/test_pipe_1", test_pipe_1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_pipe_2", test_pipe_2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
