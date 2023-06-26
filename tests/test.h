@@ -21,6 +21,11 @@ MunitResult	test_raw_string_2(const MunitParameter[], void *);
 MunitResult	test_raw_string_3(const MunitParameter[], void *);
 MunitResult	test_raw_string_4(const MunitParameter[], void *);
 
+MunitResult	test_space1(const MunitParameter[], void *);
+MunitResult	test_space2(const MunitParameter[], void *);
+MunitResult	test_space3(const MunitParameter[], void *);
+MunitResult	test_space4(const MunitParameter[], void *);
+
 MunitResult	test_redir1(const MunitParameter[], void *);
 MunitResult	test_redir2(const MunitParameter[], void *);
 MunitResult	test_redir3(const MunitParameter[], void *);
@@ -60,10 +65,13 @@ const MunitSuite	tokenizer_suite = {
 	"/tokenizer",
 	(MunitTest[]){
 		{"/test_demo", test_demo, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
 		{"/test_raw_string_1", test_raw_string_1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-		{"/test_raw_string_2", test_raw_string_2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-		{"/test_raw_string_3", test_raw_string_3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-		{"/test_raw_string_4", test_raw_string_4, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+		{"/test_space1", test_space1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_space2", test_space2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_space3", test_space3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_space4", test_space4, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
 		{"/test_redir1", test_redir1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_redir2", test_redir2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
