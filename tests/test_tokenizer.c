@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 17:35:14 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/26 18:33:01 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,6 +417,18 @@ MunitResult	test_command_8(const MunitParameter params[], void *user_data_or_fix
 		(t_type []){STRING},
 		(char *[]){"str1"},
 		1);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_command_9(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"str1$env",
+		(t_type []){STRING, ENV_VAR},
+		(char *[]){"str1", "env"},
+		2);
 	return (MUNIT_OK);
 }
 
