@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokenizer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 16:01:08 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/26 16:12:40 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,5 +370,42 @@ MunitResult	test_command_4(const MunitParameter params[], void *user_data_or_fix
 		(t_type []){PIPE, SPACE, STRING, REDIR_OUT, STRING},
 		(char *[]){NULL, NULL,   "abc", NULL,       "def"},
 		5);
+	return (MUNIT_OK);
+}
+
+MunitResult test_pipe_1(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"|",
+		(t_type []){PIPE},
+		(char *[]){NULL},
+		1);
+	return (MUNIT_OK);
+}
+
+MunitResult test_pipe_2(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		" | ",
+		(t_type []){SPACE, PIPE, SPACE},
+		(char *[]){NULL, NULL, NULL},
+		3);
+	return (MUNIT_OK);
+}
+
+MunitResult test_pipe_3(const MunitParameter params[], void *user_data_or_fixture)
+{
+	return (MUNIT_SKIP);
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"abc|",
+		(t_type []){STRING, PIPE},
+		(char *[]){NULL, NULL},
+		2);
 	return (MUNIT_OK);
 }
