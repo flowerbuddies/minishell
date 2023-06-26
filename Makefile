@@ -5,10 +5,14 @@ DEBUG := -Wno-error -g -fsanitize=address,undefined
 
 SRCS := $(addprefix srcs/,\
 	prompt.c \
-	tokenizer/states.c \
+	tokenizer/states/command.c \
+	tokenizer/states/default.c \
+	tokenizer/states/env_var.c \
+	tokenizer/states/raw_string.c \
+	tokenizer/states/string.c \
+	tokenizer/linked_list/getter.c \
+	tokenizer/linked_list/setter.c \
 	tokenizer/tokenizer.c \
-	tokenizer/linked_list_getter.c \
-	tokenizer/linked_list_setter.c \
 	tokenizer/concat_strings.c \
 )
 
