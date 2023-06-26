@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokenizer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
 /*   Updated: 2023/06/26 18:33:01 by hunam            ###   ########.fr       */
@@ -45,6 +45,54 @@ MunitResult	test_demo(const MunitParameter params[], void *user_data_or_fixture)
 		(t_type []){PIPE, SPACE, REDIR_OUT, SPACE, STRING, SPACE, REDIR_OUT_APPEND},
 		(char *[]){ NULL, NULL,  NULL,      NULL,  "abcdefghi", NULL, NULL},
 		7);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_space1(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"hi there",
+		(t_type []){STRING, SPACE, STRING},
+		(char *[]){"hi", NULL, "there"},
+		3);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_space2(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"hi  there",
+		(t_type []){STRING, SPACE, STRING},
+		(char *[]){"hi", NULL, "there"},
+		3);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_space3(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"hi            there",
+		(t_type []){STRING, SPACE, STRING},
+		(char *[]){"hi", NULL, "there"},
+		3);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_space4(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"           hi            there    ",
+		(t_type []){SPACE, STRING, SPACE, STRING, SPACE},
+		(char *[]){NULL, "hi", NULL, "there", NULL},
+		5);
 	return (MUNIT_OK);
 }
 

@@ -1,7 +1,7 @@
 NAME := minishell
 LIBFT := libft.a
-FLAGS := -Wall -Werror -Wextra -lreadline -I libft -I srcs/tokenizer
-DEBUG := -Wno-error -g -fsanitize=address,undefined
+FLAGS := -Wall -Werror -Wextra -lreadline -I libft -I srcs/tokenizer -Ofast
+DEBUG := -Wno-error -g -fsanitize=address,undefined -O0
 
 SRCS := $(addprefix srcs/,\
 	prompt.c \
@@ -13,7 +13,8 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/linked_list/getter.c \
 	tokenizer/linked_list/setter.c \
 	tokenizer/tokenizer.c \
-	tokenizer/concat_strings.c \
+	tokenizer/concatenate/concat_strings.c \
+	tokenizer/concatenate/concat_spaces.c \
 )
 
 TESTS_SRCS := $(addprefix tests/,\
@@ -32,7 +33,7 @@ $(LIBFT):
 
 $(NAME):
 	@echo "Compiling $(NAME)..."
-	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME) #TODO: rm DEBUG
+	@cc $(FLAGS) $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
 
 clean:
 
@@ -41,8 +42,24 @@ fclean: clean
 
 re: fclean all
 
+debug: fclean
+	@echo "Compiling debug..."
+	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
+	@./$(NAME)
+
+debug-leaks:
+	@echo "Compiling debug using leaks..."
+	@cc $(FLAGS) $(DEBUG) -fno-sanitize=all $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
+	@leaks -q --atExit -- ./$(NAME)
+
 test: re
 	@echo "Compiling tests..."
 	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) $(TESTS_SRCS) -o test
 	@./test
+	@rm -f test
+
+test-leaks:
+	@echo "Compiling tests using leaks..."
+	@cc $(FLAGS) $(DEBUG) -fno-sanitize=all $(LIBFT) $(SRCS) $(TESTS_SRCS) -o test
+	@leaks -q --atExit -- ./test
 	@rm -f test
