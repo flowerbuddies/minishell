@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 17:40:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/27 15:59:14 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,7 @@
 
 static t_state	in_env_var_state_end(t_tokenizer *tokenizer, int i)
 {
-	if (tokenizer->line[i] == '\'')
-	{
-		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
-				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
-		return (tokenizer->str_start_idx = i, IN_RAW_STRING);
-	}
-	else if (tokenizer->line[i + 1] == '\0')
+	if (tokenizer->line[i + 1] == '\0')
 	{
 		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx + 1));
@@ -33,23 +27,26 @@ static t_state	in_env_var_state_end(t_tokenizer *tokenizer, int i)
 
 t_state	in_env_var_state(t_tokenizer *tokenizer, int i)
 {
-	if (tokenizer->line[i] == ' ')
+	if (tokenizer->line[i] == '"')
 	{
+		if (i - tokenizer->env_start_idx == 0)
+			return (list_append(tokenizer, STRING, ft_strdup("$")), IN_DEFAULT);
 		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
-		if (tokenizer->str_start_idx == -1)
-			return (list_append(tokenizer, SPACE, NULL), IN_DEFAULT);
-		else
-			return (tokenizer->str_start_idx = i, IN_STRING);
+		return (tokenizer->str_start_idx = -1, IN_DEFAULT);
 	}
-	else if (tokenizer->line[i] == '"')
+	else if (tokenizer->line[i] == '<' || tokenizer->line[i] == '>'
+		|| tokenizer->line[i] == '|' || tokenizer->line[i] == '$'
+		|| tokenizer->line[i] == '\'' || tokenizer->line[i] == ' ')
 	{
+		if (i - tokenizer->env_start_idx == 0)
+			return (list_append(tokenizer, STRING, ft_strdup("$")), IN_DEFAULT);
 		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
-		if (tokenizer->str_start_idx == -1)
+		if (tokenizer->str_start_idx != -1)
 			return (tokenizer->str_start_idx = i, IN_STRING);
 		else
-			return (IN_DEFAULT);
+			return (tokenizer->i--, IN_DEFAULT);
 	}
 	else
 		return (in_env_var_state_end(tokenizer, i));
