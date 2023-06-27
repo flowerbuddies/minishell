@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 23:06:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 17:26:47 by hunam            ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/06/26 19:03:17 by mfm              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
@@ -68,6 +69,7 @@ void	list_print(t_token *tokens);
 //tokenizer.c
 void	tokenize(t_tokenizer *tokenizer);
 void	concat_string_tokens(t_tokenizer *tokenizer);
+void	concat_space_tokens(t_tokenizer *tokenizer);
 
 //states.c
 t_state	in_default_state(t_tokenizer *tokenizer, int i);
