@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 19:14:11 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 18:33:19 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/27 18:40:22 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ MunitResult	test_space1(const MunitParameter[], void *);
 MunitResult	test_space2(const MunitParameter[], void *);
 MunitResult	test_space3(const MunitParameter[], void *);
 MunitResult	test_space4(const MunitParameter[], void *);
+MunitResult	test_space5(const MunitParameter[], void *);
+MunitResult	test_space6(const MunitParameter[], void *);
+MunitResult	test_space7(const MunitParameter[], void *);
 
 MunitResult	test_redir1(const MunitParameter[], void *);
 MunitResult	test_redir2(const MunitParameter[], void *);
@@ -72,6 +75,9 @@ const MunitSuite	tokenizer_suite = {
 		{"/test_space2", test_space2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_space3", test_space3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_space4", test_space4, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_space5", test_space5, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_space6", test_space6, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_space7", test_space7, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
 		{"/test_redir1", test_redir1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_redir2", test_redir2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},

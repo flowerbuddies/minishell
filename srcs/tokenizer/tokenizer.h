@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/06/26 19:03:17 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/27 18:32:51 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_tokenizer
 //linked_list_setter.c
 t_token	*list_new(t_tokenizer *tokenizer);
 void	list_append(t_tokenizer *tokenizer, t_type type, char *data);
-void	list_delete_at(t_token *tokens, int idx);
+void	list_delete_at(t_tokenizer *tokenizer, int idx);
 void	list_free(t_token *tokens);
 
 //linked_list_getter.c
@@ -69,7 +69,7 @@ void	list_print(t_token *tokens);
 //tokenizer.c
 void	tokenize(t_tokenizer *tokenizer);
 void	concat_string_tokens(t_tokenizer *tokenizer);
-void	concat_space_tokens(t_tokenizer *tokenizer);
+void	delete_space_tokens(t_tokenizer *tokenizer);
 
 //states.c
 t_state	in_default_state(t_tokenizer *tokenizer, int i);
