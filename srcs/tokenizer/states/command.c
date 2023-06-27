@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 18:34:00 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/27 15:56:43 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ t_state	in_command_state(t_tokenizer *tokenizer, int i)
 	}
 	return (IN_COMMAND);
 }
-
