@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list_setter.c                               :+:      :+:    :+:   */
+/*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:21 by marmulle          #+#    #+#             */
-/*   Updated: 2023/06/22 16:16:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/27 18:43:40 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,33 @@ void	list_append(t_tokenizer *tokenizer, t_type type, char *data)
 	current->next->next = NULL;
 }
 
-void	list_delete_at(t_token *tokens, int idx)
+// Will intentionally segfault when trying to access illegal token
+void	list_delete_at(t_tokenizer *tokenizer, int idx)
 {
 	t_token	*current;
+	t_token	*previous;
 
-	current = list_at(tokens, idx);
+	if (idx == 0)
+	{
+		current = tokenizer->tokens->next;
+		if (tokenizer->tokens->data)
+			free(tokenizer->tokens->data);
+		free(tokenizer->tokens);
+		tokenizer->tokens = current;
+		return ;
+	}
+	previous = list_at(tokenizer->tokens, idx - 1);
+	current = previous->next;
 	if (current->data)
 		free(current->data);
-	if (current->next)
-	{
-		current->type = current->next->type;
-		current->next = current->next->next;
-	}
-	else
-	{
-		current->type = _NOT_SET;
-		current->next = NULL;
-	}
+	previous->next = current->next;
+	free(current);
 }
 
 void	list_free(t_token *tokens)
 {
+	if (!tokens)
+		return ;
 	if (tokens->next)
 		list_free(tokens->next);
 	if (tokens->data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_tokenizer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 18:33:01 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/27 19:05:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ MunitResult	test_demo(const MunitParameter params[], void *user_data_or_fixture)
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"| > \"abc\"'def'ghi >>",
-		(t_type []){PIPE, SPACE, REDIR_OUT, SPACE, STRING, SPACE, REDIR_OUT_APPEND},
-		(char *[]){ NULL, NULL,  NULL,      NULL,  "abcdefghi", NULL, NULL},
-		7);
+		(t_type []){PIPE, REDIR_OUT, STRING, REDIR_OUT_APPEND},
+		(char *[]){ NULL,  NULL,     "abcdefghi", NULL},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -54,9 +54,9 @@ MunitResult	test_space1(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"hi there",
-		(t_type []){STRING, SPACE, STRING},
-		(char *[]){"hi", NULL, "there"},
-		3);
+		(t_type []){STRING, STRING},
+		(char *[]){"hi", "there"},
+		2);
 	return (MUNIT_OK);
 }
 
@@ -66,9 +66,9 @@ MunitResult	test_space2(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"hi  there",
-		(t_type []){STRING, SPACE, STRING},
-		(char *[]){"hi", NULL, "there"},
-		3);
+		(t_type []){STRING, STRING},
+		(char *[]){"hi", "there"},
+		2);
 	return (MUNIT_OK);
 }
 
@@ -78,9 +78,9 @@ MunitResult	test_space3(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"hi            there",
-		(t_type []){STRING, SPACE, STRING},
-		(char *[]){"hi", NULL, "there"},
-		3);
+		(t_type []){STRING, STRING},
+		(char *[]){"hi", "there"},
+		2);
 	return (MUNIT_OK);
 }
 
@@ -90,9 +90,45 @@ MunitResult	test_space4(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"           hi            there    ",
-		(t_type []){SPACE, STRING, SPACE, STRING, SPACE},
-		(char *[]){NULL, "hi", NULL, "there", NULL},
-		5);
+		(t_type []){STRING, STRING},
+		(char *[]){"hi", "there"},
+		2);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_space5(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"    hi",
+		(t_type []){STRING},
+		(char *[]){"hi"},
+		1);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_space6(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"   ",
+		(t_type []){},
+		(char *[]){},
+		0);
+	return (MUNIT_OK);
+}
+
+MunitResult	test_space7(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		" ",
+		(t_type []){},
+		(char *[]){},
+		0);
 	return (MUNIT_OK);
 }
 
@@ -114,9 +150,9 @@ MunitResult	test_redir2(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"> > ",
-		(t_type []){REDIR_OUT, SPACE, REDIR_OUT, SPACE},
-		(char *[]){NULL, NULL, NULL, NULL},
-		4);
+		(t_type []){REDIR_OUT, REDIR_OUT},
+		(char *[]){NULL, NULL},
+		2);
 	return (MUNIT_OK);
 }
 
@@ -126,9 +162,9 @@ MunitResult	test_redir3(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"  >   >   >",
-		(t_type []){SPACE, REDIR_OUT, SPACE, REDIR_OUT, SPACE, REDIR_OUT},
-		(char *[]){NULL, NULL, NULL, NULL, NULL, NULL},
-		6);
+		(t_type []){REDIR_OUT, REDIR_OUT, REDIR_OUT},
+		(char *[]){NULL, NULL, NULL},
+		3);
 	return (MUNIT_OK);
 }
 
@@ -162,9 +198,9 @@ MunitResult	test_redir6(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"< <",
-		(t_type []){REDIR_IN, SPACE, REDIR_IN},
-		(char *[]){NULL, NULL, NULL},
-		3);
+		(t_type []){REDIR_IN, REDIR_IN},
+		(char *[]){NULL, NULL},
+		2);
 	return (MUNIT_OK);
 }
 
@@ -186,9 +222,9 @@ MunitResult	test_redir8(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"<< <<",
-		(t_type []){HEREDOC, SPACE, HEREDOC},
-		(char *[]){NULL, NULL, NULL},
-		3);
+		(t_type []){HEREDOC, HEREDOC},
+		(char *[]){NULL, NULL},
+		2);
 	return (MUNIT_OK);
 }
 
@@ -198,9 +234,9 @@ MunitResult	test_redir_mixed1(const MunitParameter params[], void *user_data_or_
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		">> >",
-		(t_type []){REDIR_OUT_APPEND, SPACE, REDIR_OUT},
-		(char *[]){NULL, NULL, NULL},
-		3);
+		(t_type []){REDIR_OUT_APPEND, REDIR_OUT},
+		(char *[]){NULL, NULL},
+		2);
 	return (MUNIT_OK);
 }
 
@@ -210,9 +246,9 @@ MunitResult	test_redir_mixed2(const MunitParameter params[], void *user_data_or_
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		">> > >>",
-		(t_type []){REDIR_OUT_APPEND, SPACE, REDIR_OUT, SPACE, REDIR_OUT_APPEND},
-		(char *[]){NULL, NULL, NULL, NULL, NULL},
-		5);
+		(t_type []){REDIR_OUT_APPEND, REDIR_OUT, REDIR_OUT_APPEND},
+		(char *[]){NULL, NULL, NULL},
+		3);
 	return (MUNIT_OK);
 }
 
@@ -222,9 +258,9 @@ MunitResult	test_redir_mixed3(const MunitParameter params[], void *user_data_or_
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		">> > < <<",
-		(t_type []){REDIR_OUT_APPEND, SPACE, REDIR_OUT, SPACE, REDIR_IN, SPACE, HEREDOC},
-		(char *[]){NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-		7);
+		(t_type []){REDIR_OUT_APPEND, REDIR_OUT, REDIR_IN, HEREDOC},
+		(char *[]){NULL, NULL, NULL, NULL},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -234,9 +270,9 @@ MunitResult	test_redir_mixed4(const MunitParameter params[], void *user_data_or_
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"< << >> >",
-		(t_type []){REDIR_IN, SPACE, HEREDOC, SPACE, REDIR_OUT_APPEND, SPACE, REDIR_OUT},
-		(char *[]){NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-		7);
+		(t_type []){REDIR_IN, HEREDOC, REDIR_OUT_APPEND, REDIR_OUT},
+		(char *[]){NULL, NULL, NULL, NULL},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -246,9 +282,9 @@ MunitResult	test_redir_mixed5(const MunitParameter params[], void *user_data_or_
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"<< < > >>",
-		(t_type []){HEREDOC, SPACE, REDIR_IN, SPACE, REDIR_OUT, SPACE, REDIR_OUT_APPEND},
-		(char *[]){NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-		7);
+		(t_type []){HEREDOC, REDIR_IN, REDIR_OUT, REDIR_OUT_APPEND},
+		(char *[]){NULL, NULL, NULL, NULL},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -258,9 +294,9 @@ MunitResult	test_redir_mixed6(const MunitParameter params[], void *user_data_or_
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"< >> << >",
-		(t_type []){REDIR_IN, SPACE, REDIR_OUT_APPEND, SPACE, HEREDOC, SPACE, REDIR_OUT},
-		(char *[]){NULL, NULL, NULL, NULL, NULL, NULL, NULL},
-		7);
+		(t_type []){REDIR_IN, REDIR_OUT_APPEND, HEREDOC, REDIR_OUT},
+		(char *[]){NULL, NULL, NULL, NULL},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -306,9 +342,9 @@ MunitResult	test_raw_string_4(const MunitParameter params[], void *user_data_or_
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"| 'abc'>'def'",
-		(t_type []){PIPE, SPACE, STRING, REDIR_OUT, STRING},
-		(char *[]){NULL, NULL,   "abc", NULL,       "def"},
-		5);
+		(t_type []){PIPE, STRING, REDIR_OUT, STRING},
+		(char *[]){NULL,  "abc", NULL,       "def"},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -354,9 +390,9 @@ MunitResult	test_string_4(const MunitParameter params[], void *user_data_or_fixt
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"| \"abc\">\"def\"",
-		(t_type []){PIPE, SPACE, STRING, REDIR_OUT, STRING},
-		(char *[]){NULL, NULL,   "abc", NULL,       "def"},
-		5);
+		(t_type []){PIPE, STRING, REDIR_OUT, STRING},
+		(char *[]){NULL,  "abc", NULL,       "def"},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -414,9 +450,9 @@ MunitResult	test_command_4(const MunitParameter params[], void *user_data_or_fix
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"| abc>def",
-		(t_type []){PIPE, SPACE, STRING, REDIR_OUT, STRING},
-		(char *[]){NULL, NULL,   "abc", NULL,       "def"},
-		5);
+		(t_type []){PIPE, STRING, REDIR_OUT, STRING},
+		(char *[]){NULL,  "abc", NULL,       "def"},
+		4);
 	return (MUNIT_OK);
 }
 
@@ -498,9 +534,9 @@ MunitResult test_pipe_2(const MunitParameter params[], void *user_data_or_fixtur
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		" | ",
-		(t_type []){SPACE, PIPE, SPACE},
-		(char *[]){NULL, NULL, NULL},
-		3);
+		(t_type []){PIPE},
+		(char *[]){NULL},
+		1);
 	return (MUNIT_OK);
 }
 
