@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/27 19:10:48 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/27 19:33:38 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	prompt(void)
 			return ;
 		}
 		// list_print(tokenizer.tokens);
-		check_syntax(&tokenizer);
+		check_syntax(&tokenizer); //TODO: if false don't execute the line
 		list_free(tokenizer.tokens);
 		// TODO: this is very very likely temporary
 		if (ft_strncmp(tokenizer.line, "exit", 4) == 0)
