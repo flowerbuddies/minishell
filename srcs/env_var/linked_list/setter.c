@@ -6,7 +6,7 @@
 /*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/27 20:37:33 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/29 20:33:35 by mfm              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,18 @@ t_var	*new_var(char *name, char *value)
 
 void	vars_append(t_var **vars, t_var *var)
 {
+	t_var	*current;
+
 	if (*vars == NULL)
 	{
 		*vars = var;
 		return ;
 	}
-	while ((*vars)->next)
-		*vars = (*vars)->next;
-	(*vars)->next = var;
-	var->prev = *vars;
+	current = *vars;
+	while (current->next)
+		current = current->next;
+	current->next = var;
+	var->prev = current;
 }
 
 void	vars_delete_at(t_var *vars, char *name)
