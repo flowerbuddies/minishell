@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/27 19:05:27 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/29 23:25:08 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -510,9 +510,9 @@ MunitResult	test_command_9(const MunitParameter params[], void *user_data_or_fix
 	(void) user_data_or_fixture;
 	tokenizer_one_test(
 		"str1$env",
-		(t_type []){STRING, ENV_VAR},
-		(char *[]){"str1", "env"},
-		2);
+		(t_type []){STRING},
+		(char *[]){"str1"},
+		1);
 	return (MUNIT_OK);
 }
 
@@ -549,5 +549,29 @@ MunitResult test_pipe_3(const MunitParameter params[], void *user_data_or_fixtur
 		(t_type []){STRING, PIPE},
 		(char *[]){NULL, NULL},
 		2);
+	return (MUNIT_OK);
+}
+
+MunitResult test_env_var1(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"$doesntexist |",
+		(t_type []){STRING, PIPE},
+		(char *[]){"", NULL},
+		2);
+	return (MUNIT_OK);
+}
+
+MunitResult test_env_var2(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"$TEMP",
+		(t_type []){STRING},
+		(char *[]){"VALUE_WOW"},
+		1);
 	return (MUNIT_OK);
 }

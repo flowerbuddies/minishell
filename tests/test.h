@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 19:14:11 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/27 18:40:22 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/29 23:21:34 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ MunitResult	test_pipe_1(const MunitParameter[], void *);
 MunitResult	test_pipe_2(const MunitParameter[], void *);
 MunitResult	test_pipe_3(const MunitParameter[], void *);
 
+MunitResult	test_env_var1(const MunitParameter[], void *);
+MunitResult	test_env_var2(const MunitParameter[], void *);
+
 const MunitSuite	tokenizer_suite = {
 	"/tokenizer",
 	(MunitTest[]){
@@ -113,6 +116,9 @@ const MunitSuite	tokenizer_suite = {
 		{"/test_pipe_1", test_pipe_1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_pipe_2", test_pipe_2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{"/test_pipe_3", test_pipe_3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+		{"/test_env_var1", test_env_var1, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+		{"/test_env_var2", test_env_var2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 		{NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
 	}, NULL, 1, MUNIT_SUITE_OPTION_NONE
 };
