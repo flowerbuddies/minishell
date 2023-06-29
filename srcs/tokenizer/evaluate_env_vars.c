@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   evaluate_env_vars.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/29 17:22:43 by mfm              ###   ########.fr       */
+/*   Created: 2023/06/29 18:59:58 by mfm               #+#    #+#             */
+/*   Updated: 2023/06/29 19:18:42 by mfm              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "prompt.h"
 #include "minishell.h"
+#include "tokenizer.h"
+#include <stdlib.h>
 
-int	main(int ac, char **av, char **ev)
+void	evaluate_env_vars(t_tokenizer *tokenizer)
 {
-	(void) ac;
-	(void) av;
-	if (!init_env_vars(ev))
-		return (1); // TODO: error
-	print_vars(g_shell.vars); //TODO: remove when env_vars working properly
-	prompt();
+	t_token	*current;
+	char	*value;
+
+	current = tokenizer->tokens;
+	while (current)
+	{
+		if (current->type == ENV_VAR && current->data)
+		{
+			current->type = STRING;
+			value = get_var(g_shell.vars, current->data)->value;
+			free(current->data);
+			current->data = value;
+		}
+		current = current->next;
+	}
 }

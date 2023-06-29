@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/06/27 18:34:23 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/29 18:58:37 by mfm              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	tokenize(t_tokenizer *tokenizer)
 		if (tokenizer->errored)
 			return ;
 	}
+	evaluate_env_vars(tokenizer);
 	concat_string_tokens(tokenizer);
 	delete_space_tokens(tokenizer);
 }

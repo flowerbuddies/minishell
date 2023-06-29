@@ -1,6 +1,7 @@
 NAME := minishell
 LIBFT := libft.a
-FLAGS := -Wall -Werror -Wextra -lreadline -I libft -I srcs/tokenizer -I srcs/syntax_checker -Ofast
+INCS := -I libft -I srcs -I srcs/tokenizer -I srcs/env_var
+FLAGS := -Wall -Werror -Wextra -lreadline $(INCS) -Ofast
 DEBUG := -Wno-error -g -fsanitize=address,undefined -O0
 
 SRCS := $(addprefix srcs/,\
@@ -13,6 +14,12 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/linked_list/getter.c \
 	tokenizer/linked_list/setter.c \
 	tokenizer/tokenizer.c \
+	tokenizer/evaluate_env_vars.c \
+	tokenizer/concatenate/concat_strings.c \
+	tokenizer/concatenate/concat_spaces.c \
+	env_var/env_var.c \
+	env_var/linked_list/setter.c \
+	env_var/linked_list/getter.c \
 	tokenizer/post_process/concat_strings.c \
 	tokenizer/post_process/delete_spaces.c \
 	syntax_checker/syntax_checker.c \

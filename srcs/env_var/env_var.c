@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/29 17:22:43 by mfm              ###   ########.fr       */
+/*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
+/*   Updated: 2023/06/27 20:38:59 by mfm              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "prompt.h"
 #include "minishell.h"
+#include "libft.h"
 
-int	main(int ac, char **av, char **ev)
+bool	init_env_vars(char **ev)
 {
-	(void) ac;
-	(void) av;
-	if (!init_env_vars(ev))
-		return (1); // TODO: error
-	print_vars(g_shell.vars); //TODO: remove when env_vars working properly
-	prompt();
+	char	**splits;
+	int		len;
+
+	g_shell.vars = NULL;
+	while (*ev)
+	{
+		splits = ft_split(*ev, '=');
+		if (!splits)
+			return (false);
+		len = 0;
+		while (splits[len])
+			len++;
+		if (len == 1 || len == 2)
+			vars_append(&g_shell.vars, new_var(splits[0], splits[1]));
+		ev++;
+	}
+	return (true);
 }

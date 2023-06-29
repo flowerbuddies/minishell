@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/06/27 18:32:51 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/29 19:10:06 by mfm              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	list_print(t_token *tokens);
 
 //tokenizer.c
 void	tokenize(t_tokenizer *tokenizer);
+void	evaluate_env_vars(t_tokenizer *tokenizer);
 void	concat_string_tokens(t_tokenizer *tokenizer);
 void	delete_space_tokens(t_tokenizer *tokenizer);
 
