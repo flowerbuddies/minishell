@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setter.c                                           :+:      :+:    :+:   */
+/*   linked_list_setter.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:21 by marmulle          #+#    #+#             */
-/*   Updated: 2023/06/27 18:27:29 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/22 16:16:03 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,25 @@ void	list_append(t_tokenizer *tokenizer, t_type type, char *data)
 	current->next->type = type;
 	current->next->data = data;
 	current->next->next = NULL;
+}
+
+void	list_delete_at(t_token *tokens, int idx)
+{
+	t_token	*current;
+
+	current = list_at(tokens, idx);
+	if (current->data)
+		free(current->data);
+	if (current->next)
+	{
+		current->type = current->next->type;
+		current->next = current->next->next;
+	}
+	else
+	{
+		current->type = _NOT_SET;
+		current->next = NULL;
+	}
 }
 
 void	list_free(t_token *tokens)
