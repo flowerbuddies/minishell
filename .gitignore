@@ -1,5 +1,6 @@
 *.dSYM/
+.vscode/
 libft.a
 minishell
-.vscode/
 test
+en.subject.pdf
