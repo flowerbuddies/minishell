@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/27 19:33:38 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/29 19:38:55 by mfm              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	prompt(void)
 			printf("Error: `malloc` managed to fail.\n");
 			return ;
 		}
-		// list_print(tokenizer.tokens);
+		list_print(tokenizer.tokens); //TODO: remove when executor implemented
 		check_syntax(&tokenizer); //TODO: if false don't execute the line
 		list_free(tokenizer.tokens);
 		// TODO: this is very very likely temporary
