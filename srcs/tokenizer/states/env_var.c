@@ -3,36 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/29 17:12:04 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/26 17:40:40 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 #include "libft.h"
 #include <stdlib.h>
-#include <minishell.h>
 
 static t_state	in_env_var_state_end(t_tokenizer *tokenizer, int i)
 {
-	char	*name;
-
 	if (tokenizer->line[i] == '\'')
 	{
-		name = ft_substr(tokenizer->line,
-				tokenizer->env_start_idx, i - tokenizer->env_start_idx);
-		list_append(tokenizer, STRING, get_var(g_shell.vars, name)->value);
-		free(name);
+		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
+				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
 		return (tokenizer->str_start_idx = i, IN_RAW_STRING);
 	}
 	else if (tokenizer->line[i + 1] == '\0')
 	{
-		name = ft_substr(tokenizer->line,
-				tokenizer->env_start_idx, i - tokenizer->env_start_idx + 1);
-		list_append(tokenizer, STRING, get_var(g_shell.vars, name)->value);
-		free(name);
+		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
+				tokenizer->env_start_idx, i - tokenizer->env_start_idx + 1));
 		return (IN_DEFAULT);
 	}
 	return (IN_ENV_VAR);
@@ -40,14 +33,10 @@ static t_state	in_env_var_state_end(t_tokenizer *tokenizer, int i)
 
 t_state	in_env_var_state(t_tokenizer *tokenizer, int i)
 {
-	const char	*name = ft_substr(tokenizer->line,
-			tokenizer->env_start_idx, i - tokenizer->env_start_idx);
-	const t_var	*var = get_var(g_shell.vars, (char *) name);
-
-	free((void *) name);
 	if (tokenizer->line[i] == ' ')
 	{
-		list_append(tokenizer, STRING, var->value);
+		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
+				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
 		if (tokenizer->str_start_idx == -1)
 			return (list_append(tokenizer, SPACE, NULL), IN_DEFAULT);
 		else
@@ -55,7 +44,8 @@ t_state	in_env_var_state(t_tokenizer *tokenizer, int i)
 	}
 	else if (tokenizer->line[i] == '"')
 	{
-		list_append(tokenizer, STRING, var->value);
+		list_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
+				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
 		if (tokenizer->str_start_idx == -1)
 			return (tokenizer->str_start_idx = i, IN_STRING);
 		else
