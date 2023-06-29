@@ -14,6 +14,7 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/linked_list/getter.c \
 	tokenizer/linked_list/setter.c \
 	tokenizer/tokenizer.c \
+	tokenizer/evaluate_env_vars.c \
 	tokenizer/concatenate/concat_strings.c \
 	tokenizer/concatenate/concat_spaces.c \
 	env_var/env_var.c \
