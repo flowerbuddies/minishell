@@ -22,4 +22,3 @@ int	main(int ac, char **av, char **ev)
 	print_vars(g_shell.vars); //TODO: remove when env_vars working properly
 	prompt();
 }
-

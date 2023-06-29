@@ -20,6 +20,9 @@ SRCS := $(addprefix srcs/,\
 	env_var/env_var.c \
 	env_var/linked_list/setter.c \
 	env_var/linked_list/getter.c \
+	tokenizer/post_process/concat_strings.c \
+	tokenizer/post_process/delete_spaces.c \
+	syntax_checker/syntax_checker.c \
 )
 
 TESTS_SRCS := $(addprefix tests/,\

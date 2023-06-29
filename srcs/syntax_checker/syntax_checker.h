@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raw_string.c                                       :+:      :+:    :+:   */
+/*   syntax_checker.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/27 15:56:57 by hunam            ###   ########.fr       */
+/*   Created: 2023/06/27 17:13:01 by hunam             #+#    #+#             */
+/*   Updated: 2023/06/27 17:16:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
-#include "libft.h"
+#ifndef SYNTAX_CHECKER_H
+# define SYNTAX_CHECKER_H
 
-t_state	in_raw_string_state(t_tokenizer *tokenizer, int i)
-{
-	if (tokenizer->line[i] == '\'')
-	{
-		list_append(tokenizer, STRING, ft_substr(tokenizer->line,
-				tokenizer->str_start_idx, i - tokenizer->str_start_idx));
-		tokenizer->str_start_idx = -1;
-		return (IN_DEFAULT);
-	}
-	return (IN_RAW_STRING);
-}
+# include <stdbool.h>
+# include "tokenizer.h"
+
+bool	check_syntax(t_tokenizer *tokenizer);
+
+#endif
