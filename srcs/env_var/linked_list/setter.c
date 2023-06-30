@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/29 20:33:35 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/30 23:39:40 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ void	vars_free(t_var *var)
 {
 	if (var->next)
 		vars_free(var->next);
-	if (var->name)
-		free(var->name);
-	if (var->value)
-		free(var->value);
+	free(var->name);
+	free(var->value);
 	free(var);
 }

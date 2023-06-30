@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/29 16:34:43 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/30 23:51:49 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_var
 }					t_var;
 
 // env_var.c
-bool	init_env_vars(char **ev);
+void	init_env_vars(char **ev);
 
 // setter.c
 t_var	*new_var(char *name, char *value);
