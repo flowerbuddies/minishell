@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/30 18:45:05 by hunam            ###   ########.fr       */
+/*   Updated: 2023/06/30 23:14:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ typedef struct s_node
 t_node	*new_node(t_node *parent);
 void	construct_ast(t_token *token, t_node *out);
 void	print_ast(t_node *first);
+void	free_ast(t_node *first);
 
 #endif

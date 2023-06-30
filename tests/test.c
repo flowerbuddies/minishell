@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 16:31:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/29 23:19:01 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 00:19:08 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "test.h"
 #include "../srcs/minishell.h"
 #include "../srcs/env_var/env_var.h"
+
+void	malloc_failed(void) {}
 
 int	main(int ac, char *av[])
 {

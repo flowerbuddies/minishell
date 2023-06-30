@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/30 18:51:04 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 00:15:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	construct_ast(t_token *start, t_node *parent)
 				prev->next = NULL;
 			parent->left = new_node(parent);
 			construct_ast(start, parent->left);
+			free(current);
 			return ;
 		}
 		prev = current;
@@ -68,6 +69,7 @@ void	construct_ast(t_token *start, t_node *parent)
 				prev->next = NULL;
 			parent->left = new_node(parent);
 			construct_ast(start, parent->left);
+			free(current);
 			return ;
 		}
 		prev = current;
@@ -95,4 +97,15 @@ void	print_ast(t_node *first)
 		ft_printf("%s\n", first->data->data);
 	print_ast(first->left);
 	print_ast(first->right);
+}
+
+void	free_ast(t_node *first)
+{
+	if (!first)
+		return ;
+	free_ast(first->left);
+	free_ast(first->right);
+	if (first->data)
+		list_free(first->data);
+	free(first);
 }

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfm <mfm@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/27 20:38:59 by mfm              ###   ########.fr       */
+/*   Updated: 2023/06/30 23:57:25 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-bool	init_env_vars(char **ev)
+void	init_env_vars(char **ev)
 {
 	char	**splits;
 	int		len;
@@ -23,13 +23,16 @@ bool	init_env_vars(char **ev)
 	{
 		splits = ft_split(*ev, '=');
 		if (!splits)
-			return (false);
+			malloc_failed();
 		len = 0;
 		while (splits[len])
 			len++;
 		if (len == 1 || len == 2)
 			vars_append(&g_shell.vars, new_var(splits[0], splits[1]));
+		else
+			while (--len >= 0)
+				free(splits[len]);
+		free(splits);
 		ev++;
 	}
-	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/06/29 19:10:06 by mfm              ###   ########.fr       */
+/*   Updated: 2023/07/01 00:01:40 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_tokenizer
 	bool		errored;
 }	t_tokenizer;
 
+//TODO: rename those to `tokens_*`
 //linked_list_setter.c
 t_token	*list_new(t_tokenizer *tokenizer);
 void	list_append(t_tokenizer *tokenizer, t_type type, char *data);
