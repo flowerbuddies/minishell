@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/30 23:57:25 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:40:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_env_vars(char **ev)
 		while (splits[len])
 			len++;
 		if (len == 1 || len == 2)
-			vars_append(&g_shell.vars, new_var(splits[0], splits[1]));
+			vars_append(&g_shell.vars, vars_new(splits[0], splits[1]));
 		else
 			while (--len >= 0)
 				free(splits[len]);

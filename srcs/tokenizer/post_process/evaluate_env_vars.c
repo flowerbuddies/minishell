@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 18:59:58 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/29 23:24:12 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:36:32 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	evaluate_env_vars(t_tokenizer *tokenizer)
 		if (current->type == ENV_VAR)
 		{
 			current->type = STRING;
-			var = get_var(g_shell.vars, current->data);
+			var = vars_at(g_shell.vars, current->data);
 			free(current->data);
 			if (var)
 				current->data = ft_strdup(var->value);

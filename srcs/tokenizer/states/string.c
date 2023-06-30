@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/26 17:39:01 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:34:09 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ t_state	in_string_state(t_tokenizer *tokenizer, int i)
 {
 	if (tokenizer->line[i] == '"')
 	{
-		list_append(tokenizer, STRING, ft_substr(tokenizer->line,
+		tokens_append(tokenizer, STRING, ft_substr(tokenizer->line,
 				tokenizer->str_start_idx, i - tokenizer->str_start_idx));
 		tokenizer->str_start_idx = -1;
 		return (IN_DEFAULT);
 	}
 	else if (tokenizer->line[i] == '$')
 	{
-		list_append(tokenizer, STRING,
+		tokens_append(tokenizer, STRING,
 			ft_substr(tokenizer->line, tokenizer->str_start_idx,
 				i - tokenizer->str_start_idx));
 		tokenizer->env_start_idx = i + 1;

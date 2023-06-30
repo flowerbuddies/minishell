@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 16:31:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 00:19:08 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:40:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	malloc_failed(void) {}
 
 int	main(int ac, char *av[])
 {
-	vars_append(&g_shell.vars, new_var("TEMP", "VALUE_WOW"));
+	vars_append(&g_shell.vars, vars_new("TEMP", "VALUE_WOW"));
 	return (munit_suite_main(&tokenizer_suite, NULL, ac, av));
 }

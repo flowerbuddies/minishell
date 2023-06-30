@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:29:00 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/29 22:39:09 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:38:26 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "env_var.h"
 #include "libft.h"
 
-t_var	*get_var(t_var *vars, char *name)
+t_var	*vars_at(t_var *vars, char *name)
 {
 	while (vars)
 	{
@@ -26,16 +26,11 @@ t_var	*get_var(t_var *vars, char *name)
 	return (NULL);
 }
 
-void	print_var(t_var *var)
-{
-	ft_printf("%s=%s\n", var->name, var->value);
-}
-
-void	print_vars(t_var *vars)
+void	vars_print(t_var *vars)
 {
 	while (vars)
 	{
-		print_var(vars);
+		ft_printf("%s=%s\n", vars->name, vars->value);
 		vars = vars->next;
 	}
 }

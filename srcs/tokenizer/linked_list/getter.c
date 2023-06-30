@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list_getter.c                               :+:      :+:    :+:   */
+/*   getter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:24 by marmulle          #+#    #+#             */
-/*   Updated: 2023/06/19 19:24:59 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/07/01 01:32:32 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "tokenizer.h"
 
-t_token	*list_at(t_token *tokens, int idx)
+t_token	*tokens_at(t_token *tokens, int idx)
 {
 	while (idx--)
 		tokens = tokens->next;
 	return (tokens);
 }
 
-void	list_print(t_token *tokens)
+void	tokens_print(t_token *tokens)
 {
 	while (tokens)
 	{
