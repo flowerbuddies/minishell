@@ -6,14 +6,14 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/30 23:39:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:40:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_var.h"
 #include <stdlib.h>
 
-t_var	*new_var(char *name, char *value)
+t_var	*vars_new(char *name, char *value)
 {
 	t_var	*var;
 
@@ -48,7 +48,7 @@ void	vars_delete_at(t_var *vars, char *name)
 	t_var	*previous;
 	t_var	*current;
 
-	current = get_var(vars, name);
+	current = vars_at(vars, name);
 	if (!current)
 		return ;
 	previous = current->prev;

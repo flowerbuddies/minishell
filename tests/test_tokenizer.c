@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/29 23:25:08 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:34:14 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	tokenizer_one_test(char *line, t_type *types, char **datas, int len)
 		current = current->next;
 	}
 	assert_int(i, ==, len);
-	list_free(tokenizer.tokens);
+	tokens_free(tokenizer.tokens);
 }
 
 MunitResult	test_demo(const MunitParameter params[], void *user_data_or_fixture)

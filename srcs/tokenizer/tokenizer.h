@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/01 00:01:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:36:00 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,25 @@ typedef struct s_tokenizer
 	bool		errored;
 }	t_tokenizer;
 
-//TODO: rename those to `tokens_*`
-//linked_list_setter.c
-t_token	*list_new(t_tokenizer *tokenizer);
-void	list_append(t_tokenizer *tokenizer, t_type type, char *data);
-void	list_delete_at(t_tokenizer *tokenizer, int idx);
-void	list_free(t_token *tokens);
+//linked_list/setter.c
+t_token	*tokens_new(t_tokenizer *tokenizer);
+void	tokens_append(t_tokenizer *tokenizer, t_type type, char *data);
+void	tokens_delete_at(t_tokenizer *tokenizer, int idx);
+void	tokens_free(t_token *tokens);
 
-//linked_list_getter.c
-t_token	*list_at(t_token *tokens, int idx);
-void	list_print(t_token *tokens);
+//linked_list/getter.c
+t_token	*tokens_at(t_token *tokens, int idx);
+void	tokens_print(t_token *tokens);
 
 //tokenizer.c
 void	tokenize(t_tokenizer *tokenizer);
+
+//post_process/*
 void	evaluate_env_vars(t_tokenizer *tokenizer);
 void	concat_string_tokens(t_tokenizer *tokenizer);
 void	delete_space_tokens(t_tokenizer *tokenizer);
 
-//states.c
+//states/*
 t_state	in_default_state(t_tokenizer *tokenizer, int i);
 t_state	in_command_state(t_tokenizer *tokenizer, int i);
 t_state	in_raw_string_state(t_tokenizer *tokenizer, int i);

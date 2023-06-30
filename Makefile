@@ -1,11 +1,11 @@
 NAME := minishell
 LIBFT := libft.a
-INCS := -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor
+INCS := -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt
 FLAGS := -Wall -Werror -Wextra -lreadline $(INCS) -Ofast
 DEBUG := -Wno-error -g -fsanitize=address,undefined -O0
 
 SRCS := $(addprefix srcs/,\
-	prompt.c \
+	prompt/prompt.c \
 	tokenizer/states/command.c \
 	tokenizer/states/default.c \
 	tokenizer/states/env_var.c \

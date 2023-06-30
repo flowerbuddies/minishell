@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 00:15:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:34:11 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ void	free_ast(t_node *first)
 	free_ast(first->left);
 	free_ast(first->right);
 	if (first->data)
-		list_free(first->data);
+		tokens_free(first->data);
 	free(first);
 }

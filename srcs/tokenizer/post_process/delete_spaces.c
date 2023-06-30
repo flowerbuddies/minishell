@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 17:45:22 by mfm               #+#    #+#             */
-/*   Updated: 2023/06/27 18:59:35 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:33:59 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	delete_leading_spaces(t_tokenizer *tokenizer)
 		num_to_del++;
 	}
 	while (num_to_del--)
-		list_delete_at(tokenizer, 0);
+		tokens_delete_at(tokenizer, 0);
 	tokenizer->tokens = current;
 }
 
@@ -42,7 +42,7 @@ void	delete_space_tokens(t_tokenizer *tokenizer)
 	while (current->next)
 	{
 		if (current->next->type == SPACE)
-			list_delete_at(tokenizer, i + 1);
+			tokens_delete_at(tokenizer, i + 1);
 		else
 		{
 			current = current->next;

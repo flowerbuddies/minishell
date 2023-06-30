@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/06/29 18:58:37 by mfm              ###   ########.fr       */
+/*   Updated: 2023/07/01 01:33:31 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static void	init_tokenizer(t_tokenizer *tokenizer)
 {
 	tokenizer->errored = false;
-	tokenizer->tokens = list_new(tokenizer);
+	tokenizer->tokens = tokens_new(tokenizer);
 	if (tokenizer->errored)
 		return ;
 	tokenizer->i = -1;

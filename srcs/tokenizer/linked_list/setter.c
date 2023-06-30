@@ -6,14 +6,14 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:21 by marmulle          #+#    #+#             */
-/*   Updated: 2023/06/27 18:43:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:32:38 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "tokenizer.h"
 
-t_token	*list_new(t_tokenizer *tokenizer)
+t_token	*tokens_new(t_tokenizer *tokenizer)
 {
 	t_token	*out;
 
@@ -29,7 +29,7 @@ t_token	*list_new(t_tokenizer *tokenizer)
 	return (out);
 }
 
-void	list_append(t_tokenizer *tokenizer, t_type type, char *data)
+void	tokens_append(t_tokenizer *tokenizer, t_type type, char *data)
 {
 	t_token	*current;
 
@@ -42,7 +42,7 @@ void	list_append(t_tokenizer *tokenizer, t_type type, char *data)
 	}
 	while (current->next)
 		current = current->next;
-	current->next = list_new(tokenizer);
+	current->next = tokens_new(tokenizer);
 	if (tokenizer->errored)
 		return ;
 	current->next->type = type;
@@ -51,7 +51,7 @@ void	list_append(t_tokenizer *tokenizer, t_type type, char *data)
 }
 
 // Will intentionally segfault when trying to access illegal token
-void	list_delete_at(t_tokenizer *tokenizer, int idx)
+void	tokens_delete_at(t_tokenizer *tokenizer, int idx)
 {
 	t_token	*current;
 	t_token	*previous;
@@ -65,7 +65,7 @@ void	list_delete_at(t_tokenizer *tokenizer, int idx)
 		tokenizer->tokens = current;
 		return ;
 	}
-	previous = list_at(tokenizer->tokens, idx - 1);
+	previous = tokens_at(tokenizer->tokens, idx - 1);
 	current = previous->next;
 	if (current->data)
 		free(current->data);
@@ -73,12 +73,12 @@ void	list_delete_at(t_tokenizer *tokenizer, int idx)
 	free(current);
 }
 
-void	list_free(t_token *tokens)
+void	tokens_free(t_token *tokens)
 {
 	if (!tokens)
 		return ;
 	if (tokens->next)
-		list_free(tokens->next);
+		tokens_free(tokens->next);
 	if (tokens->data)
 		free(tokens->data);
 	free(tokens);

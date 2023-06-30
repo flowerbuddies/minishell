@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 00:17:28 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:38:26 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	main(int ac, char **av, char **ev)
 	(void) ac;
 	(void) av;
 	init_env_vars(ev);
-	print_vars(g_shell.vars); //TODO: rm
+	vars_print(g_shell.vars); //TODO: rm
 	prompt();
 }

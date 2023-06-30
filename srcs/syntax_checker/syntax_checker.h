@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:13:01 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/27 17:16:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:43:49 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include "tokenizer.h"
 
+//syntax_checker.c
 bool	check_syntax(t_tokenizer *tokenizer);
 
 #endif

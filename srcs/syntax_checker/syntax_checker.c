@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:13:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/06/27 19:58:54 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 01:28:07 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_error(char *msg, int idx, char *idx_msg)
 {
 	if (idx != -1)
 		printf("%*c^——%s\n", idx + 11, ' ', idx_msg);
-	printf("\033[31;1mSyntax Error:\033[0m %s\n", msg);
+	printf("\e[31;1mSyntax Error:\e[0m %s\n", msg);
 }
 
 static bool	is_special(t_type type)
