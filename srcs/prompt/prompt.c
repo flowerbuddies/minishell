@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 01:40:57 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 16:22:11 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	prompt(void)
 			free_ast(ast);
 		}
 		else
-			free(tokenizer.tokens);
+			(set_last_exit_status(ft_strdup("258")), free(tokenizer.tokens));
 		// TODO: rm
 		if (ft_strncmp(tokenizer.line, "exit", 4) == 0)
 		{

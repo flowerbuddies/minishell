@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/01 01:40:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 16:18:54 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	vars_delete_at(t_var *vars, char *name)
 	t_var	*previous;
 	t_var	*current;
 
-	current = vars_at(vars, name);
+	current = vars_find(vars, name);
 	if (!current)
 		return ;
 	previous = current->prev;

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/01 01:40:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/01 16:20:56 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ void	init_env_vars(char **ev)
 		free(splits);
 		ev++;
 	}
+	vars_append(&g_shell.vars, vars_new(ft_strdup("?"), ft_strdup("0")));
+}
+
+void	set_last_exit_status(char *value)
+{
+	t_var	*var;
+
+	var = vars_find(g_shell.vars, "?");
+	free(var->value);
+	var->value = value;
 }
