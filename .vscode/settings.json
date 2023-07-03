@@ -1,3 +1,13 @@
 {
-    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+    "files.associations": {
+        "tokenizer.h": "c",
+        "env_var.h": "c",
+        "stdbool.h": "c",
+        "executor.h": "c",
+        "tree_constructor.h": "c",
+        "minishell.h": "c",
+        "libft.h": "c",
+        "string.h": "c"
+    }
 }

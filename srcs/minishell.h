@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:10:32 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/02 18:51:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/03 18:38:27 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 struct s_shell
 {
 	t_var	*vars;
-	char	**raw_vars;
+	int		vars_len;
+	int		pipe_ends[2];
 }			g_shell;
 
-void	malloc_failed(void);
+void	action_failed(char *action);
 
 #endif

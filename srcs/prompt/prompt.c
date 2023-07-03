@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/02 18:32:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/03 17:07:25 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	prompt(void)
 		tokenizer.line = readline("MiniHell $ ");
 		tokenize(&tokenizer);
 		if (tokenizer.errored)
-			malloc_failed();
+			action_failed("malloc");
 		tokens_print(tokenizer.tokens); //TODO: rm
 		if (check_syntax(&tokenizer))
 		{

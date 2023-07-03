@@ -23,6 +23,7 @@ SRCS := $(addprefix srcs/,\
 	syntax_checker/syntax_checker.c \
 	tree_constructor/tree_constructor.c \
 	executor/executor.c \
+	executor/encoding.c \
 )
 
 TESTS_SRCS := $(addprefix tests/,\
