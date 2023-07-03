@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 16:22:11 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/02 18:32:16 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "tree_constructor.h"
 #include "env_var.h"
 #include "minishell.h"
+#include "executor.h"
 
 void	prompt(void)
 {
@@ -34,6 +35,7 @@ void	prompt(void)
 			ast = new_node(NULL);
 			construct_ast(tokenizer.tokens, ast);
 			print_ast(ast); //TODO: rm
+			execute(ast);
 			free_ast(ast);
 		}
 		else

@@ -1,6 +1,6 @@
 NAME := minishell
 LIBFT := libft.a
-INCS := -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt
+INCS := -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor
 FLAGS := -Wall -Werror -Wextra -lreadline $(INCS) -Ofast
 DEBUG := -Wno-error -g -fsanitize=address,undefined -O0
 
@@ -22,6 +22,7 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/post_process/delete_spaces.c \
 	syntax_checker/syntax_checker.c \
 	tree_constructor/tree_constructor.c \
+	executor/executor.c \
 )
 
 TESTS_SRCS := $(addprefix tests/,\

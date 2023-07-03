@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/01 16:20:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/02 18:51:56 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_env_vars(char **ev)
 	char	**splits;
 	int		len;
 
+	g_shell.raw_vars = ev;
 	g_shell.vars = NULL;
 	while (*ev)
 	{
