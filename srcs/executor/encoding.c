@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   encoding.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:13:39 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/03 19:00:04 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/07/04 00:04:01 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ char	**decode(int read_end)
 	{
 		if (read(read_end, &elem_len, sizeof(int)) == -1)
 			action_failed("read");
+		array[i] = malloc(sizeof(char) * (elem_len + 1));
+		if (!array[i])
+			action_failed("malloc");
 		if (read(read_end, array[i], elem_len) == -1)
 			action_failed("read");
+		array[i][elem_len] = '\0';
 	}
 	return (array);
 }
