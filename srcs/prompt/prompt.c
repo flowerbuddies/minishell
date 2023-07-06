@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/03 22:57:12 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/05 17:23:16 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	prompt(void)
 	while (42)
 	{
 		tokenizer.line = readline("MiniHell $ ");
+		if (!tokenizer.line[0])
+			continue ;
 		tokenize(&tokenizer);
 		if (tokenizer.errored)
 			action_failed("malloc");
@@ -35,6 +37,9 @@ void	prompt(void)
 			construct_ast(tokenizer.tokens, ast);
 			// print_ast(ast); //TODO: rm
 			execute(ast);
+			// printf("a lot of a\n");
+			rl_replace_line("aaaaaaaaaaaaaaaaaaaaaaaaa", 0);
+			rl_redisplay();
 			free_ast(ast);
 		}
 		else
@@ -46,8 +51,7 @@ void	prompt(void)
 			vars_free(g_shell.vars);
 			exit(0);
 		}
-		if (tokenizer.line[0])
-			add_history(tokenizer.line);
+		add_history(tokenizer.line);
 		free(tokenizer.line);
 	}
 }

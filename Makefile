@@ -1,7 +1,7 @@
 NAME := minishell
 LIBFT := libft.a
-INCS := -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor
-FLAGS := -Wall -Werror -Wextra -lreadline $(INCS) -Ofast
+INCS := -I /opt/homebrew/opt/readline/include -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor
+FLAGS := -Wall -Werror -Wextra -L/opt/homebrew/opt/readline/lib -lreadline $(INCS) -Ofast
 DEBUG := -Wno-error -g -fsanitize=address,undefined -O0
 
 SRCS := $(addprefix srcs/,\
@@ -53,7 +53,7 @@ re: fclean all
 
 debug: fclean
 	@echo "Compiling debug..."
-	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
+	@cc $(DEBUG) $(LIBFT) $(SRCS) $(FLAGS) srcs/minishell.c -o $(NAME)
 	@./$(NAME)
 
 debug-leaks:

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 01:34:05 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/04 23:40:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static t_state	in_default_state_end(t_tokenizer *tokenizer, int i)
 {
 	if (tokenizer->line[i] == ' ')
-		return (tokens_append(tokenizer, SPACE, NULL), IN_DEFAULT);
+		return (tokens_append(tokenizer, SPC, NULL), IN_DEFAULT);
 	else if (tokenizer->line[i] == '|')
 		return (tokens_append(tokenizer, PIPE, NULL), IN_DEFAULT);
 	else if (tokenizer->line[i] == '\'')

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:24 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/01 01:32:32 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/04 23:40:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	tokens_print(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == SPACE)
+		if (tokens->type == SPC)
 			printf("sp ");
 		else if (tokens->type == ENV_VAR)
 			printf("$%s ", tokens->data);
