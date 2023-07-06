@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 16:22:11 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/06 18:00:13 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "tree_constructor.h"
 #include "env_var.h"
 #include "minishell.h"
+#include "executor.h"
 
 void	prompt(void)
 {
@@ -25,15 +26,17 @@ void	prompt(void)
 	while (42)
 	{
 		tokenizer.line = readline("MiniHell $ ");
+		if (!tokenizer.line[0])
+			continue ;
 		tokenize(&tokenizer);
 		if (tokenizer.errored)
-			malloc_failed();
-		tokens_print(tokenizer.tokens); //TODO: rm
+			action_failed("malloc");
 		if (check_syntax(&tokenizer))
 		{
 			ast = new_node(NULL);
 			construct_ast(tokenizer.tokens, ast);
-			print_ast(ast); //TODO: rm
+			// print_ast(ast); //TODO: rm
+			execute(ast);
 			free_ast(ast);
 		}
 		else
@@ -45,8 +48,7 @@ void	prompt(void)
 			vars_free(g_shell.vars);
 			exit(0);
 		}
-		if (tokenizer.line[0])
-			add_history(tokenizer.line);
+		add_history(tokenizer.line);
 		free(tokenizer.line);
 	}
 }

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/01 16:18:54 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/03 17:46:11 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "env_var.h"
 #include <stdlib.h>
 
@@ -31,6 +32,7 @@ void	vars_append(t_var **vars, t_var *var)
 {
 	t_var	*current;
 
+	g_shell.vars_len++;
 	if (*vars == NULL)
 	{
 		*vars = var;
@@ -51,6 +53,7 @@ void	vars_delete_at(t_var *vars, char *name)
 	current = vars_find(vars, name);
 	if (!current)
 		return ;
+	g_shell.vars_len--;
 	previous = current->prev;
 	previous->next = current->next;
 	if (current->name)

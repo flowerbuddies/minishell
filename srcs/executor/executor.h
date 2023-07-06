@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 19:10:32 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/06 17:48:02 by hunam            ###   ########.fr       */
+/*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
+/*   Updated: 2023/07/06 17:39:10 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
 
-# include "env_var.h"
-# include <unistd.h>
+# include "tree_constructor.h"
 
-struct s_shell
-{
-	t_var	*vars;
-	int		vars_len;
-}			g_shell;
+// executor.c
+void	execute(t_node *ast);
+void	execute_command(t_token *command);
+void	child_main(int comm[2]);
 
-void	action_failed(char *action);
+// encoding.c
+void	encode(int write_end, t_token *argv);
+char	**decode(int read_end);
 
 #endif

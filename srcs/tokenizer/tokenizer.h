@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/01 01:36:00 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/04 23:40:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_type
 	HEREDOC,
 	REDIR_OUT,
 	REDIR_OUT_APPEND,
-	SPACE,
+	SPC,
 	PIPE,
 	STRING,
 	ENV_VAR,
