@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/05 17:23:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/06 18:00:13 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ void	prompt(void)
 			construct_ast(tokenizer.tokens, ast);
 			// print_ast(ast); //TODO: rm
 			execute(ast);
-			// printf("a lot of a\n");
-			rl_replace_line("aaaaaaaaaaaaaaaaaaaaaaaaa", 0);
-			rl_redisplay();
 			free_ast(ast);
 		}
 		else
