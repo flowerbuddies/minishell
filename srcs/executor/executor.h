@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/03 18:45:01 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:39:10 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // executor.c
 void	execute(t_node *ast);
 void	execute_command(t_token *command);
-void	child_main(void);
+void	child_main(int comm[2]);
 
 // encoding.c
 void	encode(int write_end, t_token *argv);
