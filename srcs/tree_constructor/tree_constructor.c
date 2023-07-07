@@ -6,13 +6,13 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 01:34:11 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/08 00:07:54 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tree_constructor.h"
 #include "tokenizer.h"
-#include "libft.h" //TODO: rm
+#include "libft.h"
 
 t_node	*new_node(t_node *parent)
 {
@@ -29,7 +29,6 @@ t_node	*new_node(t_node *parent)
 	return (out);
 }
 
-//TODO: maybe pass `t_token *tokens` instead
 void	construct_ast(t_token *start, t_node *parent)
 {
 	t_token	*prev;
