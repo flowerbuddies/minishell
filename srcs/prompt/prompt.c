@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 20:05:04 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/08 00:10:51 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	prompt(void)
 			continue ;
 		tokenize(&tokenizer);
 		if (tokenizer.errored)
-			action_failed("malloc");
+			action_failed("tokenize's mallocs");
 		if (check_syntax(&tokenizer))
 		{
 			ast = new_node(NULL);

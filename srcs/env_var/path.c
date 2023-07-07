@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 18:20:31 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/08 00:10:22 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*find_cmd_in_path(char *cmd)
 	char		*cmd_path;
 
 	if (!dirs)
-		action_failed("malloc");
+		action_failed("ft_split");
 	i = -1;
 	while (dirs[++i])
 	{

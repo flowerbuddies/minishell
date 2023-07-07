@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/08 00:06:37 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/08 00:15:09 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "executor.h"
 #include <unistd.h>
 #include <errno.h>
+#include <string.h>
 
 void	action_failed(char *action)
 {

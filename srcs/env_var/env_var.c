@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/07 20:05:04 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/08 00:10:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_env_vars(char **ev)
 	{
 		splits = ft_split(*ev, '=');
 		if (!splits)
-			action_failed("malloc");
+			action_failed("ft_split");
 		len = 0;
 		while (splits[len])
 			len++;
