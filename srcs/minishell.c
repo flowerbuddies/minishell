@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/06 17:30:12 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/08 00:06:37 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "minishell.h"
 #include "executor.h"
 #include <unistd.h>
+#include <errno.h>
 
-//TODO: use errno to indicate the error, probably strerror or perror too
 void	action_failed(char *action)
 {
-	ft_printf("\e[31;1mError\e[0m: \e[4m%s\e[0m failed\n", action);
+	printf("\e[31;1mError\e[0m: \e[4m%s\e[0m failed. %s\n", action, strerror(errno));
 	exit(1);
 }
 
