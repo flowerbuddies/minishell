@@ -6,13 +6,14 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 01:53:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 20:15:53 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "env_var.h"
+#include "minishell.h"
 #include "libft.h"
-#include <stdlib.h>
 
 bool	is_builtin(const char *cmd)
 {
@@ -30,8 +31,18 @@ bool	is_builtin(const char *cmd)
 	return (false);
 }
 
-void	execute_builtin(const char *cmd)
+void	execute_builtin(t_token *cmd)
 {
-	//TODO
-	(void) cmd;
+	if (ft_strncmp(cmd->data, "echo", 4) == 0)
+		echo(cmd->next);
+	else if (ft_strncmp(cmd->data, "cd", 2) == 0)
+		cd(cmd->next);
+	else if (ft_strncmp(cmd->data, "pwd", 3) == 0)
+		pwd();
+	else if (ft_strncmp(cmd->data, "export", 6) == 0)
+		export(cmd->next);
+	else if (ft_strncmp(cmd->data, "unset", 5) == 0)
+		unset(cmd->next);
+	else if (ft_strncmp(cmd->data, "env", 3) == 0)
+		env(cmd->next);
 }

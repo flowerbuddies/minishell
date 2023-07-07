@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/06 18:41:27 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 20:05:04 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,13 @@ void	prompt(void)
 		{
 			ast = new_node(NULL);
 			construct_ast(tokenizer.tokens, ast);
-			// print_ast(ast); //TODO: rm
 			execute(ast);
 			free_ast(ast);
 		}
 		else
-			(set_last_exit_status(syntax_error), free(tokenizer.tokens));
-		// TODO: rm
+			(set_exit_status(syntax_error), free(tokenizer.tokens));
 		if (ft_strncmp(tokenizer.line, "exit", 4) == 0)
-		{
-			free(tokenizer.line);
-			vars_free(g_shell.vars);
-			exit(0);
-		}
+			(free(tokenizer.line), vars_free(g_shell.vars), exit(0));
 		add_history(tokenizer.line);
 		free(tokenizer.line);
 	}

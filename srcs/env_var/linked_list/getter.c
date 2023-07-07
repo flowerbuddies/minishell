@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:29:00 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/01 16:18:54 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 20:05:08 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	vars_print(t_var *vars)
 {
 	while (vars)
 	{
-		ft_printf("%s=%s\n", vars->name, vars->value);
+		if (ft_strlen(vars->name) != 1 && ft_strncmp(vars->name, "?", 1))
+			ft_printf("%s=%s\n", vars->name, vars->value);
 		vars = vars->next;
 	}
 }

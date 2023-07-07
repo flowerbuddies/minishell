@@ -31,6 +31,8 @@ SRCS := $(addprefix srcs/,\
 	executor/decode.c \
 	executor/path.c \
 	builtin/builtin.c \
+	builtin/echo_cd_pwd.c \
+	builtin/export_unset_env.c \
 )
 
 TESTS_SRCS := $(addprefix tests/,\
