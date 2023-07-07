@@ -13,6 +13,7 @@
     "libft.h": "c",
     "string.h": "c",
     "__locale": "c",
-    "ios": "c"
+    "ios": "c",
+    "ostream": "c"
   }
 }

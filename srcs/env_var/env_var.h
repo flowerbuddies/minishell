@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/07 17:52:08 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 20:05:04 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 typedef enum e_exit_status
 {
 	success = 0,
+	failure = 1,
+	invalid_usage = 2,
 	not_found = 127,
 	not_executable = 126,
 	syntax_error = 258
@@ -33,7 +35,7 @@ typedef struct s_var
 
 //env_var.c
 void	init_env_vars(char **ev);
-void	set_last_exit_status(t_exit_status status);
+void	set_exit_status(t_exit_status status);
 
 //linked_list/setter.c
 t_var	*vars_new(char *name, char *value);

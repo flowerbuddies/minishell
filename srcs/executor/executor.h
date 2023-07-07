@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 17:51:48 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:37:06 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char	*decode_string(int read_end);
 char	**decode_array(int read_end);
 
 //path.c
-char	*get_command_path(char *cmd);
+char	*get_command_path(t_token *cmd);
 
 #endif

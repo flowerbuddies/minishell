@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 18:20:10 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:36:57 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	execute(t_node *ast)
 	execute_command(ast->data);
 }
 
-void	execute_command(t_token *command)
+void	execute_command(t_token *cmd)
 {
 	int			status_code;
 	pid_t		pid;
 	int			comm[2];
-	const char	*path = get_command_path(command->data);
+	const char	*path = get_command_path(cmd);
 
 	if (!path)
 		return ;
@@ -41,7 +41,7 @@ void	execute_command(t_token *command)
 		child_main(comm);
 	else
 	{
-		encode(comm[1], (char *) path, command);
+		encode(comm[1], (char *) path, cmd);
 		free((char *) path);
 		waitpid(pid, &status_code, WUNTRACED); //TODO: make sure WUNTRACED is necessary, see man waitpid for maybe interesting macros
 	}
