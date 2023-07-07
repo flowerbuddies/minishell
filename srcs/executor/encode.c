@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   encoding.c                                         :+:      :+:    :+:   */
+/*   encode.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:13:39 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/04 00:04:01 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/06 19:10:07 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,20 @@
 #include "tokenizer.h"
 #include "libft.h"
 
-char	**decode(int read_end)
+static void	encode_string(int write_end, char *string)
 {
-	char	**array;
-	int		array_len;
-	int		elem_len;
-	int		i;
+	int	string_len;
 
-	if (read(read_end, &array_len, sizeof(int)) == -1)
-		action_failed("read");
-	array = malloc(sizeof(char *) * (array_len + 1));
-	if (!array)
-		action_failed("malloc");
-	array[array_len] = NULL;
-	i = -1;
-	while (++i < array_len)
-	{
-		if (read(read_end, &elem_len, sizeof(int)) == -1)
-			action_failed("read");
-		array[i] = malloc(sizeof(char) * (elem_len + 1));
-		if (!array[i])
-			action_failed("malloc");
-		if (read(read_end, array[i], elem_len) == -1)
-			action_failed("read");
-		array[i][elem_len] = '\0';
-	}
-	return (array);
+	string_len = ft_strlen(string);
+	if (write(write_end, &string_len, sizeof(int)) == -1)
+		action_failed("write");
+	if (write(write_end, string, string_len) == -1)
+		action_failed("write");
 }
 
 static void	encode_argv(int write_end, t_token *argv)
 {
 	int		argc;
-	int		data_len;
 	t_token	*current;
 
 	argc = 0;
@@ -59,11 +41,7 @@ static void	encode_argv(int write_end, t_token *argv)
 		action_failed("write");
 	while (argv)
 	{
-		data_len = ft_strlen(argv->data);
-		if (write(write_end, &data_len, sizeof(int)) == -1)
-			action_failed("write");
-		if (write(write_end, argv->data, data_len) == -1)
-			action_failed("write");
+		encode_string(write_end, argv->data);
 		argv = argv->next;
 	}
 }
@@ -97,8 +75,9 @@ static void	encode_envp(int write_end)
 	}
 }
 
-void	encode(int write_end, t_token *argv)
+void	encode(int write_end, char *path, t_token *argv)
 {
+	encode_string(write_end, path);
 	encode_argv(write_end, argv);
 	encode_envp(write_end);
 }

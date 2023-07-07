@@ -1,7 +1,7 @@
 NAME := minishell
 LIBFT := libft.a
 BREW := $(shell test -d /opt/homebrew && echo /opt/homebrew || echo ~/.brew)
-INCS := -I $(BREW)/opt/readline/include -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor
+INCS := -I $(BREW)/opt/readline/include -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor -I srcs/builtin
 LINK := -L $(BREW)/opt/readline/lib -lreadline
 FLAGS := -Wall -Werror -Wextra $(LINK) $(INCS) -Ofast
 DEBUG := -Wno-error -g -fsanitize=address,undefined -O0
@@ -26,7 +26,10 @@ SRCS := $(addprefix srcs/,\
 	syntax_checker/syntax_checker.c \
 	tree_constructor/tree_constructor.c \
 	executor/executor.c \
-	executor/encoding.c \
+	executor/encode.c \
+	executor/decode.c \
+	executor/path.c \
+	builtin/builtin.c \
 )
 
 TESTS_SRCS := $(addprefix tests/,\
@@ -55,9 +58,8 @@ fclean: clean
 re: fclean all
 
 debug: fclean
-	echo $(BREW)
 	@echo "Compiling debug..."
-	@cc $(DEBUG) $(LIBFT) $(SRCS) $(FLAGS) srcs/minishell.c -o $(NAME)
+	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
 	@./$(NAME)
 
 debug-leaks:

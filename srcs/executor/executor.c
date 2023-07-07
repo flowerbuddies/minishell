@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/06 17:51:02 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 17:28:49 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include "libft.h"
+#include "builtin.h"
 
 	// if (ast->type == PIPE)
 	// {
@@ -30,15 +34,52 @@ void	execute(t_node *ast)
 
 void	execute_command(t_token *command)
 {
-	int		status_code;
-	pid_t	pid;
-	int		comm[2];
+	int			status_code;
+	pid_t		pid;
+	int			comm[2];
+	char		*path;
+	struct stat	path_stat;
 
-	//TODO: here
-	// if starts with /, check existence and permissions, and exec
-	// else if it's a builtin, and exec
-	// else check in the PATH dirs, check permissions, and exec
-	// TODO: for PATH looking, is it the first match found or the last match?
+	if (ft_strchr(command->data, '/'))
+	{
+		if (access(command->data, F_OK) == -1)
+		{
+			printf("\e[31;1mError:\e[0m command `%s` not found\n", command->data);
+			set_last_exit_status(not_found);
+			return ;
+		}
+		else if (access(command->data, X_OK) == -1)
+		{
+			printf("\e[31;1mError:\e[0m permission denied on `%s`\n",
+				command->data);
+			set_last_exit_status(not_executable);
+			return ;
+		}
+		else
+		{
+			if (stat(command->data, &path_stat) == -1)
+				action_failed("stat");
+			if (!S_ISREG(path_stat.st_mode))
+			{
+				printf("\e[31;1mError:\e[0m `%s` is not a file\n", command->data);
+				set_last_exit_status(not_executable);
+				return ;
+			}
+			path = ft_strdup(command->data);
+		}
+	}
+	else if (is_builtin(command->data))
+		return (execute_builtin(command->data));
+	else
+	{
+		path = find_cmd_in_path(command->data);
+		if (!path)
+		{
+			printf("\e[31;1mError:\e[0m command `%s` not found\n", command->data);
+			set_last_exit_status(not_found);
+			return ;
+		}
+	}
 	if (pipe(comm) == -1)
 		action_failed("pipe");
 	pid = fork();
@@ -48,19 +89,15 @@ void	execute_command(t_token *command)
 		child_main(comm);
 	else
 	{
-		encode(comm[1], command);
+		encode(comm[1], path, command);
+		free(path);
 		waitpid(pid, &status_code, WUNTRACED); //TODO: make sure WUNTRACED is necessary, see man waitpid for maybe interesting macros
 	}
 }
 
 void	child_main(int comm[2])
 {
-	char	**argv;
-	char	**envp;
-
-	argv = decode(comm[0]);
-	envp = decode(comm[0]);
-	if (execve(argv[0], argv, envp) == -1)
+	if (execve(decode_string(comm[0]), decode_array(comm[0]),
+			decode_array(comm[0])) == -1)
 		action_failed("execve");
-	// TODO: free?
 }

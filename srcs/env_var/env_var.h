@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/01 16:20:53 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/06 18:40:03 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define ENV_VAR_H
 
 # include <stdbool.h>
+
+typedef enum e_exit_status
+{
+	success = 0,
+	not_found = 127,
+	not_executable = 126,
+	syntax_error = 258
+}	t_exit_status;
 
 typedef struct s_var
 {
@@ -25,7 +33,7 @@ typedef struct s_var
 
 //env_var.c
 void	init_env_vars(char **ev);
-void	set_last_exit_status(char *value);
+void	set_last_exit_status(t_exit_status status);
 
 //linked_list/setter.c
 t_var	*vars_new(char *name, char *value);
