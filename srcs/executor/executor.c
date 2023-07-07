@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/06 17:51:02 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:20:10 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdio.h>
+#include "libft.h"
 
-	// if (ast->type == PIPE)
-	// {
-	// 	execute(ast->left);
-	// 	execute(ast->right);
-	// }
-	// if (ast->type == STRING)
-	// 	printf("->%s\n", ast->data->data);
 void	execute(t_node *ast)
 {
 	execute_command(ast->data);
@@ -30,15 +25,13 @@ void	execute(t_node *ast)
 
 void	execute_command(t_token *command)
 {
-	int		status_code;
-	pid_t	pid;
-	int		comm[2];
+	int			status_code;
+	pid_t		pid;
+	int			comm[2];
+	const char	*path = get_command_path(command->data);
 
-	//TODO: here
-	// if starts with /, check existence and permissions, and exec
-	// else if it's a builtin, and exec
-	// else check in the PATH dirs, check permissions, and exec
-	// TODO: for PATH looking, is it the first match found or the last match?
+	if (!path)
+		return ;
 	if (pipe(comm) == -1)
 		action_failed("pipe");
 	pid = fork();
@@ -48,19 +41,15 @@ void	execute_command(t_token *command)
 		child_main(comm);
 	else
 	{
-		encode(comm[1], command);
+		encode(comm[1], (char *) path, command);
+		free((char *) path);
 		waitpid(pid, &status_code, WUNTRACED); //TODO: make sure WUNTRACED is necessary, see man waitpid for maybe interesting macros
 	}
 }
 
 void	child_main(int comm[2])
 {
-	char	**argv;
-	char	**envp;
-
-	argv = decode(comm[0]);
-	envp = decode(comm[0]);
-	if (execve(argv[0], argv, envp) == -1)
+	if (execve(decode_string(comm[0]), decode_array(comm[0]),
+			decode_array(comm[0])) == -1)
 		action_failed("execve");
-	// TODO: free?
 }

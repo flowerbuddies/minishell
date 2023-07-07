@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/06 18:00:13 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:41:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	prompt(void)
 			free_ast(ast);
 		}
 		else
-			(set_last_exit_status(ft_strdup("258")), free(tokenizer.tokens));
+			(set_last_exit_status(syntax_error), free(tokenizer.tokens));
 		// TODO: rm
 		if (ft_strncmp(tokenizer.line, "exit", 4) == 0)
 		{
