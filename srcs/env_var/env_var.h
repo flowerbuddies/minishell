@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/06 18:40:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 17:52:08 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,8 @@ void	vars_free(t_var *var);
 //linked_list/getter.c
 t_var	*vars_find(t_var *list, char *name);
 void	vars_print(t_var *vars);
+
+//path.c
+char	*find_cmd_in_path(char *cmd);
 
 #endif

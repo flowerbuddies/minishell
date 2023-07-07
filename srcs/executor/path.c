@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 16:13:12 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/07 18:19:55 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,76 +14,47 @@
 #include "minishell.h"
 #include "env_var.h"
 #include <dirent.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include "builtin.h"
 
-static void	free_2d(const char **obj)
+static char	*direct_path(char *cmd)
 {
-	int	i;
+	struct stat	path_stat;
 
-	i = 0;
-	while (obj[i])
-		free((char *)obj[i++]);
-	free(obj);
-}
-
-static char	*strjoin3(char const *s1, char const *s2, char const *s3)
-{
-	char	*out;
-	size_t	i;
-	size_t	j;
-
-	if (!s1 || !s2 || !s3)
-		return (NULL);
-	out = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3)
-				+ 1));
-	if (out == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[j])
-		out[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		out[i++] = s2[j++];
-	j = 0;
-	while (s3[j])
-		out[i++] = s3[j++];
-	out[i] = '\0';
-	return (out);
-}
-
-char	*find_cmd_in_path(char *cmd)
-{
-	const char		**dirs = (const char **)
-		ft_split(vars_find(g_shell.vars, "PATH")->value, ':');
-	int				i;
-	DIR				*dir;
-	struct dirent	*dir_entry;
-	const int		cmd_len = ft_strlen(cmd);
-	char			*out;
-
-	if (!dirs)
-		action_failed("malloc");
-	i = -1;
-	while (dirs[++i])
+	if (access(cmd, F_OK) == -1)
 	{
-		dir = opendir(dirs[i]);
-		if (!dir)
-			continue ;
-		(readdir(dir), readdir(dir));
-		dir_entry = readdir(dir);
-		while (dir_entry)
-		{
-			// ft_printf("current dir: %s\n", dir_entry->d_name);
-			if (cmd_len == dir_entry->d_namlen
-				&& ft_strncmp(cmd, dir_entry->d_name, cmd_len) == 0)
-			{
-				out = strjoin3(dirs[i], "/", cmd);
-				// ft_printf("path found: %s\n", out);
-				return (free_2d(dirs), closedir(dir), out); //TODO: free dir_entry?
-			}
-			dir_entry = readdir(dir);
-		}
-		closedir(dir);
+		printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd);
+		return (set_last_exit_status(not_found), NULL);
 	}
-	return (free_2d(dirs), NULL);
+	if (access(cmd, X_OK) == -1)
+	{
+		printf("\e[31;1mError:\e[0m permission denied on `%s`\n",
+			cmd);
+		return (set_last_exit_status(not_executable), NULL);
+	}
+	if (stat(cmd, &path_stat) == -1)
+		action_failed("stat");
+	if (!S_ISREG(path_stat.st_mode))
+	{
+		printf("\e[31;1mError:\e[0m `%s` is not a file\n", cmd);
+		return (set_last_exit_status(not_executable), NULL);
+	}
+	return (ft_strdup(cmd));
+}
+
+char	*get_command_path(char *cmd)
+{
+	char	*tmp;
+
+	if (ft_strchr(cmd, '/'))
+		return (direct_path(cmd));
+	if (is_builtin(cmd))
+		return (execute_builtin(cmd), NULL);
+	tmp = find_cmd_in_path(cmd);
+	if (tmp)
+		return (tmp);
+	printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd);
+	set_last_exit_status(not_found);
+	return (NULL);
 }

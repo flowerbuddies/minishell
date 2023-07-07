@@ -18,6 +18,7 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/linked_list/setter.c \
 	tokenizer/tokenizer.c \
 	env_var/env_var.c \
+	env_var/path.c \
 	env_var/linked_list/setter.c \
 	env_var/linked_list/getter.c \
 	tokenizer/post_process/evaluate_env_vars.c \
