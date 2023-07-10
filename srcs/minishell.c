@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/08 00:15:09 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 18:10:37 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
+#include "signals.h"
 
 void	action_failed(char *action)
 {
@@ -23,10 +24,19 @@ void	action_failed(char *action)
 	exit(1);
 }
 
+bool	streq(const char *s1, const char *s2)
+{
+	const int	s1_len = ft_strlen(s1);
+
+	return (s1_len == (int)ft_strlen(s2) && ft_strncmp(s1, s2, s1_len) == 0);
+}
+
 int	main(int ac, char **av, char **ev)
 {
 	(void) ac;
 	(void) av;
+	g_shell.exit_status = 0;
 	init_env_vars(ev);
+	init_signals();
 	prompt();
 }

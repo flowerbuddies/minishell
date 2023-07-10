@@ -1,7 +1,7 @@
 NAME := minishell
 LIBFT := libft.a
 BREW := $(shell test -d /opt/homebrew && echo /opt/homebrew || echo ~/.brew)
-INCS := -I $(BREW)/opt/readline/include -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor -I srcs/builtin
+INCS := -I $(BREW)/opt/readline/include -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor -I srcs/builtin -I srcs/signals
 LINK := -L $(BREW)/opt/readline/lib -lreadline
 FLAGS := -Wall -Werror -Wextra $(LINK) $(INCS) -Ofast
 DEBUG := -Wno-error -g -fsanitize=address,undefined -O0
@@ -33,6 +33,7 @@ SRCS := $(addprefix srcs/,\
 	builtin/builtin.c \
 	builtin/echo_cd_pwd.c \
 	builtin/export_unset_env.c \
+	signals/signals.c \
 )
 
 TESTS_SRCS := $(addprefix tests/,\

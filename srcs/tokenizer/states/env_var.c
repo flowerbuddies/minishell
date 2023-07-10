@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 01:34:07 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 17:48:55 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ t_state	in_env_var_state(t_tokenizer *tokenizer, int i)
 	if (tokenizer->line[i] == '"')
 	{
 		if (i - tokenizer->env_start_idx == 0)
-			return (tokens_append(tokenizer, STRING, ft_strdup("$")), IN_DEFAULT);
+			return (tokens_append(tokenizer, STRING, ft_strdup("$")),
+				IN_DEFAULT);
 		tokens_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
 		return (tokenizer->str_start_idx = -1, IN_DEFAULT);
@@ -40,7 +41,8 @@ t_state	in_env_var_state(t_tokenizer *tokenizer, int i)
 		|| tokenizer->line[i] == '\'' || tokenizer->line[i] == ' ')
 	{
 		if (i - tokenizer->env_start_idx == 0)
-			return (tokens_append(tokenizer, STRING, ft_strdup("$")), IN_DEFAULT);
+			return (tokens_append(tokenizer, STRING, ft_strdup("$")),
+				IN_DEFAULT);
 		tokens_append(tokenizer, ENV_VAR, ft_substr(tokenizer->line,
 				tokenizer->env_start_idx, i - tokenizer->env_start_idx));
 		if (tokenizer->str_start_idx != -1)

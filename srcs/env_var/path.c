@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/08 00:10:22 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 18:07:15 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static char	*find_cmd_in_dir(const char *dir_name, char *cmd)
 {
 	DIR				*dir;
 	struct dirent	*dir_entry;
-	const int		cmd_len = ft_strlen(cmd);
 
 	dir = opendir(dir_name);
 	if (!dir)
@@ -67,8 +66,7 @@ static char	*find_cmd_in_dir(const char *dir_name, char *cmd)
 	dir_entry = readdir(dir);
 	while (dir_entry)
 	{
-		if (cmd_len == dir_entry->d_namlen
-			&& ft_strncmp(cmd, dir_entry->d_name, cmd_len) == 0)
+		if (streq(cmd, dir_entry->d_name))
 			return (closedir(dir), strjoin3(dir_name, "/", cmd));
 		dir_entry = readdir(dir);
 	}

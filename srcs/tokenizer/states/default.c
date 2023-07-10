@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 21:27:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/08 00:07:13 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 17:45:35 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_state	in_default_state(t_tokenizer *tokenizer, int i)
 	else if (tokenizer->line[i] == '>')
 	{
 		if (i > 0 && tokenizer->line[i - 1] == '>')
-			return (tokens_append(tokenizer, REDIR_OUT_APPEND, NULL), IN_DEFAULT);
+			return (tokens_append(tokenizer, REDIR_OUT_APPEND, NULL),
+				IN_DEFAULT);
 		else if (tokenizer->line[i + 1] != '>')
 			return (tokens_append(tokenizer, REDIR_OUT, NULL), IN_DEFAULT);
 		else
