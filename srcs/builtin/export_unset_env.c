@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 20:16:10 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 18:40:15 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	export(t_token *cmd)
 
 	if (!cmd)
 		return (write(1, "\e[31;1mError:\e[0m missing an argument\n", 38),
-			set_exit_status(invalid_usage));
+			g_shell.exit_status = invalid_usage, free(NULL));
 	if (!ft_strchr(cmd->data, '='))
 		return ;
 	parts = ft_split(cmd->data, '=');
@@ -42,7 +42,7 @@ void	export(t_token *cmd)
 	parts_len = array_len(parts);
 	if (parts_len != 1 && parts_len != 2)
 		return (write(1, "\e[31;1mError:\e[0m incorrect usage\n", 34),
-			set_exit_status(invalid_usage));
+			g_shell.exit_status = invalid_usage, free(NULL)); //TODO: maybe support environment variables with an equal sign
 	if (vars_find(g_shell.vars, parts[0]))
 		vars_delete_at(g_shell.vars, parts[0]);
 	if (parts_len == 1)
@@ -62,7 +62,10 @@ void	unset(t_token *cmd)
 void	env(t_token *cmd)
 {
 	if (cmd)
-		return (write(1, "\e[31;1mError:\e[0m too many arguments\n", 37),
-			set_exit_status(invalid_usage));
+	{
+		write(1, "\e[31;1mError:\e[0m too many arguments\n", 37);
+		g_shell.exit_status = invalid_usage;
+		return ;
+	}
 	vars_print(g_shell.vars);
 }

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/08 00:10:51 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 18:08:38 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "minishell.h"
 #include "executor.h"
 
+//TODO: slipt this function into multiple
 void	prompt(void)
 {
 	t_tokenizer	tokenizer;
@@ -26,6 +27,8 @@ void	prompt(void)
 	while (42)
 	{
 		tokenizer.line = readline("MiniHell $ ");
+		if (!tokenizer.line)
+			(vars_free(g_shell.vars), exit(0)); // TODO: maybe write exit in the line too like bash
 		if (!tokenizer.line[0])
 			continue ;
 		tokenize(&tokenizer);
@@ -34,15 +37,14 @@ void	prompt(void)
 		if (check_syntax(&tokenizer))
 		{
 			ast = new_node(NULL);
-			construct_ast(tokenizer.tokens, ast);
-			execute(ast);
-			free_ast(ast);
+			construct_ast(tokenizer.tokens, ast), execute(ast), free_ast(ast);
 		}
 		else
-			(set_exit_status(syntax_error), free(tokenizer.tokens));
-		if (ft_strncmp(tokenizer.line, "exit", 4) == 0)
-			(free(tokenizer.line), vars_free(g_shell.vars), exit(0));
-		add_history(tokenizer.line);
-		free(tokenizer.line);
+			(free(tokenizer.tokens), g_shell.exit_status = syntax_error);
+		if (streq(tokenizer.line, "exit"))
+			(free(tokenizer.line), vars_free(g_shell.vars),
+				exit(g_shell.exit_status));
+		(add_history(tokenizer.line), free(tokenizer.line));
+		g_shell.stop_child = false;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 20:15:46 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 18:06:34 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	echo(t_token *cmd)
 	bool	is_first;
 
 	trailing_nl = true;
-	if (cmd && ft_strlen(cmd->data) == 2 && ft_strncmp(cmd->data, "-n", 2) == 0)
+	if (cmd && streq(cmd->data, "-n"))
 	{
 		trailing_nl = false;
 		cmd = cmd->next;
@@ -54,7 +54,8 @@ void	cd(t_token *cmd)
 		if (!home_var)
 		{
 			write(1, "\e[31;1mError:\e[0m $HOME not set\n", 32);
-			return (set_exit_status(failure));
+			g_shell.exit_status = failure;
+			return ;
 		}
 		path = home_var->value;
 	}

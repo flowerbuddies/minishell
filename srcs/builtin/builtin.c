@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 20:15:53 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 18:05:51 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,27 @@ bool	is_builtin(const char *cmd)
 {
 	const char	*builtins[] = {
 		"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
-	const int	builtin_lens[] = {4, 2, 3, 6, 5, 3, 4};
-	const int	cmd_len = ft_strlen(cmd);
 	int			i;
 
 	i = -1;
 	while (builtins[++i])
-		if (cmd_len == builtin_lens[i]
-			&& ft_strncmp(builtins[i], cmd, cmd_len) == 0)
+		if (streq(builtins[i], cmd))
 			return (true);
 	return (false);
 }
 
 void	execute_builtin(t_token *cmd)
 {
-	if (ft_strncmp(cmd->data, "echo", 4) == 0)
+	if (streq(cmd->data, "echo"))
 		echo(cmd->next);
-	else if (ft_strncmp(cmd->data, "cd", 2) == 0)
+	else if (streq(cmd->data, "cd"))
 		cd(cmd->next);
-	else if (ft_strncmp(cmd->data, "pwd", 3) == 0)
+	else if (streq(cmd->data, "pwd"))
 		pwd();
-	else if (ft_strncmp(cmd->data, "export", 6) == 0)
+	else if (streq(cmd->data, "export"))
 		export(cmd->next);
-	else if (ft_strncmp(cmd->data, "unset", 5) == 0)
+	else if (streq(cmd->data, "unset"))
 		unset(cmd->next);
-	else if (ft_strncmp(cmd->data, "env", 3) == 0)
+	else if (streq(cmd->data, "env"))
 		env(cmd->next);
 }
