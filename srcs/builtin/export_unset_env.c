@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 18:40:15 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 19:44:41 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,23 @@ static int	array_len(char **array)
 	return (len);
 }
 
-void	export(t_token *cmd)
+int	export(t_token *cmd)
 {
 	char	**parts;
 	int		parts_len;
 
 	if (!cmd)
 		return (write(1, "\e[31;1mError:\e[0m missing an argument\n", 38),
-			g_shell.exit_status = invalid_usage, free(NULL));
+			invalid_usage);
 	if (!ft_strchr(cmd->data, '='))
-		return ;
+		return (success);
 	parts = ft_split(cmd->data, '=');
 	if (!parts)
 		action_failed("ft_split");
 	parts_len = array_len(parts);
 	if (parts_len != 1 && parts_len != 2)
 		return (write(1, "\e[31;1mError:\e[0m incorrect usage\n", 34),
-			g_shell.exit_status = invalid_usage, free(NULL)); //TODO: maybe support environment variables with an equal sign
+			invalid_usage); //TODO: maybe support environment variables with an equal sign
 	if (vars_find(g_shell.vars, parts[0]))
 		vars_delete_at(g_shell.vars, parts[0]);
 	if (parts_len == 1)
@@ -50,22 +50,22 @@ void	export(t_token *cmd)
 	else
 		vars_append(&g_shell.vars, vars_new(parts[0], parts[1]));
 	free(parts);
+	return (success);
 }
 
-void	unset(t_token *cmd)
+int	unset(t_token *cmd)
 {
 	if (!cmd)
-		return ;
+		return (success);
 	vars_delete_at(g_shell.vars, cmd->data);
+	return (success);
 }
 
-void	env(t_token *cmd)
+int	env(t_token *cmd)
 {
 	if (cmd)
-	{
-		write(1, "\e[31;1mError:\e[0m too many arguments\n", 37);
-		g_shell.exit_status = invalid_usage;
-		return ;
-	}
+		return (write(1, "\e[31;1mError:\e[0m too many arguments\n", 37),
+			invalid_usage);
 	vars_print(g_shell.vars);
+	return (success);
 }

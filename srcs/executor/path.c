@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 17:42:33 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 19:37:33 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include "builtin.h"
 #include "tokenizer.h"
 
 static char	*direct_path(char *cmd)
@@ -44,18 +43,16 @@ static char	*direct_path(char *cmd)
 	return (ft_strdup(cmd));
 }
 
-char	*get_command_path(t_token *cmd)
+char	*get_command_path(char *cmd)
 {
 	char	*tmp;
 
-	if (ft_strchr(cmd->data, '/'))
-		return (direct_path(cmd->data));
-	if (is_builtin(cmd->data))
-		return (execute_builtin(cmd), NULL);
-	tmp = find_cmd_in_path(cmd->data);
+	if (ft_strchr(cmd, '/'))
+		return (direct_path(cmd));
+	tmp = find_cmd_in_path(cmd);
 	if (tmp)
 		return (tmp);
-	printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd->data);
+	printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd);
 	g_shell.exit_status = not_found;
 	return (NULL);
 }

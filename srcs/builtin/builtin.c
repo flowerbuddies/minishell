@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 18:05:51 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 19:44:02 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,19 @@ bool	is_builtin(const char *cmd)
 	return (false);
 }
 
-void	execute_builtin(t_token *cmd)
+int	execute_builtin(t_token *cmd)
 {
 	if (streq(cmd->data, "echo"))
-		echo(cmd->next);
-	else if (streq(cmd->data, "cd"))
-		cd(cmd->next);
-	else if (streq(cmd->data, "pwd"))
-		pwd();
-	else if (streq(cmd->data, "export"))
-		export(cmd->next);
-	else if (streq(cmd->data, "unset"))
-		unset(cmd->next);
-	else if (streq(cmd->data, "env"))
-		env(cmd->next);
+		return (echo(cmd->next));
+	if (streq(cmd->data, "cd"))
+		return (cd(cmd->next));
+	if (streq(cmd->data, "pwd"))
+		return (pwd());
+	if (streq(cmd->data, "export"))
+		return (export(cmd->next));
+	if (streq(cmd->data, "unset"))
+		return (unset(cmd->next));
+	if (streq(cmd->data, "env"))
+		return (env(cmd->next));
+	return (g_shell.exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 18:06:34 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 19:40:06 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	echo(t_token *cmd)
+int	echo(t_token *cmd)
 {
 	bool	trailing_nl;
 	bool	is_first;
@@ -39,9 +39,10 @@ void	echo(t_token *cmd)
 	}
 	if (trailing_nl)
 		write(1, "\n", 1);
+	return (success);
 }
 
-void	cd(t_token *cmd)
+int	cd(t_token *cmd)
 {
 	char	*path;
 	t_var	*home_var;
@@ -52,17 +53,14 @@ void	cd(t_token *cmd)
 	{
 		home_var = vars_find(g_shell.vars, "HOME");
 		if (!home_var)
-		{
-			write(1, "\e[31;1mError:\e[0m $HOME not set\n", 32);
-			g_shell.exit_status = failure;
-			return ;
-		}
+			return (write(1, "\e[31;1mError:\e[0m $HOME not set\n", 32), failure);
 		path = home_var->value;
 	}
 	chdir(path);
+	return (success);
 }
 
-void	pwd(void)
+int	pwd(void)
 {
 	const char	*cwd = getcwd(NULL, 0);
 
@@ -71,4 +69,5 @@ void	pwd(void)
 	write(1, cwd, ft_strlen(cwd));
 	write(1, "\n", 1);
 	free((char *)cwd);
+	return (success);
 }

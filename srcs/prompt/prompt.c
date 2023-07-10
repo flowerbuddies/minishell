@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 18:08:38 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 19:50:35 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 //TODO: slipt this function into multiple
 void	prompt(void)
 {
-	t_tokenizer	tokenizer;
-	t_node		*ast;
+	t_tokenizer		tokenizer;
+	t_node			*ast;
 
 	while (42)
 	{
 		tokenizer.line = readline("MiniHell $ ");
 		if (!tokenizer.line)
-			(vars_free(g_shell.vars), exit(0)); // TODO: maybe write exit in the line too like bash
+			(vars_free(g_shell.vars), exit(0)); // TODO: maybe write "exit" in the line too like bash
 		if (!tokenizer.line[0])
 			continue ;
 		tokenize(&tokenizer);
@@ -37,7 +37,9 @@ void	prompt(void)
 		if (check_syntax(&tokenizer))
 		{
 			ast = new_node(NULL);
-			construct_ast(tokenizer.tokens, ast), execute(ast), free_ast(ast);
+			construct_ast(tokenizer.tokens, ast);
+			g_shell.exit_status = execute(ast);
+			free_ast(ast);
 		}
 		else
 			(free(tokenizer.tokens), g_shell.exit_status = syntax_error);

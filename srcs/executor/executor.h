@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/07 18:37:06 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/10 19:36:58 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "tree_constructor.h"
 
 // executor.c
-void	execute(t_node *ast);
-void	execute_command(t_token *command);
+int		execute(t_node *ast);
+int		execute_command(t_token *command);
 void	child_main(int comm[2]);
 
 // encode.c
@@ -28,6 +28,6 @@ char	*decode_string(int read_end);
 char	**decode_array(int read_end);
 
 //path.c
-char	*get_command_path(t_token *cmd);
+char	*get_command_path(char *cmd);
 
 #endif
