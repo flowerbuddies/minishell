@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:10:46 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 01:34:14 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/13 18:26:30 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -573,5 +573,78 @@ MunitResult test_env_var2(const MunitParameter params[], void *user_data_or_fixt
 		(t_type []){STRING},
 		(char *[]){"VALUE_WOW"},
 		1);
+	return (MUNIT_OK);
+}
+
+MunitResult test_env_var3(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"$",
+		(t_type []){STRING},
+		(char *[]){"$"},
+		1);
+	return (MUNIT_OK);
+}
+
+MunitResult test_env_var4(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"echo $e",
+		(t_type []){STRING},
+		(char *[]){"echo"},
+		1);
+	return (MUNIT_OK);
+}
+
+MunitResult test_env_var5(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"echo $ee",
+		(t_type []){STRING, STRING},
+		(char *[]){"echo", ""},
+		2);
+	return (MUNIT_OK);
+}
+
+MunitResult test_env_var6(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"echo $",
+		(t_type []){STRING, STRING},
+		(char *[]){"echo", "$"},
+		2);
+	return (MUNIT_OK);
+}
+
+MunitResult test_env_var7(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"echo $ hey",
+		(t_type []){STRING, STRING, STRING},
+		(char *[]){"echo", "$", "hey"},
+		3);
+	return (MUNIT_OK);
+}
+
+
+MunitResult test_env_var8(const MunitParameter params[], void *user_data_or_fixture)
+{
+	(void) params;
+	(void) user_data_or_fixture;
+	tokenizer_one_test(
+		"echo $$",
+		(t_type []){STRING, STRING},
+		(char *[]){"echo", "$$"},
+		2);
 	return (MUNIT_OK);
 }
