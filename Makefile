@@ -1,6 +1,6 @@
 NAME := minishell
 LIBFT := libft.a
-BREW := $(shell test -d /opt/homebrew && echo /opt/homebrew || echo ~/.brew)
+BREW := $(shell brew --prefix)
 INCS := -I $(BREW)/opt/readline/include -I libft -I srcs -I srcs/tokenizer -I srcs/env_var -I srcs/syntax_checker -I srcs/tree_constructor -I srcs/prompt -I srcs/executor -I srcs/builtin -I srcs/signals
 LINK := -L $(BREW)/opt/readline/lib -lreadline
 FLAGS := -Wall -Werror -Wextra $(LINK) $(INCS) -Ofast
