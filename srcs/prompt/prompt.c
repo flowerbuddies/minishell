@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 19:50:35 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/13 20:11:19 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	prompt(void)
 	{
 		tokenizer.line = readline("MiniHell $ ");
 		if (!tokenizer.line)
-			(vars_free(g_shell.vars), exit(0)); // TODO: maybe write "exit" in the line too like bash
+			(vars_free(g_shell.vars), exit(0));
 		if (!tokenizer.line[0])
 			continue ;
 		tokenize(&tokenizer);
