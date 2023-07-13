@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 18:10:37 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/13 20:11:25 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int ac, char **av, char **ev)
 {
 	(void) ac;
 	(void) av;
+	rl_catch_signals = 0;
 	g_shell.exit_status = 0;
 	init_env_vars(ev);
 	init_signals();
