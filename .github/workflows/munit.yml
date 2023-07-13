@@ -15,6 +15,6 @@ jobs:
         with:
           submodules: true
       - name: Where is brew?
-        run: which brew
+        run: brew info readline
       - name: Run tests
         run: make test
