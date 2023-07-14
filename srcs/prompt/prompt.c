@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/13 20:11:19 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/14 17:30:46 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	prompt(void)
 		if (!tokenizer.line[0])
 			continue ;
 		tokenize(&tokenizer);
-		if (tokenizer.errored)
+		if (tokenizer.errored) //TODO: replace this by individual action_failed
 			action_failed("tokenize's mallocs");
 		if (check_syntax(&tokenizer))
 		{

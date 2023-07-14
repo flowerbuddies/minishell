@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/08 00:07:54 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/14 17:30:56 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	construct_ast(t_token *start, t_node *parent)
 	while (current)
 	{
 		if (current->type == REDIR_IN || current->type == REDIR_OUT
-			|| current->type == REDIR_OUT_APPEND)
+			|| current->type == REDIR_OUT_APPEND || current->type == HEREDOC)
 		{
 			parent->type = current->type;
 			parent->right = new_node(parent);
@@ -76,8 +76,6 @@ void	construct_ast(t_token *start, t_node *parent)
 	}
 	parent->type = STRING;
 	parent->data = start;
-
-	//TODO: heredoc actually exists
 }
 
 void	print_ast(t_node *first)
