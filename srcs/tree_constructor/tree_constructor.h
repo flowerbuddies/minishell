@@ -18,7 +18,7 @@
 typedef struct s_node
 {
 	t_type			type;
-	t_token			*data;
+	t_token			*token;
 	struct s_node	*parent; //TODO: maybe rm
 	struct s_node	*left;
 	struct s_node	*right;

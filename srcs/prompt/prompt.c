@@ -38,7 +38,7 @@ void	prompt(void)
 		{
 			ast = new_node(NULL);
 			construct_ast(tokenizer.tokens, ast);
-			g_shell.exit_status = execute(ast);
+			g_shell.exit_status = execute(ast, (int []){STDIN_FILENO, STDOUT_FILENO}, false);
 			free_ast(ast);
 		}
 		else

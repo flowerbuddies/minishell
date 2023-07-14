@@ -16,9 +16,13 @@
 # include "tree_constructor.h"
 # include "env_var.h"
 
+# define FILE_PERMISSION 0644
+# define READONLY_PERMISSION 0444
+
 // executor.c
-int		execute(t_node *ast);
-int		execute_command(t_token *command);
+int		execute(t_node *ast, int io[2], bool has_pipe);
+int		execute_command(t_token *command, int io[2], bool has_pipe, bool has_redir_in);
+void	child_main(char *path, char **argv, char **envp, int io[2], bool has_pipe, bool has_redir_in);
 
 // argv_envp.c
 char	**get_argv(t_token *cmd);
@@ -26,5 +30,10 @@ char	**get_envp(t_var *env_vars);
 
 //path.c
 char	*get_command_path(char *cmd);
+
+// redirection.c
+int		execute_pipe(t_node *node, int io[2]);
+int		execute_redir_out(t_node *node, int io[2]);
+int		execute_redir_in(t_node *node, int io[2]);
 
 #endif

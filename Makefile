@@ -28,6 +28,7 @@ SRCS := $(addprefix srcs/,\
 	syntax_checker/syntax_checker.c \
 	tree_constructor/tree_constructor.c \
 	executor/executor.c \
+	executor/redirection.c \
 	executor/argv_envp.c \
 	executor/path.c \
 	builtin/builtin.c \
@@ -46,9 +47,9 @@ TESTS_SRCS := $(addprefix tests/,\
 
 all: $(LIBFT) $(NAME)
 
-$(LIBFT):
+$(LIBFT): 
 	@make -C libft
-	@mv libft/libft.a .
+	@mv libft/$(LIBFT) .
 
 $(NAME):
 	@echo "Compiling $(NAME)..."
@@ -59,7 +60,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 
-re: fclean all
+re: fclean all 
 
 debug: fclean
 	@echo "Compiling debug..."
