@@ -28,8 +28,7 @@ SRCS := $(addprefix srcs/,\
 	syntax_checker/syntax_checker.c \
 	tree_constructor/tree_constructor.c \
 	executor/executor.c \
-	executor/encode.c \
-	executor/decode.c \
+	executor/argv_envp.c \
 	executor/path.c \
 	builtin/builtin.c \
 	builtin/echo_cd_pwd.c \
