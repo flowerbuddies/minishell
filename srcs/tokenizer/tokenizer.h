@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:44:16 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 17:44:38 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/14 16:25:59 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,26 @@ typedef struct s_tokenizer
 	bool		errored;
 }	t_tokenizer;
 
-//linked_list/setter.c
+// linked_list/setter.c
 t_token	*tokens_new(t_tokenizer *tokenizer);
 void	tokens_append(t_tokenizer *tokenizer, t_type type, char *data);
 void	tokens_delete_at(t_tokenizer *tokenizer, int idx);
 void	tokens_free(t_token *tokens);
 
-//linked_list/getter.c
+// linked_list/getter.c
 t_token	*tokens_at(t_token *tokens, int idx);
 void	tokens_print(t_token *tokens);
 
-//tokenizer.c
+// tokenizer.c
 void	tokenize(t_tokenizer *tokenizer);
 
-//post_process/*
+// post_process/*
 void	evaluate_env_vars(t_tokenizer *tokenizer);
 void	concat_string_tokens(t_tokenizer *tokenizer);
 void	delete_space_tokens(t_tokenizer *tokenizer);
+void	heredocs_prompt_user_input(t_tokenizer *tokenizer);
 
-//states/*
+// states/*
 t_state	in_default_state(t_tokenizer *tokenizer, int i);
 t_state	in_command_state(t_tokenizer *tokenizer, int i);
 t_state	in_raw_string_state(t_tokenizer *tokenizer, int i);

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 01:33:31 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 17:45:10 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/14 16:26:13 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	tokenize(t_tokenizer *tokenizer)
 	evaluate_env_vars(tokenizer);
 	concat_string_tokens(tokenizer);
 	delete_space_tokens(tokenizer);
+	heredocs_prompt_user_input(tokenizer);
 }

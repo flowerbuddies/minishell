@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 01:44:33 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/14 16:20:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_node
 	struct s_node	*right;
 }	t_node;
 
-//tree_constructor.c
+// tree_constructor.c
 t_node	*new_node(t_node *parent);
 void	construct_ast(t_token *token, t_node *out);
 void	print_ast(t_node *first);
