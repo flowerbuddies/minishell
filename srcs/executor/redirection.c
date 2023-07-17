@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/17 19:47:27 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:59:37 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include "libft.h"
-
-int	execute_pipe(t_node *node, int io[2])
-{
-	if (pipe(io) == -1)
-		action_failed("pipe");
-	execute(node->left, io, true, false);
-	return (execute(node->right, io, false, false));
-}
-
-static void	print_error(char *msg, char *file_name)
-{
-	printf("\e[31;1mError:\e[0m ");
-	printf(msg, file_name);
-	printf("\n");
-}
 
 static int	get_heredoc_fd(char *content)
 {
@@ -44,13 +29,12 @@ static int	get_heredoc_fd(char *content)
 	return (tmp_pipe[0]);
 }
 
-static int	open_file(int fd2close, t_type type, char *file_name)
+static int	open_file(int fd_to_close, t_type type, char *file_name)
 {
 	int	flags;
-	int	permissions;
 	int	fd;
 
-	close(fd2close);
+	close(fd_to_close);
 	if (type == HEREDOC)
 		return (get_heredoc_fd(file_name));
 	flags = O_CREAT | O_WRONLY | O_TRUNC;
@@ -58,14 +42,11 @@ static int	open_file(int fd2close, t_type type, char *file_name)
 		flags = O_CREAT | O_WRONLY | O_APPEND;
 	else if (type == REDIR_IN)
 		flags = O_RDONLY;
-	permissions = DEFAULT_FILE_PERMISSIONS;
-	if (type == REDIR_IN)
-		permissions = READ_ONLY_PERMISSIONS; //TODO: check that this is correct
 	if (type == REDIR_IN && access(file_name, F_OK) == -1)
 		return (print_error("file %s doesn't exist", file_name), -1);
 	if (type == REDIR_IN && access(file_name, R_OK) == -1)
 		return (print_error("can't read the file %s", file_name), -1);
-	fd = open(file_name, flags, permissions);
+	fd = open(file_name, flags, DEFAULT_FILE_PERMISSIONS);
 	if (fd == -1)
 		return (print_error("cannot open or create the file %s", file_name),
 			-1);

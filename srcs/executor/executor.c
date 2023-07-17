@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 19:51:27 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 20:00:41 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,21 @@ int	execute_command(
 	if (WIFSIGNALED(status_code))
 		return (signal_base + WTERMSIG(status_code));
 	return (WEXITSTATUS(status_code));
+}
+
+int	execute_pipe(t_node *node, int io[2])
+{
+	if (pipe(io) == -1)
+		action_failed("pipe");
+	execute(node->left, io, true, false);
+	return (execute(node->right, io, false, false));
+}
+
+static void	print_error(char *msg, char *file_name)
+{
+	printf("\e[31;1mError:\e[0m ");
+	printf(msg, file_name);
+	printf("\n");
 }
 
 void	child_main(t_child *child)
