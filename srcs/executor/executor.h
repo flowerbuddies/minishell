@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 19:29:38 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:58:49 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "env_var.h"
 
 # define DEFAULT_FILE_PERMISSIONS 0644
-# define READ_ONLY_PERMISSIONS 0444
 
 typedef struct s_child
 {
