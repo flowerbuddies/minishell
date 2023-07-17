@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 19:30:08 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:51:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ int	execute(t_node *ast, int io[2], bool redir_in_needed, bool redir_out_needed)
 	if (!ast)
 		return (g_shell.exit_status);
 	if (ast->type == PIPE)
-		execute_pipe(ast, io);
-	else if (ast->type == REDIR_OUT || ast->type == REDIR_OUT_APPEND)
-		execute_redir_out(ast, io);
-	else if (ast->type == REDIR_IN || ast->type == HEREDOC)
-		execute_redir_in(ast, io);
-	else if (ast->type == STRING)
-		execute_command(ast->token, io, redir_out_needed, redir_in_needed);
-	return (0); // TODO: return code
+		return (execute_pipe(ast, io));
+	if (ast->type == REDIR_OUT || ast->type == REDIR_OUT_APPEND)
+		return (execute_redir_out(ast, io));
+	if (ast->type == REDIR_IN || ast->type == HEREDOC)
+		return (execute_redir_in(ast, io));
+	return (execute_command(ast->token, io, redir_out_needed, redir_in_needed));
 }
 
 int	execute_command(

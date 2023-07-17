@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/17 19:19:55 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:47:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	execute_pipe(t_node *node, int io[2])
 	if (pipe(io) == -1)
 		action_failed("pipe");
 	execute(node->left, io, true, false);
-	execute(node->right, io, false, false);
-	return (0); // TODO: rm
+	return (execute(node->right, io, false, false));
 }
 
 static void	print_error(char *msg, char *file_name)
