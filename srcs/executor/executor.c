@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/14 18:57:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 17:06:23 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "libft.h"
 #include "builtin.h"
 
-int		execute(t_node *ast, int io[2], bool has_pipe) // local scope io, recursive
+int		execute(t_node *ast, int io[2], bool has_pipe, bool has_redir_in) // local scope io, recursive
 {
 	if (!ast)
 		return (g_shell.exit_status);
@@ -27,10 +27,10 @@ int		execute(t_node *ast, int io[2], bool has_pipe) // local scope io, recursive
 		execute_pipe(ast, io);
 	else if (ast->type == REDIR_OUT || ast->type == REDIR_OUT_APPEND)
 		execute_redir_out(ast, io);
-	else if (ast->type == REDIR_IN)
+	else if (ast->type == REDIR_IN || ast->type == HEREDOC)
 		execute_redir_in(ast, io);
-	if (ast->type == STRING)
-		execute_command(ast->token, io, has_pipe, false);
+	else if (ast->type == STRING)
+		execute_command(ast->token, io, has_pipe, has_redir_in);
 	return (0); // TODO: return code
 }
 
@@ -64,7 +64,7 @@ void	child_main(char *path, char **argv, char **envp, int io[2], bool has_pipe, 
 {
 	if (has_pipe && (dup2(io[1], STDOUT_FILENO) == -1 || close(io[0]) == -1 || close(io[1]) == -1))
 		action_failed("dup2 or close");
-	if (has_redir_in && (dup2(io[0], STDIN_FILENO) == -1 || close(io[0]) == -1 || close(io[1]) == -1))
+	if (has_redir_in && (dup2(io[0], STDIN_FILENO) == -1 || close(io[0]) == -1))
 		action_failed("dup2 or close");
 	if (execve(path, argv, envp) == -1)
 		action_failed("execve");

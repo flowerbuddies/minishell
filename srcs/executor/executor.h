@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/14 18:52:48 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 17:39:38 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include "tree_constructor.h"
 # include "env_var.h"
 
-# define FILE_PERMISSION 0644
-# define READONLY_PERMISSION 0444
+# define DEFAULT_FILE_PERMISSIONS 0644
+# define READ_ONLY_PERMISSIONS 0444
 
 // executor.c
-int		execute(t_node *ast, int io[2], bool has_pipe);
+int		execute(t_node *ast, int io[2], bool has_pipe, bool has_redir_in);
 int		execute_command(t_token *command, int io[2], bool has_pipe, bool has_redir_in);
 void	child_main(char *path, char **argv, char **envp, int io[2], bool has_pipe, bool has_redir_in);
 

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/14 17:30:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 17:06:13 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	print_ast(t_node *first)
 		ft_printf(">\n");
 	else if (first->type == REDIR_OUT_APPEND)
 		ft_printf(">>\n");
+	else if (first->type == HEREDOC)
+		ft_printf("<<\n");
 	else
 		ft_printf("%s\n", first->token->data);
 	print_ast(first->left);
