@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 19:37:33 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 18:55:07 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include "tokenizer.h"
+#include "builtin.h"
 
 static char	*direct_path(char *cmd)
 {
@@ -47,6 +48,8 @@ char	*get_command_path(char *cmd)
 {
 	char	*tmp;
 
+	if (is_builtin(cmd))
+		return (ft_strdup(""));
 	if (ft_strchr(cmd, '/'))
 		return (direct_path(cmd));
 	tmp = find_cmd_in_path(cmd);

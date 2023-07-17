@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/14 17:30:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 17:06:13 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_node	*new_node(t_node *parent)
 	if (!out)
 		return (NULL);
 	out->type = _NOT_SET;
-	out->data = NULL;
+	out->token = NULL;
 	out->parent = parent;
 	out->left = NULL;
 	out->right = NULL;
@@ -75,7 +75,7 @@ void	construct_ast(t_token *start, t_node *parent)
 		current = current->next;
 	}
 	parent->type = STRING;
-	parent->data = start;
+	parent->token = start;
 }
 
 void	print_ast(t_node *first)
@@ -90,8 +90,10 @@ void	print_ast(t_node *first)
 		ft_printf(">\n");
 	else if (first->type == REDIR_OUT_APPEND)
 		ft_printf(">>\n");
+	else if (first->type == HEREDOC)
+		ft_printf("<<\n");
 	else
-		ft_printf("%s\n", first->data->data);
+		ft_printf("%s\n", first->token->data);
 	print_ast(first->left);
 	print_ast(first->right);
 }
@@ -102,7 +104,7 @@ void	free_ast(t_node *first)
 		return ;
 	free_ast(first->left);
 	free_ast(first->right);
-	if (first->data)
-		tokens_free(first->data);
+	if (first->token)
+		tokens_free(first->token);
 	free(first);
 }
