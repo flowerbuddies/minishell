@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 19:29:14 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:30:08 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "libft.h"
 #include "builtin.h"
 
-int	execute(t_node *ast, int io[2], bool redir_in_needed, bool redir_in_needed)
+int	execute(t_node *ast, int io[2], bool redir_in_needed, bool redir_out_needed)
 {
 	if (!ast)
 		return (g_shell.exit_status);
