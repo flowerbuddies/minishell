@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 17:39:38 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:20:06 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,20 @@
 # define DEFAULT_FILE_PERMISSIONS 0644
 # define READ_ONLY_PERMISSIONS 0444
 
+typedef struct s_child
+{
+	char	*path;
+	t_token	*cmd;
+	int		io[2];
+	bool	has_pipe;
+	bool	has_redir_in;
+}	t_child;
+
 // executor.c
 int		execute(t_node *ast, int io[2], bool has_pipe, bool has_redir_in);
-int		execute_command(t_token *command, int io[2], bool has_pipe, bool has_redir_in);
-void	child_main(char *path, char **argv, char **envp, int io[2], bool has_pipe, bool has_redir_in);
+int		execute_command(t_token *command, int io[2],
+			bool has_pipe, bool has_redir_in);
+void	child_main(t_child *child);
 
 // argv_envp.c
 char	**get_argv(t_token *cmd);

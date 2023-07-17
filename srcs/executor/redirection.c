@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/17 17:40:22 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:19:55 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,9 @@ int	execute_redir_out(t_node *node, int io[2])
 		is_first = false;
 		current = current->right;
 	}
-	return (execute_command(node->left->token, (int []){io[0], fd}, true, false)
-		);
+	close(io[1]);
+	return (
+		execute_command(node->left->token, (int []){io[0], fd}, true, false));
 }
 
 int	execute_redir_in(t_node *node, int io[2])
@@ -132,6 +133,7 @@ int	execute_redir_in(t_node *node, int io[2])
 		is_first = false;
 		current = current->right;
 	}
-	return (execute_command(node->left->token, (int []){fd, io[1]}, false, true)
-		);
+	close(io[1]);
+	return (
+		execute_command(node->left->token, (int []){fd, io[1]}, false, true));
 }

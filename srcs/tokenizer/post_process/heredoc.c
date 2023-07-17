@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:14:03 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/14 17:06:28 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:08:58 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ static char	*heredoc(char *delim)
 	while (42)
 	{
 		line = readline("heredoc> ");
-		if (!line || streq(line, delim))
+		if (!line)
 			return (free(delim), strjoin(input, NULL));
+		if (streq(line, delim))
+			return (free(line), free(delim), strjoin(input, NULL));
 		input = strjoin(input, strjoin(line, ft_strdup("\n")));
 	}
 }
