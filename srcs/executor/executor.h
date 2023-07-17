@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 19:20:06 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/17 19:29:38 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ typedef struct s_child
 	char	*path;
 	t_token	*cmd;
 	int		io[2];
-	bool	has_pipe;
-	bool	has_redir_in;
+	bool	redir_in_needed;
+	bool	redir_out_needed;
 }	t_child;
 
 // executor.c
-int		execute(t_node *ast, int io[2], bool has_pipe, bool has_redir_in);
+int		execute(t_node *ast, int io[2],
+			bool redir_in_needed, bool redir_out_needed);
 int		execute_command(t_token *command, int io[2],
-			bool has_pipe, bool has_redir_in);
+			bool redir_in_needed, bool redir_out_needed);
 void	child_main(t_child *child);
 
 // argv_envp.c
