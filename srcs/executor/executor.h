@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 19:58:49 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/18 16:13:56 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		execute(t_node *ast, int io[2],
 			bool redir_in_needed, bool redir_out_needed);
 int		execute_command(t_token *command, int io[2],
 			bool redir_in_needed, bool redir_out_needed);
+void	print_error(char *msg, char *file_name);
 void	child_main(t_child *child);
 
 // argv_envp.c
