@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/17 19:59:37 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/18 19:48:48 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_type	get_type(t_node *current)
 	return (current->type);
 }
 
-int	execute_redir_out(t_node *node, int io[2])
+int	execute_redir_out(t_node *node, int io[2], bool redir_out_needed)
 {
 	t_node	*current;
 	int		fd;
@@ -85,12 +85,13 @@ int	execute_redir_out(t_node *node, int io[2])
 		is_first = false;
 		current = current->right;
 	}
-	close(io[1]);
+	if (redir_out_needed)
+		close(io[1]);
 	return (
-		execute_command(node->left->token, (int []){io[0], fd}, true, false));
+		execute(node->left, (int []){io[0], fd}, false, true));
 }
 
-int	execute_redir_in(t_node *node, int io[2])
+int	execute_redir_in(t_node *node, int io[2], bool redir_out_needed)
 {
 	t_node	*current;
 	int		fd;
@@ -113,7 +114,10 @@ int	execute_redir_in(t_node *node, int io[2])
 		is_first = false;
 		current = current->right;
 	}
-	close(io[1]);
-	return (
-		execute_command(node->left->token, (int []){fd, io[1]}, false, true));
+	close(io[0]);
+	// char ch;
+	// read(fd, &ch, 1);
+	// printf("first char: %c\n", ch);
+	return (execute_command(node->left->token, (int []){fd, io[1]},
+		true, redir_out_needed));
 }

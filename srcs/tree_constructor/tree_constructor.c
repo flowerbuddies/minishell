@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 17:06:13 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/18 17:55:59 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,27 @@ void	construct_ast(t_token *start, t_node *parent)
 	current = start;
 	while (current)
 	{
-		if (current->type == REDIR_IN || current->type == REDIR_OUT
-			|| current->type == REDIR_OUT_APPEND || current->type == HEREDOC)
+		if (current->type == REDIR_OUT || current->type == REDIR_OUT_APPEND)
+		{
+			parent->type = current->type;
+			parent->right = new_node(parent);
+			construct_ast(current->next, parent->right);
+			if (prev)
+				prev->next = NULL;
+			parent->left = new_node(parent);
+			construct_ast(start, parent->left);
+			free(current);
+			return ;
+		}
+		prev = current;
+		current = current->next;
+	}
+
+	prev = NULL;
+	current = start;
+	while (current)
+	{
+		if (current->type == REDIR_IN || current->type == HEREDOC)
 		{
 			parent->type = current->type;
 			parent->right = new_node(parent);

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/18 16:13:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/18 17:49:29 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_command_path(char *cmd);
 
 // redirection.c
 int		execute_pipe(t_node *node, int io[2]);
-int		execute_redir_out(t_node *node, int io[2]);
-int		execute_redir_in(t_node *node, int io[2]);
+int		execute_redir_out(t_node *node, int io[2], bool redir_out_needed);
+int		execute_redir_in(t_node *node, int io[2], bool redir_out_needed);;
 
 #endif
