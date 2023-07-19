@@ -114,7 +114,7 @@ int	execute_redir_in(t_node *node, int io[2], bool redir_out_needed)
 		is_first = false;
 		current = current->right;
 	}
-	close(io[0]);
+	// close(io[0]);
 	// char ch;
 	// read(fd, &ch, 1);
 	// printf("first char: %c\n", ch);

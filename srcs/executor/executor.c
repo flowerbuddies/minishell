@@ -35,8 +35,8 @@ int	execute(t_node *ast, int io[2], bool redir_in_needed, bool redir_out_needed)
 int	execute_command(
 		t_token *cmd, int io[2], bool redir_in_needed, bool redir_out_needed)
 {
-	int		status_code;
-	t_child	child;
+	int			status_code;
+	t_child		child;
 
 	ft_memcpy(child.io, io, sizeof(int [2]));
 	child.cmd = cmd;
@@ -54,10 +54,11 @@ int	execute_command(
 	g_shell.is_child_running = true;
 	waitpid(g_shell.child_pid, &status_code, 0);
 	g_shell.is_child_running = false;
-	if (redir_out_needed && (dup2(io[0], STDIN_FILENO) == -1))
-		action_failed("dup2");
-	if (redir_out_needed && close(io[0]) == -1)
-		action_failed("close0");
+	// close fd
+	// if ((redir_in_needed && close(io[0]) == -1))
+	// 	action_failed("close0");
+	// if ((redir_out_needed || redir_in_needed) && close(io[0]) == -1)
+	// 	action_failed("close0");
 	if (redir_out_needed && close(io[1]) == -1)
 		action_failed("close1");
 	if (WIFSIGNALED(status_code))
@@ -67,10 +68,18 @@ int	execute_command(
 
 int	execute_pipe(t_node *node, int io[2])
 {
+
 	if (pipe(io) == -1)
 		action_failed("pipe");
-	// printf("execute_pipe io[0]: %d, io[1]: %d\n", io[0], io[1]);
+	printf("execute_pipe io[0]: %d, io[1]: %d\n", io[0], io[1]);
 	execute(node->left, io, false, true);
+	printf("STDIN replaced with %d\n", io[0]);
+	if (dup2(io[0], STDIN_FILENO) == -1)
+		action_failed("dup2 in pipe");
+	// if (close(io[0]) == -1)
+	// 	action_failed("close0");
+	// if (close(io[1]) == -1)
+	// 	action_failed("close1");
 	return (execute(node->right, io, false, false));
 }
 
@@ -102,11 +111,6 @@ void	child_main(t_child *child)
 	if (child->redir_out_needed)
 		if (close(child->io[1]) == -1)
 			action_failed("close io[1]");
-	if (child->cmd->data[0] == 'w')
-	{
-		if (dup2(child->io[0], STDIN_FILENO) == -1)
-			action_failed("....... :/");
-	}
 	// if (!child->redir_in_needed && !child->redir_out_needed)
 	// {
 	// 	if (close(child->io[0]) == -1)
