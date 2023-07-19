@@ -25,6 +25,7 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/post_process/concat_strings.c \
 	tokenizer/post_process/delete_spaces.c \
 	tokenizer/post_process/heredoc.c \
+	tokenizer/post_process/single_sided_redirs.c \
 	syntax_checker/syntax_checker.c \
 	tree_constructor/tree_constructor.c \
 	executor/executor.c \
