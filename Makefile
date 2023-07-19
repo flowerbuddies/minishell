@@ -62,12 +62,12 @@ fclean: clean
 
 re: fclean all 
 
-debug: fclean
+debug: fclean $(LIBFT)
 	@echo "Compiling debug..."
 	@cc $(FLAGS) $(DEBUG) $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
 	@./$(NAME)
 
-debug-leaks:
+debug-leaks: $(LIBFT)
 	@echo "Compiling debug using leaks..."
 	@cc $(FLAGS) $(DEBUG) -fno-sanitize=all $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
 	@leaks -q --atExit -- ./$(NAME)

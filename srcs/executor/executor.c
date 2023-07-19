@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/18 20:40:52 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/19 16:50:33 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ int	execute_command(
 	waitpid(g_shell.child_pid, &status_code, 0);
 	g_shell.is_child_running = false;
 	// close fd
-	// if ((redir_in_needed && close(io[0]) == -1))
-	// 	action_failed("close0");
-	// if ((redir_out_needed || redir_in_needed) && close(io[0]) == -1)
-	// 	action_failed("close0");
+	if (redir_in_needed && close(io[0]) == -1)
+		action_failed("close0");
 	if (redir_out_needed && close(io[1]) == -1)
 		action_failed("close1");
 	if (WIFSIGNALED(status_code))
@@ -76,8 +74,8 @@ int	execute_pipe(t_node *node, int io[2])
 	printf("STDIN replaced with %d\n", io[0]);
 	if (dup2(io[0], STDIN_FILENO) == -1)
 		action_failed("dup2 in pipe");
-	// if (close(io[0]) == -1)
-	// 	action_failed("close0");
+	if (close(io[0]) == -1)
+		action_failed("close0 in pipe");
 	// if (close(io[1]) == -1)
 	// 	action_failed("close1");
 	return (execute(node->right, io, false, false));
