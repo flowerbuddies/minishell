@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/18 19:48:48 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/19 17:49:56 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,6 @@ int	execute_redir_in(t_node *node, int io[2], bool redir_out_needed)
 		is_first = false;
 		current = current->right;
 	}
-	// close(io[0]);
-	// char ch;
-	// read(fd, &ch, 1);
-	// printf("first char: %c\n", ch);
 	return (execute_command(node->left->token, (int []){fd, io[1]},
 		true, redir_out_needed));
 }
