@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/19 18:44:24 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/21 17:50:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,8 @@ char	*get_command_path(char *cmd);
 int		open_file(int fd_to_close, t_type type, char *file_name);
 int		execute_redir_out(t_node *node, int io[2], bool redir_out_needed);
 int		execute_redir_in(t_node *node, int io[2], bool redir_out_needed);
+
+// waiting.c
+int		wait_commands(t_node *ast, bool redir_in_needed, bool redir_out_needed);
 
 #endif

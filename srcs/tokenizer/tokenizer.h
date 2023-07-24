@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:44:16 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/19 18:26:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/20 18:24:59 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_token
 {
 	t_type			type;
 	char			*data;
+	int				pid; //TODO: make this a t_pid
+	int				io[2];
 	struct s_token	*next;
 }	t_token;
 

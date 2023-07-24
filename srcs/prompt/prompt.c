@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/18 18:23:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/21 17:50:39 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	prompt(void)
 			ast = new_node(NULL);
 			construct_ast(tokenizer.tokens, ast);
 			g_shell.exit_status = execute(ast, (int []){STDIN_FILENO, STDOUT_FILENO}, false, false);
+			wait_commands(ast, false, false);
 			if (dup2(dupped_in, STDIN_FILENO) == -1)
 				action_failed("dup2");
 			free_ast(ast); 

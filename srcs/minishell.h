@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:10:32 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/10 18:12:54 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/24 19:40:06 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ struct s_shell
 	pid_t			child_pid;
 	bool			stop_child;
 	bool			is_child_running;
+
+	pid_t			pids[100];
+	int				pids_idx;
 }					g_shell;
 
 void	action_failed(char *action);

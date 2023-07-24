@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 19:27:06 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/20 18:00:46 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TREE_CONSTRUCTOR_H
 
 # include "tokenizer.h"
+# include <unistd.h>
 
 typedef struct s_node
 {

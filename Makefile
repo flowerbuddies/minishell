@@ -30,6 +30,7 @@ SRCS := $(addprefix srcs/,\
 	tree_constructor/tree_constructor.c \
 	executor/executor.c \
 	executor/redirection.c \
+	executor/waiting.c \
 	executor/argv_envp.c \
 	executor/path.c \
 	builtin/builtin.c \

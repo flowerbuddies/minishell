@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/19 17:55:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/24 19:48:31 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,23 @@ int	execute_command(
 	t_child	child;
 
 	ft_memcpy(child.io, io, sizeof(int [2]));
+	ft_memcpy(cmd->io, io, sizeof(int [2]));
 	child.cmd = cmd;
 	child.redir_out_needed = redir_out_needed;
 	child.redir_in_needed = redir_in_needed;
 	child.path = get_command_path(cmd->data);
 	if (g_shell.stop_child || !child.path)
 		return (g_shell.exit_status);
-	g_shell.child_pid = fork();
-	if (g_shell.child_pid == -1)
+	g_shell.pids[g_shell.pids_idx++] = fork();
+	if (g_shell.pids[g_shell.pids_idx] == -1)
 		action_failed("fork");
-	if (g_shell.child_pid == 0)
+	if (g_shell.pids[g_shell.pids_idx] == 0)
 		return (child_main(&child), 0);
 	free(child.path);
-	g_shell.is_child_running = true;
-	waitpid(g_shell.child_pid, &child.status_code, 0);
-	g_shell.is_child_running = false;
-	if (redir_in_needed && close(io[0]) == -1)
-		action_failed("close");
-	if (redir_out_needed && close(io[1]) == -1)
-		action_failed("close");
-	if (WIFSIGNALED(child.status_code))
-		return (signal_base + WTERMSIG(child.status_code));
-	return (WEXITSTATUS(child.status_code));
+	// if (io[0] != STDIN_FILENO)
+	// 	close(io[0]);
+	// if (io[1] != STDOUT_FILENO)
+	// 	close(io[1]);
 }
 
 int	execute_pipe(t_node *node, int io[2])
