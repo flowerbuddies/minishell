@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/07 19:09:15 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/07 19:41:39 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	execute_pipe(t_node *node)
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->left);
-		exit(g_shell.exit_status); //seems useless
+		exit(g_shell.exit_status);
 	}
 	pid_right = fork();
 	// error
@@ -94,12 +94,16 @@ void	execute_pipe(t_node *node)
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->right);
-		exit(g_shell.exit_status); //seems useless
+		exit(g_shell.exit_status);
 	}
 	close(pip[READ_END]);
 	close(pip[WRITE_END]);
 	waitpid(pid_left, &status_code, 0);
+	if (WTERMSIG(status_code) == SIGPIPE)
+		ft_putchar_fd('\n', 1);
 	waitpid(pid_right, &status_code, 0);
+	if (WTERMSIG(status_code) == SIGPIPE)
+		ft_putchar_fd('\n', 1);
 	g_shell.exit_status = WEXITSTATUS(status_code);
 }
 
