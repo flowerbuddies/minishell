@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/18 16:13:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/07 16:49:44 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,21 @@ int		execute(t_node *ast, int io[2],
 			bool redir_in_needed, bool redir_out_needed);
 int		execute_command(t_token *command, int io[2],
 			bool redir_in_needed, bool redir_out_needed);
-void	print_error(char *msg, char *file_name);
 void	child_main(t_child *child);
+void	print_error(char *msg, char *file_name);
+int		execute_pipe(t_node *node, int io[2]);
 
 // argv_envp.c
 char	**get_argv(t_token *cmd);
 char	**get_envp(t_var *env_vars);
 
-//path.c
+// path.c
 char	*get_command_path(char *cmd);
 
 // redirection.c
 int		execute_pipe(t_node *node, int io[2]);
 int		execute_redir_out(t_node *node, int io[2]);
 int		execute_redir_in(t_node *node, int io[2]);
+int		open_file(int fd_to_close, t_type type, char *file_name);
 
 #endif

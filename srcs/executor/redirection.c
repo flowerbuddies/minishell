@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/17 19:59:37 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/07 16:49:54 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	get_heredoc_fd(char *content)
 	return (tmp_pipe[0]);
 }
 
-static int	open_file(int fd_to_close, t_type type, char *file_name)
+int	open_file(int fd_to_close, t_type type, char *file_name)
 {
 	int	flags;
 	int	fd;
@@ -43,12 +43,12 @@ static int	open_file(int fd_to_close, t_type type, char *file_name)
 	else if (type == REDIR_IN)
 		flags = O_RDONLY;
 	if (type == REDIR_IN && access(file_name, F_OK) == -1)
-		return (print_error("file %s doesn't exist", file_name), -1);
+		return (print_error("file `%s` doesn't exist", file_name), -1);
 	if (type == REDIR_IN && access(file_name, R_OK) == -1)
-		return (print_error("can't read the file %s", file_name), -1);
+		return (print_error("can't read the file `%s`", file_name), -1);
 	fd = open(file_name, flags, DEFAULT_FILE_PERMISSIONS);
 	if (fd == -1)
-		return (print_error("cannot open or create the file %s", file_name),
+		return (print_error("cannot open or create the file `%s`", file_name),
 			-1);
 	return (fd);
 }

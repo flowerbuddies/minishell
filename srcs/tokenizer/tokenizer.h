@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:44:16 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/14 16:25:59 by hunam            ###   ########.fr       */
+/*   Updated: 2023/07/19 18:26:16 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	evaluate_env_vars(t_tokenizer *tokenizer);
 void	concat_string_tokens(t_tokenizer *tokenizer);
 void	delete_space_tokens(t_tokenizer *tokenizer);
 void	heredocs_prompt_user_input(t_tokenizer *tokenizer);
+void	single_sided_redirs(t_tokenizer *tokenizer);
 
 // states/*
 t_state	in_default_state(t_tokenizer *tokenizer, int i);
