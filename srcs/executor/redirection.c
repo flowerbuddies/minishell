@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/07 16:49:54 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:02:41 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_type	get_type(t_node *current)
 	return (current->type);
 }
 
-int	execute_redir_out(t_node *node, int io[2])
+int	execute_redir_out(t_node *node)
 {
 	t_node	*current;
 	int		fd;
@@ -85,12 +85,12 @@ int	execute_redir_out(t_node *node, int io[2])
 		is_first = false;
 		current = current->right;
 	}
-	close(io[1]);
-	return (
-		execute_command(node->left->token, (int []){io[0], fd}, true, false));
+	// close(io[1]);
+	// return (
+	// 	execute_command(node->left->token, (int []){io[0], fd}, true, false));
 }
 
-int	execute_redir_in(t_node *node, int io[2])
+int	execute_redir_in(t_node *node)
 {
 	t_node	*current;
 	int		fd;
@@ -113,7 +113,7 @@ int	execute_redir_in(t_node *node, int io[2])
 		is_first = false;
 		current = current->right;
 	}
-	close(io[1]);
-	return (
-		execute_command(node->left->token, (int []){fd, io[1]}, false, true));
+	// close(io[1]);
+	// return (
+	// 	execute_command(node->left->token, (int []){fd, io[1]}, false, true));
 }
