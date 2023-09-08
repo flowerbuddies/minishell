@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/07 19:41:39 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/08 18:21:59 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	execute(t_node *ast)
 		return ;
 	if (ast->type == PIPE)
 		return (execute_pipe(ast));
-	// if (ast->type == REDIR_OUT || ast->type == REDIR_OUT_APPEND)
-	// 	return (execute_redir_out(ast));
-	// if (ast->type == REDIR_IN || ast->type == HEREDOC)
-	// 	return (execute_redir_in(ast));
+	if (ast->type == REDIR_OUT || ast->type == REDIR_OUT_APPEND)
+		return (execute_redir_out(ast));
+	if (ast->type == REDIR_IN || ast->type == HEREDOC)
+		return (execute_redir_in(ast));
 	return (execute_command(ast->token));
 }
 
@@ -49,17 +49,6 @@ void	execute_command(t_token *cmd)
 			action_failed("execve");
 	}
 	wait(&status_code);
-	// if (g_shell.child_pid == -1)
-	// 	action_failed("fork");
-	// if (g_shell.child_pid == 0)
-	// 	return (child_main(&child), 0);
-	// free(child.path);
-	// g_shell.is_child_running = true;
-	// waitpid(g_shell.child_pid, &status_code, 0);
-	// g_shell.is_child_running = false;
-	// if (redir_out_needed && (dup2(io[0], STDIN_FILENO) == -1
-	// 		|| close(io[0]) == -1 || close(io[1]) == -1))
-	// 	action_failed("dup2 or close1");
 	// if (WIFSIGNALED(status_code))
 	// 	return (signal_base + WTERMSIG(status_code));
 	g_shell.exit_status = WEXITSTATUS(status_code);

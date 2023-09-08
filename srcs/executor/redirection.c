@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/07 18:02:41 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/08 18:52:14 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 		return (print_error("can't read the file `%s`", file_name), -1);
 	fd = open(file_name, flags, DEFAULT_FILE_PERMISSIONS);
 	if (fd == -1)
-		return (print_error("cannot open or create the file `%s`", file_name),
-			-1);
+	{
+		print_error("cannot open or create the file `%s`", file_name);
+		g_shell.exit_status = failure;
+	}
 	return (fd);
 }
 
@@ -62,7 +64,7 @@ static t_type	get_type(t_node *current)
 	return (current->type);
 }
 
-int	execute_redir_out(t_node *node)
+void	execute_redir_out(t_node *node)
 {
 	t_node	*current;
 	int		fd;
@@ -71,26 +73,33 @@ int	execute_redir_out(t_node *node)
 	current = node;
 	fd = -2;
 	is_first = true;
-	while (current
-		&& (current->type == REDIR_OUT || current->type == REDIR_OUT_APPEND))
+	//error
+	if (fork() == 0)
 	{
-		if (!is_first && current->left->type == STRING)
-			fd = open_file(fd, current->type, current->left->token->data);
-		if (fd == -1)
-			return (failure);
-		if (current->right->type == STRING)
-			fd = open_file(fd, current->type, current->right->token->data);
-		if (fd == -1)
-			return (failure);
-		is_first = false;
-		current = current->right;
+		while (current && (current->type == REDIR_OUT
+				|| current->type == REDIR_OUT_APPEND))
+		{
+			if (!is_first && current->left->type == STRING)
+				fd = open_file(fd, current->type, current->left->token->data);
+			if (fd == -1)
+				return ;
+			if (current->right->type == STRING)
+				fd = open_file(fd, current->type, current->right->token->data);
+			if (fd == -1)
+				return ;
+			is_first = false;
+			current = current->right;
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		execute_command(node->left->token);
+		exit(0);
 	}
-	// close(io[1]);
-	// return (
-	// 	execute_command(node->left->token, (int []){io[0], fd}, true, false));
+	int exit_status;
+	wait(&exit_status);
 }
 
-int	execute_redir_in(t_node *node)
+void	execute_redir_in(t_node *node)
 {
 	t_node	*current;
 	int		fd;
@@ -99,21 +108,27 @@ int	execute_redir_in(t_node *node)
 	current = node;
 	fd = -2;
 	is_first = true;
-	while (current
-		&& (current->type == REDIR_IN || current->type == HEREDOC))
+	if (fork() == 0)
 	{
-		if (!is_first && current->left->type == STRING)
-			fd = open_file(fd, get_type(current), current->left->token->data);
-		if (fd == -1)
-			return (failure);
-		if (current->right->type == STRING)
-			fd = open_file(fd, current->type, current->right->token->data);
-		if (fd == -1)
-			return (failure);
-		is_first = false;
-		current = current->right;
+		while (current && (current->type == REDIR_IN
+				|| current->type == HEREDOC))
+		{
+			if (!is_first && current->left->type == STRING)
+				fd = open_file(fd, get_type(current), current->left->token->data);
+			if (fd == -1)
+				return ;
+			if (current->right->type == STRING)
+				fd = open_file(fd, current->type, current->right->token->data);
+			if (fd == -1)
+				return ;
+			is_first = false;
+			current = current->right;
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		execute_command(node->left->token);
+		exit(0);
 	}
-	// close(io[1]);
-	// return (
-	// 	execute_command(node->left->token, (int []){fd, io[1]}, false, true));
+	int exit_status;
+	wait(&exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/07 19:01:59 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/08 18:16:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_child
 // executor.c
 void	execute(t_node *node);
 void	execute_command(t_token *command);
-void	child_main(t_child *child);
 void	print_error(char *msg, char *file_name);
 void	execute_pipe(t_node *node);
 
@@ -44,9 +43,8 @@ char	**get_envp(t_var *env_vars);
 char	*get_command_path(char *cmd);
 
 // redirection.c
-// int		execute_pipe(t_node *node);
-int		execute_redir_out(t_node *node);
-int		execute_redir_in(t_node *node);
+void	execute_redir_out(t_node *node);
+void	execute_redir_in(t_node *node);
 int		open_file(int fd_to_close, t_type type, char *file_name);
 
 #endif
