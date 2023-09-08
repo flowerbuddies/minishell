@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/08 18:52:14 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/08 19:43:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	execute_redir_out(t_node *node)
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
-		execute_command(node->left->token);
+		execute(node->left);
 		exit(0);
 	}
 	int exit_status;
@@ -126,7 +126,7 @@ void	execute_redir_in(t_node *node)
 		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
-		execute_command(node->left->token);
+		execute(node->left);
 		exit(0);
 	}
 	int exit_status;
