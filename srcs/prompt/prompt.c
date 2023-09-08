@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/07 18:56:34 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/08 19:38:05 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 //TODO: slipt this function into multiple
 void	prompt(void)
 {
-	t_tokenizer		tokenizer;
-	t_node			*ast;
-	// const int		dupped_in = dup(STDIN_FILENO);
+	t_tokenizer	tokenizer;
+	t_node		*ast;
 
 	while (42)
 	{
@@ -35,13 +34,11 @@ void	prompt(void)
 		tokenize(&tokenizer);
 		if (tokenizer.errored) //TODO: replace this by individual action_failed
 			action_failed("tokenize's mallocs");
-		if (check_syntax(&tokenizer))
+				if (check_syntax(&tokenizer))
 		{
 			ast = new_node(NULL);
 			construct_ast(tokenizer.tokens, ast);
-			execute(ast);
-			// if (dup2(dupped_in, STDIN_FILENO) == -1)
-			// 	action_failed("dup2");
+						execute(ast);
 			free_ast(ast); 
 		}
 		else
