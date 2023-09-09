@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/08 18:21:59 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/09 20:15:58 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	execute_command(t_token *cmd)
 
 	child.cmd = cmd;
 	child.path = get_command_path(cmd->data);
-	// if (g_shell.stop_child || !child.path)
-	// 	return (g_shell.exit_status);
+	if (!child.path)
+		return ;
 	if (fork() == 0)
 	{
 		// error
-		// signals
-		if (execve(child.path, get_argv(child.cmd), get_envp(g_shell.vars)) == -1)
+		if (execve(child.path, get_argv(child.cmd), get_envp(g_shell.vars))
+			== -1)
 			action_failed("execve");
 	}
 	wait(&status_code);
@@ -65,7 +65,6 @@ void	execute_pipe(t_node *node)
 		action_failed("pipe");
 	pid_left = fork();
 	// error
-	// signal for the child
 	if (pid_left == 0)
 	{
 		dup2(pip[WRITE_END], STDOUT_FILENO); //error
@@ -76,7 +75,6 @@ void	execute_pipe(t_node *node)
 	}
 	pid_right = fork();
 	// error
-	// signal for the child
 	if (pid_right == 0)
 	{
 		dup2(pip[READ_END], STDIN_FILENO); //error
