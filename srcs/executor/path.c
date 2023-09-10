@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 18:55:07 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 17:56:54 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ char	*get_command_path(char *cmd)
 {
 	char	*tmp;
 
-	if (is_builtin(cmd))
-		return (ft_strdup(""));
 	if (ft_strchr(cmd, '/'))
 		return (direct_path(cmd));
 	tmp = find_cmd_in_path(cmd);

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:10:32 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/10 18:12:54 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/09 20:15:12 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ struct s_shell
 
 	t_exit_status	exit_status;
 
-	pid_t			child_pid;
-	bool			stop_child;
-	bool			is_child_running;
+	bool			nl_needed;
 }					g_shell;
 
 void	action_failed(char *action);

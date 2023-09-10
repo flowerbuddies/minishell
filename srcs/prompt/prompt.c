@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/17 17:35:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 17:00:30 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,23 @@
 #include "env_var.h"
 #include "minishell.h"
 #include "executor.h"
+#include "signals.h"
 
 //TODO: slipt this function into multiple
 void	prompt(void)
 {
-	t_tokenizer		tokenizer;
-	t_node			*ast;
-	const int		dupped_in = dup(STDIN_FILENO);
+	t_tokenizer	tokenizer;
+	t_node		*ast;
 
 	while (42)
 	{
+		signal(SIGINT, sig_interactive_mode);
+		signal(SIGQUIT, SIG_IGN);
+		if (g_shell.nl_needed)
+		{
+			ft_printf("\n");
+			g_shell.nl_needed = false;
+		}
 		tokenizer.line = readline("MiniHell $ ");
 		if (!tokenizer.line)
 			(vars_free(g_shell.vars), exit(0));
@@ -39,10 +46,10 @@ void	prompt(void)
 		{
 			ast = new_node(NULL);
 			construct_ast(tokenizer.tokens, ast);
-			g_shell.exit_status = execute(ast, (int []){STDIN_FILENO, STDOUT_FILENO}, false, false);
-			if (dup2(dupped_in, STDIN_FILENO) == -1)
-				action_failed("dup2");
-			free_ast(ast); 
+			signal(SIGINT, sig_non_interactive_mode);
+			signal(SIGQUIT, sig_non_interactive_mode);
+			execute(ast);
+			free_ast(ast);
 		}
 		else
 			(free(tokenizer.tokens), g_shell.exit_status = syntax_error);
@@ -50,6 +57,6 @@ void	prompt(void)
 			(free(tokenizer.line), vars_free(g_shell.vars),
 				exit(g_shell.exit_status));
 		(add_history(tokenizer.line), free(tokenizer.line));
-		g_shell.stop_child = false;
+		// g_shell.stop_child = false;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:39:02 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 19:38:48 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 18:05:35 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		unset(t_token *cmd);
 int		env(t_token *cmd);
 
 // builtin.c
-bool	is_builtin(const char *cmd);
+bool	try_builtin(t_token *cmd);
 int		execute_builtin(t_token *cmd);
 
 #endif

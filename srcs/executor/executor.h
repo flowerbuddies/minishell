@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/07 16:49:44 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:16:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "env_var.h"
 
 # define DEFAULT_FILE_PERMISSIONS 0644
+# define READ_END 0
+# define WRITE_END 1
 
 typedef struct s_child
 {
@@ -28,13 +30,10 @@ typedef struct s_child
 }	t_child;
 
 // executor.c
-int		execute(t_node *ast, int io[2],
-			bool redir_in_needed, bool redir_out_needed);
-int		execute_command(t_token *command, int io[2],
-			bool redir_in_needed, bool redir_out_needed);
-void	child_main(t_child *child);
+void	execute(t_node *node);
+void	execute_command(t_token *command);
 void	print_error(char *msg, char *file_name);
-int		execute_pipe(t_node *node, int io[2]);
+void	execute_pipe(t_node *node);
 
 // argv_envp.c
 char	**get_argv(t_token *cmd);
@@ -44,9 +43,8 @@ char	**get_envp(t_var *env_vars);
 char	*get_command_path(char *cmd);
 
 // redirection.c
-int		execute_pipe(t_node *node, int io[2]);
-int		execute_redir_out(t_node *node, int io[2]);
-int		execute_redir_in(t_node *node, int io[2]);
+void	execute_redir_out(t_node *node);
+void	execute_redir_in(t_node *node);
 int		open_file(int fd_to_close, t_type type, char *file_name);
 
 #endif
