@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/09 20:15:12 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 17:00:30 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ void	prompt(void)
 			(free(tokenizer.line), vars_free(g_shell.vars),
 				exit(g_shell.exit_status));
 		(add_history(tokenizer.line), free(tokenizer.line));
-		g_shell.stop_child = false;
+		// g_shell.stop_child = false;
 	}
 }

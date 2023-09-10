@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 19:44:02 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 18:05:36 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "minishell.h"
 #include "libft.h"
 
-bool	is_builtin(const char *cmd)
+bool	try_builtin(t_token *cmd)
 {
 	const char	*builtins[] = {
 		"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
@@ -23,8 +23,13 @@ bool	is_builtin(const char *cmd)
 
 	i = -1;
 	while (builtins[++i])
-		if (streq(builtins[i], cmd))
+	{
+		if (streq(builtins[i], cmd->data))
+		{
+			g_shell.exit_status = execute_builtin(cmd);
 			return (true);
+		}
+	}
 	return (false);
 }
 

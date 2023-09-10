@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/09 20:15:58 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 18:02:59 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	execute_command(t_token *cmd)
 	int		status_code;
 	t_child	child;
 
+	if (try_builtin(cmd))
+		return ;
 	child.cmd = cmd;
 	child.path = get_command_path(cmd->data);
 	if (!child.path)

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 15:56:58 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/09 20:15:12 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 17:26:50 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 #include "libft.h"
+#include <stdio.h>
 #include <readline/readline.h>
 #include "minishell.h"
 
