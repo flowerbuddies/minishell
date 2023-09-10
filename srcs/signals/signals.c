@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 15:56:58 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 17:26:50 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:42:09 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	sig_interactive_mode(int signal)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_shell.exit_status = failure;
+	(void) signal;
 }
 
 void	sig_non_interactive_mode(int signal)

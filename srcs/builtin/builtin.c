@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 18:05:36 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:00:56 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ int	execute_builtin(t_token *cmd)
 		return (unset(cmd->next));
 	if (streq(cmd->data, "env"))
 		return (env(cmd->next));
+	// if (streq(cmd->data, "exit"))
+	// 	return (exit_builtin(cmd->next));
 	return (g_shell.exit_status);
 }
