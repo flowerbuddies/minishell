@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/08 19:43:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 19:13:23 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,80 +55,28 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 	return (fd);
 }
 
-// for this special case: `cat << end < test.c`
-// when a redir_in is chained after a heredoc
-static t_type	get_type(t_node *current)
+void	execute_redir(t_node *current)
 {
-	if (current->parent->type == HEREDOC)
-		return (HEREDOC);
-	return (current->type);
-}
-
-void	execute_redir_out(t_node *node)
-{
-	t_node	*current;
 	int		fd;
-	bool	is_first;
+	bool	is_redir_in;
 
-	current = node;
+	if (!current)
+		return ;
+	is_redir_in = (current->type == REDIR_IN || current->type == HEREDOC);
 	fd = -2;
-	is_first = true;
-	//error
-	if (fork() == 0)
+	while (current)
 	{
-		while (current && (current->type == REDIR_OUT
-				|| current->type == REDIR_OUT_APPEND))
-		{
-			if (!is_first && current->left->type == STRING)
-				fd = open_file(fd, current->type, current->left->token->data);
-			if (fd == -1)
-				return ;
-			if (current->right->type == STRING)
-				fd = open_file(fd, current->type, current->right->token->data);
-			if (fd == -1)
-				return ;
-			is_first = false;
-			current = current->right;
-		}
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-		execute(node->left);
-		exit(0);
+		fd = open_file(fd, current->type, current->token->data);
+		if (fd == -1)
+			return ;
+		if (is_redir_in)
+			current = current->redir_in;
+		else
+			current = current->redir_out;
 	}
-	int exit_status;
-	wait(&exit_status);
-}
-
-void	execute_redir_in(t_node *node)
-{
-	t_node	*current;
-	int		fd;
-	bool	is_first;
-
-	current = node;
-	fd = -2;
-	is_first = true;
-	if (fork() == 0)
-	{
-		while (current && (current->type == REDIR_IN
-				|| current->type == HEREDOC))
-		{
-			if (!is_first && current->left->type == STRING)
-				fd = open_file(fd, get_type(current), current->left->token->data);
-			if (fd == -1)
-				return ;
-			if (current->right->type == STRING)
-				fd = open_file(fd, current->type, current->right->token->data);
-			if (fd == -1)
-				return ;
-			is_first = false;
-			current = current->right;
-		}
+	if (is_redir_in)
 		dup2(fd, STDIN_FILENO);
-		close(fd);
-		execute(node->left);
-		exit(0);
-	}
-	int exit_status;
-	wait(&exit_status);
+	else
+		dup2(fd, STDOUT_FILENO);
+	close(fd);
 }

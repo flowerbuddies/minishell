@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:44:16 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/19 18:26:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 19:39:02 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_tokenizer
 }	t_tokenizer;
 
 // linked_list/setter.c
-t_token	*tokens_new(t_tokenizer *tokenizer);
+t_token	*tokens_new(void);
 void	tokens_append(t_tokenizer *tokenizer, t_type type, char *data);
 void	tokens_delete_at(t_tokenizer *tokenizer, int idx);
 void	tokens_free(t_token *tokens);
@@ -73,7 +73,6 @@ void	evaluate_env_vars(t_tokenizer *tokenizer);
 void	concat_string_tokens(t_tokenizer *tokenizer);
 void	delete_space_tokens(t_tokenizer *tokenizer);
 void	heredocs_prompt_user_input(t_tokenizer *tokenizer);
-void	single_sided_redirs(t_tokenizer *tokenizer);
 
 // states/*
 t_state	in_default_state(t_tokenizer *tokenizer, int i);
