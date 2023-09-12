@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/10 18:14:25 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/12 17:29:27 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	vars_free(t_var *var);
 
 //linked_list/getter.c
 t_var	*vars_find(t_var *list, char *name);
-void	vars_print(t_var *vars);
+void	vars_print(t_var *vars, bool prepend_declare);
 
 //path.c
 char	*find_cmd_in_path(char *cmd);

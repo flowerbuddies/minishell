@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 22:26:24 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/12 19:27:04 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,35 @@ void	execute(t_node *ast)
 
 void	execute_command(t_node *node)
 {
-	int		status_code;
-	char	*path;
+	char		*path;
+	const bool	is_a_builtin = is_builtin(node->token);
 
-	if (try_builtin(node->token))
-		return ;
-	path = get_command_path(node->token->data);
-	if (!path)
-		return ;
+	if (is_a_builtin)
+		execute_builtin(node->token, true);
+	else
+	{
+		path = get_command_path(node->token->data);
+		if (!path)
+			return ;
+	}
 	if (fork() == 0)
 	{
 		// error
 		execute_redir(node->redir_in);
 		execute_redir(node->redir_out);
+		if (is_a_builtin)
+			(execute_builtin(node->token, false), exit(g_shell.exit_status));
 		if (execve(path, get_argv(node->token), get_envp(g_shell.vars))
 			== -1)
 			action_failed("execve");
 	}
-	free((char *)path);
-	wait(&status_code);
-	// if (WIFSIGNALED(status_code))
-	// 	return (signal_base + WTERMSIG(status_code));
-	g_shell.exit_status = WEXITSTATUS(status_code);
+	if (!is_a_builtin)
+		free((char *)path);
+	wait((int *)&g_shell.exit_status);
+	if (WIFSIGNALED(g_shell.exit_status))
+		g_shell.exit_status = signal_base + WTERMSIG(g_shell.exit_status);
+	else
+		g_shell.exit_status = WEXITSTATUS(g_shell.exit_status);
 }
 
 void	execute_pipe(t_node *node)

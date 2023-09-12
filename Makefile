@@ -33,7 +33,8 @@ SRCS := $(addprefix srcs/,\
 	executor/path.c \
 	builtin/builtin.c \
 	builtin/echo_cd_pwd.c \
-	builtin/export_unset_env.c \
+	builtin/unset_env.c \
+	builtin/export.c \
 	signals/signals.c \
 )
 
@@ -47,7 +48,7 @@ TESTS_SRCS := $(addprefix tests/,\
 
 all: $(LIBFT) $(NAME)
 
-$(LIBFT): 
+$(LIBFT):
 	@make -C libft
 	@mv libft/$(LIBFT) .
 
@@ -60,7 +61,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 
-re: fclean all 
+re: fclean all
 
 debug: fclean
 	@echo "Compiling debug..."

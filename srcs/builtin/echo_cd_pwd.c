@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cd_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 20:02:39 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:15:39 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static void	update_pwd_var(char *var_name);
 
-int	echo(t_token *cmd)
+void	echo(t_token *cmd)
 {
 	bool	trailing_nl;
 	bool	is_first;
@@ -41,10 +41,9 @@ int	echo(t_token *cmd)
 	}
 	if (trailing_nl)
 		write(1, "\n", 1);
-	return (success);
 }
 
-int	cd(t_token *cmd)
+void	cd(t_token *cmd, bool is_parent)
 {
 	char	*path;
 	t_var	*home_var;
@@ -55,14 +54,23 @@ int	cd(t_token *cmd)
 	{
 		home_var = vars_find(g_shell.vars, "HOME");
 		if (!home_var)
-			return (write(1, "\e[31;1mError:\e[0m $HOME not set\n", 32), failure);
+		{
+			g_shell.exit_status = failure;
+			if (!is_parent)
+				ft_putstr_fd("\e[31;1mError:\e[0m $HOME not set\n", 2);
+			return ;
+		}
 		path = home_var->value;
 	}
 	update_pwd_var("OLDPWD");
 	if (chdir(path))
-		action_failed("chdir");
+	{
+		g_shell.exit_status = failure;
+		if (!is_parent)
+			ft_putstr_fd("\e[31;1mError:\e[0m No such file or directory\n", 2);
+		return ;
+	}
 	update_pwd_var("PWD");
-	return (success);
 }
 
 static void	update_pwd_var(char *var_name)
@@ -83,7 +91,7 @@ static void	update_pwd_var(char *var_name)
 	}
 }
 
-int	pwd(void)
+void	pwd(void)
 {
 	const char	*cwd = getcwd(NULL, 0);
 
@@ -92,5 +100,4 @@ int	pwd(void)
 	write(1, cwd, ft_strlen(cwd));
 	write(1, "\n", 1);
 	free((char *)cwd);
-	return (success);
 }

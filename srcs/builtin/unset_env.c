@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getter.c                                           :+:      :+:    :+:   */
+/*   export_unset_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 17:29:00 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/12 17:29:17 by marmulle         ###   ########.fr       */
+/*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
+/*   Updated: 2023/09/12 18:58:10 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtin.h"
 #include "env_var.h"
+#include "minishell.h"
 #include "libft.h"
+#include <stdlib.h>
 
-t_var	*vars_find(t_var *vars, char *name)
+void	unset(t_token *cmd)
 {
-	while (vars)
-	{
-		if (streq(vars->name, name))
-			return (vars);
-		vars = vars->next;
-	}
-	return (NULL);
+	if (!cmd)
+		return ;
+	vars_delete_at(g_shell.vars, cmd->data);
 }
 
-void	vars_print(t_var *vars, bool prepend_declare)
+void	env(void)
 {
-	while (vars)
-	{
-		if (prepend_declare)
-			ft_printf("declare -x ");
-		ft_printf("%s=%s\n", vars->name, vars->value);
-		vars = vars->next;
-	}
+	vars_print(g_shell.vars, false);
 }
