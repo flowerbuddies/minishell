@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 22:26:50 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/12 20:42:23 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "minishell.h"
 #include "executor.h"
 #include "signals.h"
+#include "builtin.h"
 #include <signal.h>
 
 //TODO: slipt this function into multiple
@@ -54,9 +55,8 @@ void	prompt(void)
 		}
 		else
 			(tokens_free(tokenizer.tokens), g_shell.exit_status = syntax_error);
-		if (streq(tokenizer.line, "exit"))
-			(free(tokenizer.line), vars_free(g_shell.vars),
-				exit(g_shell.exit_status));
 		(add_history(tokenizer.line), free(tokenizer.line));
+		if (g_shell.exit_needed)
+			(vars_free(g_shell.vars), exit(g_shell.exit_status));
 	}
 }

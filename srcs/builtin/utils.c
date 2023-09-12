@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 19:10:32 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/12 20:18:31 by marmulle         ###   ########.fr       */
+/*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
+/*   Updated: 2023/09/12 19:50:55 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "builtin.h"
+#include <stdlib.h>
 
-# include "env_var.h"
-# include <unistd.h>
-
-struct s_shell
+int	len2d(char **array)
 {
-	t_var			*vars;
-	int				vars_len;
+	int	len;
 
-	t_exit_status	exit_status;
+	len = 0;
+	while (array[len])
+		len++;
+	return (len);
+}
 
-	bool			nl_needed;
-	bool			exit_needed;
-}					g_shell;
+void	free2d(char **array)
+{
+	int	len;
 
-void	action_failed(char *action);
-bool	streq(const char *s1, const char *s2);
-
-#endif
+	if (!array)
+		return ;
+	len = 0;
+	while (array[len])
+		if (array[len])
+			free(array[len++]);
+	if (array)
+		free(array);
+}

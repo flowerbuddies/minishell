@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 19:07:28 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:38:24 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,6 @@
 #include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
-
-static int	array_len(char **array)
-{
-	int	len;
-
-	len = 0;
-	while (array[len])
-		len++;
-	return (len);
-}
-
-static void	free2d(char **array)
-{
-	int	len;
-
-	if (!array)
-		return ;
-	len = 0;
-	while (array[len])
-		if (array[len])
-			free(array[len++]);
-	if (array)
-		free(array);
-}
 
 static bool	is_valid_identifier(char *str)
 {
@@ -59,6 +35,7 @@ void	export(t_token *cmd, bool is_parent)
 	char	**parts;
 	int		parts_len;
 
+	g_shell.exit_status = success;
 	if (!cmd)
 	{
 		if (!is_parent)
@@ -70,8 +47,8 @@ void	export(t_token *cmd, bool is_parent)
 	parts = ft_split(cmd->data, '=');
 	if (!parts)
 		return ((void)(g_shell.exit_status = failure));
-	parts_len = array_len(parts);
-	if (parts_len != 1 && parts_len != 2) //TODO: fix export 5f
+	parts_len = len2d(parts);
+	if (parts_len != 1 && parts_len != 2) //TODO(mark): fix export 5f
 	{
 		g_shell.exit_status = failure;
 		return (free2d(parts));

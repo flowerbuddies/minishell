@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 19:38:37 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:39:28 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	execute_builtin(t_token *cmd, bool is_parent)
 	int			i;
 
 	i = -1;
-	if (is_parent)
-		g_shell.exit_status = success;
 	while (builtins[++i])
 	{
 		if (streq(cmd->data, "echo") && !is_parent)
@@ -51,5 +49,7 @@ void	execute_builtin(t_token *cmd, bool is_parent)
 			return (unset(cmd->next));
 		if (streq(cmd->data, "env") && !is_parent)
 			return (env());
+		if (streq(cmd->data, "exit") && is_parent)
+			return (exit_builtin(cmd->next));
 	}
 }

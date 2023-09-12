@@ -32,8 +32,9 @@ SRCS := $(addprefix srcs/,\
 	executor/argv_envp.c \
 	executor/path.c \
 	builtin/builtin.c \
+	builtin/utils.c \
 	builtin/echo_cd_pwd.c \
-	builtin/unset_env.c \
+	builtin/unset_env_exit.c \
 	builtin/export.c \
 	signals/signals.c \
 )

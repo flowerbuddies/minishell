@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 19:15:39 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:38:10 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	echo(t_token *cmd)
 	bool	trailing_nl;
 	bool	is_first;
 
+	g_shell.exit_status = success;
 	trailing_nl = true;
 	if (cmd && streq(cmd->data, "-n"))
 	{
@@ -48,6 +49,7 @@ void	cd(t_token *cmd, bool is_parent)
 	char	*path;
 	t_var	*home_var;
 
+	g_shell.exit_status = success;
 	if (cmd)
 		path = cmd->data;
 	else
@@ -95,6 +97,7 @@ void	pwd(void)
 {
 	const char	*cwd = getcwd(NULL, 0);
 
+	g_shell.exit_status = success;
 	if (!cwd)
 		action_failed("getcwd");
 	write(1, cwd, ft_strlen(cwd));
