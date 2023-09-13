@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 20:42:23 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 14:38:08 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@ void	prompt(void)
 		signal(SIGQUIT, SIG_IGN);
 		if (g_shell.nl_needed)
 		{
-			ft_printf("\n");
+			ft_printf("\n"); // TODO: enable for SIGQUIT
 			g_shell.nl_needed = false;
 		}
 		tokenizer.line = readline("MiniHell $ ");
 		if (!tokenizer.line)
 			(vars_free(g_shell.vars), exit(0));
 		if (!tokenizer.line[0])
+		{
+			free(tokenizer.line);
 			continue ;
+		}
 		tokenize(&tokenizer);
 		if (tokenizer.errored) //TODO: replace this by individual action_failed
 			action_failed("tokenize's mallocs");
@@ -51,10 +54,11 @@ void	prompt(void)
 			signal(SIGQUIT, sig_non_interactive_mode);
 			execute(ast);
 			free_ast(ast);
-			// TODO: `ls |` leaks
+			// TODO: `ls |` leaks --(mark) seems not to leak anymore
 		}
 		else
-			(tokens_free(tokenizer.tokens), g_shell.exit_status = syntax_error);
+			g_shell.exit_status = syntax_error;
+		tokens_free(tokenizer.tokens);
 		(add_history(tokenizer.line), free(tokenizer.line));
 		if (g_shell.exit_needed)
 			(vars_free(g_shell.vars), exit(g_shell.exit_status));

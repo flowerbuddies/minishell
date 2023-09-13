@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_constructor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 21:09:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 14:34:01 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	append_arg(t_node *out, t_token *arg_str)
 
 	*current = tokens_new();
 	(*current)->type = STRING;
-	(*current)->data = ft_strdup(arg_str->data);
+	(*current)->data = ft_strdup(arg_str->data); //TODO: possible leak when called from extract_cmd
 }
 
 t_node	*extract_cmd(t_token *current)
@@ -80,8 +80,9 @@ t_node	*extract_cmd(t_token *current)
 			current = current->next;
 		current = current->next;
 	}
-	if (out->token == NULL)
+	if (out->token == NULL) //TODO: what's this? possible leak when setting data?
 	{
+		ft_printf("[PING extract_cmd/out->token is null]\n");
 		out->token = tokens_new();
 		out->token->type = STRING;
 		out->token->data = ft_strdup("/usr/bin/true");
@@ -105,7 +106,11 @@ t_node	*extract_pipes(t_token *start)
 			out->type = PIPE;
 			out->right = extract_pipes(current->next);
 			if (prev)
+			{
+				if (prev->next && prev->next->next)
+					tokens_free(prev->next->next);
 				prev->next = NULL;
+			}
 			out->left = extract_pipes(start);
 			free(current);
 			return (out);
