@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 19:27:04 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:23:19 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	execute_command(t_node *node)
 	if (fork() == 0)
 	{
 		// error
-		execute_redir(node->redir_in);
-		execute_redir(node->redir_out);
+		if (!execute_redir(node->redir_in) || !execute_redir(node->redir_out))
+			exit(g_shell.exit_status);
 		if (is_a_builtin)
 			(execute_builtin(node->token, false), exit(g_shell.exit_status));
 		if (execve(path, get_argv(node->token), get_envp(g_shell.vars))

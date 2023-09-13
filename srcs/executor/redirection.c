@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/13 16:36:19 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:21:40 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,17 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 	else if (type == REDIR_IN)
 		flags = O_RDONLY;
 	if (type == REDIR_IN && access(file_name, F_OK) == -1)
-		return (print_error("file `%s` doesn't exist", file_name), -1);
+	{
+		print_error("file `%s` doesn't exist", file_name);
+		g_shell.exit_status = failure;
+		return (-1);
+	}
 	if (type == REDIR_IN && access(file_name, R_OK) == -1)
-		return (print_error("can't read the file `%s`", file_name), -1);
+	{
+		print_error("can't read the file `%s`", file_name);
+		g_shell.exit_status = failure;
+		return (-1);
+	}
 	fd = open(file_name, flags, DEFAULT_FILE_PERMISSIONS);
 	if (fd == -1)
 	{
@@ -56,20 +64,20 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 	return (fd);
 }
 
-void	execute_redir(t_node *current)
+bool	execute_redir(t_node *current)
 {
 	int		fd;
 	bool	is_redir_in;
 
 	if (!current)
-		return ;
+		return (true);
 	is_redir_in = (current->type == REDIR_IN || current->type == HEREDOC);
 	fd = -2;
 	while (current)
 	{
 		fd = open_file(fd, current->type, current->token->data);
 		if (fd == -1)
-			return ;
+			return (false);
 		if (is_redir_in)
 			current = current->redir_in;
 		else
@@ -80,4 +88,5 @@ void	execute_redir(t_node *current)
 	else
 		dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (true);
 }

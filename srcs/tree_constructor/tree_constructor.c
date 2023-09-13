@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 16:40:09 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:29:06 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	append_redir_in(t_node *out, t_type type, t_token *redir_str)
 		out = out->redir_in;
 	out->redir_in = new_node();
 	out->redir_in->type = type;
-	out->redir_in->token = redir_str;
+	out->redir_in->token = tokens_new();
+	out->redir_in->token->data = ft_strdup(redir_str->data);
+	out->redir_in->token->next = NULL;
+	out->redir_in->token->type = STRING;
 }
 
 void	append_redir_out(t_node *out, t_type type, t_token *redir_str)
@@ -45,7 +48,10 @@ void	append_redir_out(t_node *out, t_type type, t_token *redir_str)
 		out = out->redir_out;
 	out->redir_out = new_node();
 	out->redir_out->type = type;
-	out->redir_out->token = redir_str;
+	out->redir_out->token = tokens_new();
+	out->redir_out->token->data = ft_strdup(redir_str->data);
+	out->redir_out->token->next = NULL;
+	out->redir_out->token->type = STRING;
 }
 
 void	append_arg(t_node *out, t_token *arg_str)
@@ -153,8 +159,9 @@ void	free_ast(t_node *node)
 		return ;
 	free_ast(node->left);
 	free_ast(node->right);
-	// free_ast(node->redir_in);
+	free_ast(node->redir_in);
 	free_ast(node->redir_out);
-	//TODO: `> omg /bin/echo hi > out` leaks
+	if (node->token)
+		tokens_free(node->token);
 	free(node);
 }
