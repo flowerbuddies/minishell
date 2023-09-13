@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/13 18:23:39 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:37:27 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,28 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 
 bool	execute_redir(t_token *current)
 {
-	int		fd;
+	int	fd_in;
+	int	fd_out;
 
 	if (!current)
 		return (true);
-	fd = -2;
+	fd_in = -2;
+	fd_out = -2;
 	while (current)
 	{
-		fd = open_file(fd, current->type, current->data);
-		if (fd == -1)
+		if (current->type == REDIR_IN || current->type == HEREDOC)
+			fd_in = open_file(fd_in, current->type, current->data);
+		else
+			fd_out = open_file(fd_out, current->type, current->data);
+		if (fd_in == -1 || fd_out == -1)
 			return (false);
 		if (!current->next)
 			break ;
 		current = current->next;
 	}
-	if (current->type == REDIR_IN || current->type == HEREDOC)
-		dup2(fd, STDIN_FILENO);
-	else
-		dup2(fd, STDOUT_FILENO);
-	close(fd);
+	if (fd_in != -2)
+		(dup2(fd_in, STDIN_FILENO), close(fd_in));
+	if (fd_out != -2)
+		(dup2(fd_out, STDOUT_FILENO), close(fd_out));
 	return (true);
 }

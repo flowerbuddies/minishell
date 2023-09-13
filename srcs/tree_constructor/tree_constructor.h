@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_constructor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 18:02:46 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:43:15 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ typedef struct s_node
 	struct s_node	*right;
 
 	t_token			*token;
-	t_token			*redir_in;
-	t_token			*redir_out;
+	t_token			*redirs;
 }	t_node;
 
 // tree_constructor.c

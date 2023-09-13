@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_constructor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 19:19:43 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:40:03 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ t_node	*new_node(void)
 	out->left = NULL;
 	out->right = NULL;
 	out->token = NULL;
-	out->redir_in = NULL;
-	out->redir_out = NULL;
+	out->redirs = NULL;
 	return (out);
 }
 
@@ -47,13 +46,10 @@ t_node	*extract_cmd(t_token *current)
 	out->type = STRING;
 	while (current && !current->gate)
 	{
-		if (current->type == REDIR_IN || current->type == HEREDOC)
-			append_token(&out->redir_in, current->next, current->type);
-		else if (current->type == REDIR_OUT
-			|| current->type == REDIR_OUT_APPEND)
-			append_token(&out->redir_out, current->next, current->type);
-		else
+		if (current->type == STRING)
 			append_token(&out->token, current, current->type);
+		else
+			append_token(&out->redirs, current->next, current->type);
 		if (current->type != STRING)
 			current = current->next;
 		current = current->next;
@@ -133,9 +129,7 @@ void	free_ast(t_node *node)
 	free_ast(node->right);
 	if (node->token)
 		tokens_free(node->token);
-	if (node->redir_in)
-		tokens_free(node->redir_in);
-	if (node->redir_out)
-		tokens_free(node->redir_out);
+	if (node->redirs)
+		tokens_free(node->redirs);
 	free(node);
 }
