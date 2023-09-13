@@ -25,7 +25,6 @@ SRCS := $(addprefix srcs/,\
 	tokenizer/post_process/concat_strings.c \
 	tokenizer/post_process/delete_spaces.c \
 	tokenizer/post_process/heredoc.c \
-	tokenizer/post_process/single_sided_redirs.c \
 	syntax_checker/syntax_checker.c \
 	tree_constructor/tree_constructor.c \
 	executor/executor.c \
@@ -33,8 +32,10 @@ SRCS := $(addprefix srcs/,\
 	executor/argv_envp.c \
 	executor/path.c \
 	builtin/builtin.c \
+	builtin/utils.c \
 	builtin/echo_cd_pwd.c \
-	builtin/export_unset_env.c \
+	builtin/unset_env_exit.c \
+	builtin/export.c \
 	signals/signals.c \
 )
 
@@ -48,7 +49,7 @@ TESTS_SRCS := $(addprefix tests/,\
 
 all: $(LIBFT) $(NAME)
 
-$(LIBFT): 
+$(LIBFT):
 	@make -C libft
 	@mv libft/$(LIBFT) .
 
@@ -61,7 +62,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 
-re: fclean all 
+re: fclean all
 
 debug: fclean
 	@echo "Compiling debug..."
@@ -71,7 +72,7 @@ debug: fclean
 debug-leaks:
 	@echo "Compiling debug using leaks..."
 	@cc $(FLAGS) $(DEBUG) -fno-sanitize=all $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
-	@leaks -q --atExit -- ./$(NAME)
+	@./$(NAME)
 
 test: re
 	@echo "Compiling tests..."

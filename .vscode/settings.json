@@ -15,6 +15,7 @@
     "__locale": "c",
     "ios": "c",
     "ostream": "c",
-    "__node_handle": "c"
+    "__node_handle": "c",
+    "__config": "c"
   }
 }

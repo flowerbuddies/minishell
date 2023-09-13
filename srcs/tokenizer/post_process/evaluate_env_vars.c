@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   evaluate_env_vars.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 18:59:58 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/10 17:34:25 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 19:02:04 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ void	evaluate_env_vars(t_tokenizer *tokenizer)
 		{
 			current->type = STRING;
 			if (current->data[0] == '?' && current->data[1] == '\0')
+			{
+				free(current->data);
 				current->data = ft_itoa(g_shell.exit_status);
+			}
 			else
 			{
-				var = vars_find(g_shell.vars, current->data);
+				var = vars_find(current->data);
 				free(current->data);
 				if (var)
 					current->data = ft_strdup(var->value);

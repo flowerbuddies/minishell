@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 18:07:15 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 19:01:55 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*find_cmd_in_dir(const char *dir_name, char *cmd)
 char	*find_cmd_in_path(char *cmd)
 {
 	const char	**dirs = (const char **)
-		ft_split(vars_find(g_shell.vars, "PATH")->value, ':');
+		ft_split(vars_find("PATH")->value, ':');
 	int			i;
 	char		*cmd_path;
 

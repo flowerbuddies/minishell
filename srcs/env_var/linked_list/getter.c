@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:29:00 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/10 18:19:35 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 19:00:49 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,30 @@
 #include "env_var.h"
 #include "libft.h"
 
-t_var	*vars_find(t_var *vars, char *name)
+t_var	*vars_find(char *name)
 {
-	while (vars)
+	t_var	*current;
+
+	current = g_shell.vars;
+	while (current)
 	{
-		if (streq(vars->name, name))
-			return (vars);
-		vars = vars->next;
+		if (streq(current->name, name))
+			return (current);
+		current = current->next;
 	}
 	return (NULL);
 }
 
-void	vars_print(t_var *vars)
+void	vars_print(bool prepend_declare)
 {
-	while (vars)
+	t_var	*current;
+
+	current = g_shell.vars;
+	while (current)
 	{
-		ft_printf("%s=%s\n", vars->name, vars->value);
-		vars = vars->next;
+		if (prepend_declare)
+			ft_printf("declare -x ");
+		ft_printf("%s=%s\n", current->name, current->value);
+		current = current->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 19:00:56 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:39:28 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,41 @@
 #include "minishell.h"
 #include "libft.h"
 
-bool	try_builtin(t_token *cmd)
+bool	is_builtin(t_token *cmd)
 {
 	const char	*builtins[] = {
-		"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
+		"cd", "export", "unset", "echo", "pwd", "env", "exit", NULL};
+	int			i;
+
+	i = -1;
+	while (builtins[++i])
+		if (streq(builtins[i], cmd->data))
+			return (true);
+	return (false);
+}
+
+void	execute_builtin(t_token *cmd, bool is_parent)
+{
+	const char	*builtins[] = {
+		"cd", "export", "unset", "echo", "pwd", "env", "exit", NULL};
 	int			i;
 
 	i = -1;
 	while (builtins[++i])
 	{
-		if (streq(builtins[i], cmd->data))
-		{
-			g_shell.exit_status = execute_builtin(cmd);
-			return (true);
-		}
+		if (streq(cmd->data, "echo") && !is_parent)
+			return (echo(cmd->next));
+		if (streq(cmd->data, "cd"))
+			return (cd(cmd->next, is_parent));
+		if (streq(cmd->data, "pwd") && !is_parent)
+			return (pwd());
+		if (streq(cmd->data, "export"))
+			return (export(cmd->next, is_parent));
+		if (streq(cmd->data, "unset"))
+			return (unset(cmd->next));
+		if (streq(cmd->data, "env") && !is_parent)
+			return (env());
+		if (streq(cmd->data, "exit") && is_parent)
+			return (exit_builtin(cmd->next));
 	}
-	return (false);
-}
-
-int	execute_builtin(t_token *cmd)
-{
-	if (streq(cmd->data, "echo"))
-		return (echo(cmd->next));
-	if (streq(cmd->data, "cd"))
-		return (cd(cmd->next));
-	if (streq(cmd->data, "pwd"))
-		return (pwd());
-	if (streq(cmd->data, "export"))
-		return (export(cmd->next));
-	if (streq(cmd->data, "unset"))
-		return (unset(cmd->next));
-	if (streq(cmd->data, "env"))
-		return (env(cmd->next));
-	// if (streq(cmd->data, "exit"))
-	// 	return (exit_builtin(cmd->next));
-	return (g_shell.exit_status);
 }

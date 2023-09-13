@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:13:27 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/01 01:28:07 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 23:53:16 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,18 @@ static bool	is_special(t_type type)
 
 static bool	check_consecutive_special(t_tokenizer *tokenizer)
 {
+	t_token	*prev;
 	t_token	*current;
-	bool	prev_was_special;
 
+	prev = NULL;
 	current = tokenizer->tokens;
-	prev_was_special = false;
 	while (current)
 	{
-		if (is_special(current->type))
-		{
-			if (prev_was_special)
+		if (prev && is_special(prev->type) && is_special(current->type))
+			if (!(prev->type == PIPE && current->type != PIPE))
 				return (print_error("At least 2 consecutive special operators\
  (pipe/heredoc/redirectors)", -1, NULL), false);
-			prev_was_special = true;
-		}
-		else
-			prev_was_special = false;
+		prev = current;
 		current = current->next;
 	}
 	return (true);

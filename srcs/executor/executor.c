@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 18:02:59 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 22:34:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,40 @@ void	execute(t_node *ast)
 		return ;
 	if (ast->type == PIPE)
 		return (execute_pipe(ast));
-	if (ast->type == REDIR_OUT || ast->type == REDIR_OUT_APPEND)
-		return (execute_redir_out(ast));
-	if (ast->type == REDIR_IN || ast->type == HEREDOC)
-		return (execute_redir_in(ast));
-	return (execute_command(ast->token));
+	return (execute_command(ast));
 }
 
-void	execute_command(t_token *cmd)
+void	execute_command(t_node *node)
 {
-	int		status_code;
-	t_child	child;
+	char		*path;
+	const bool	is_a_builtin = is_builtin(node->token);
 
-	if (try_builtin(cmd))
-		return ;
-	child.cmd = cmd;
-	child.path = get_command_path(cmd->data);
-	if (!child.path)
-		return ;
+	if (is_a_builtin)
+		execute_builtin(node->token, true);
+	else
+	{
+		path = get_command_path(node->token->data);
+		if (!path)
+			return ;
+	}
 	if (fork() == 0)
 	{
 		// error
-		if (execve(child.path, get_argv(child.cmd), get_envp(g_shell.vars))
+		if (!execute_redir(node->redirs))
+			exit(g_shell.exit_status);
+		if (is_a_builtin)
+			(execute_builtin(node->token, false), exit(g_shell.exit_status));
+		if (execve(path, get_argv(node->token), get_envp(g_shell.vars))
 			== -1)
 			action_failed("execve");
 	}
-	wait(&status_code);
-	// if (WIFSIGNALED(status_code))
-	// 	return (signal_base + WTERMSIG(status_code));
-	g_shell.exit_status = WEXITSTATUS(status_code);
+	if (!is_a_builtin)
+		free((char *)path);
+	wait((int *)&g_shell.exit_status);
+	if (WIFSIGNALED(g_shell.exit_status))
+		g_shell.exit_status = signal_base + WTERMSIG(g_shell.exit_status);
+	else
+		g_shell.exit_status = WEXITSTATUS(g_shell.exit_status);
 }
 
 void	execute_pipe(t_node *node)
@@ -91,7 +96,7 @@ void	execute_pipe(t_node *node)
 	if (WTERMSIG(status_code) == SIGPIPE)
 		ft_putchar_fd('\n', 1);
 	waitpid(pid_right, &status_code, 0);
-	if (WTERMSIG(status_code) == SIGPIPE)
+	if (WTERMSIG(status_code) == SIGPIPE) //TODO: test exhaustively
 		ft_putchar_fd('\n', 1);
 	g_shell.exit_status = WEXITSTATUS(status_code);
 }

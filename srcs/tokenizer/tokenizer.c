@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 01:33:31 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/19 18:26:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/10 19:39:05 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	init_tokenizer(t_tokenizer *tokenizer)
 {
 	tokenizer->errored = false;
-	tokenizer->tokens = tokens_new(tokenizer);
+	tokenizer->tokens = tokens_new();
 	if (tokenizer->errored)
 		return ;
 	tokenizer->i = -1;
@@ -47,5 +47,4 @@ void	tokenize(t_tokenizer *tokenizer)
 	concat_string_tokens(tokenizer);
 	delete_space_tokens(tokenizer);
 	heredocs_prompt_user_input(tokenizer);
-	single_sided_redirs(tokenizer);
 }

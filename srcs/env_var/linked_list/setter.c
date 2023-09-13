@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/03 17:46:11 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:02:00 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,35 @@ t_var	*vars_new(char *name, char *value)
 	return (var);
 }
 
-void	vars_append(t_var **vars, t_var *var)
+void	vars_append(t_var *var)
 {
 	t_var	*current;
 
 	g_shell.vars_len++;
-	if (*vars == NULL)
+	if (g_shell.vars == NULL)
 	{
-		*vars = var;
+		g_shell.vars = var;
 		return ;
 	}
-	current = *vars;
+	current = g_shell.vars;
 	while (current->next)
 		current = current->next;
 	current->next = var;
 	var->prev = current;
 }
 
-void	vars_delete_at(t_var *vars, char *name)
+void	vars_delete_at(char *name)
 {
-	t_var	*previous;
 	t_var	*current;
 
-	current = vars_find(vars, name);
+	current = vars_find(name);
 	if (!current)
 		return ;
-	g_shell.vars_len--;
-	previous = current->prev;
-	previous->next = current->next;
+	g_shell.vars_len--; //TODO: useful, really?
+	if (current->prev)
+		current->prev->next = current->next;
+	else
+		g_shell.vars = current->next;
 	if (current->name)
 		free(current->name);
 	if (current->value)
