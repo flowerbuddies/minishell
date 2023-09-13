@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 17:44:16 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 19:39:02 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 16:10:08 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_token
 	t_type			type;
 	char			*data;
 	struct s_token	*next;
+	bool			gate;
 }	t_token;
 
 typedef struct s_tokenizer

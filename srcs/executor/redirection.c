@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/10 19:13:23 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 16:36:19 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 	int	flags;
 	int	fd;
 
-	close(fd_to_close);
+	if (fd_to_close != -2)
+		close(fd_to_close);
 	if (type == HEREDOC)
 		return (get_heredoc_fd(file_name));
 	flags = O_CREAT | O_WRONLY | O_TRUNC;

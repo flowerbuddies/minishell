@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 14:34:01 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 16:40:09 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_node	*extract_cmd(t_token *current)
 
 	out = new_node();
 	out->type = STRING;
-	while (current)
+	while (current && !current->gate)
 	{
 		if (current->type == REDIR_IN || current->type == HEREDOC)
 			append_redir_in(out, current->type, current->next);
@@ -82,7 +82,6 @@ t_node	*extract_cmd(t_token *current)
 	}
 	if (out->token == NULL) //TODO: what's this? possible leak when setting data?
 	{
-		ft_printf("[PING extract_cmd/out->token is null]\n");
 		out->token = tokens_new();
 		out->token->type = STRING;
 		out->token->data = ft_strdup("/usr/bin/true");
@@ -93,32 +92,22 @@ t_node	*extract_cmd(t_token *current)
 t_node	*extract_pipes(t_token *start)
 {
 	t_node	*out;
-	t_token	*prev;
 	t_token	*current;
 
-	out = new_node();
-	prev = NULL;
 	current = start;
-	while (current)
+	while (current && !current->gate)
 	{
 		if (current->type == PIPE)
 		{
+			out = new_node();
 			out->type = PIPE;
-			out->right = extract_pipes(current->next);
-			if (prev)
-			{
-				if (prev->next && prev->next->next)
-					tokens_free(prev->next->next);
-				prev->next = NULL;
-			}
+			current->gate = true;
 			out->left = extract_pipes(start);
-			free(current);
+			out->right = extract_pipes(current->next);
 			return (out);
 		}
-		prev = current;
 		current = current->next;
 	}
-	free(out);
 	return (extract_cmd(start));
 }
 
@@ -165,9 +154,7 @@ void	free_ast(t_node *node)
 	free_ast(node->left);
 	free_ast(node->right);
 	// free_ast(node->redir_in);
-	// free_ast(node->redir_out);
+	free_ast(node->redir_out);
 	//TODO: `> omg /bin/echo hi > out` leaks
-	if (node->token)
-		tokens_free(node->token);
 	free(node);
 }

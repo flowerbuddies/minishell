@@ -72,7 +72,7 @@ debug: fclean
 debug-leaks:
 	@echo "Compiling debug using leaks..."
 	@cc $(FLAGS) $(DEBUG) -fno-sanitize=all $(LIBFT) $(SRCS) srcs/minishell.c -o $(NAME)
-	@leaks -q --atExit -- ./$(NAME)
+	@./$(NAME)
 
 test: re
 	@echo "Compiling tests..."

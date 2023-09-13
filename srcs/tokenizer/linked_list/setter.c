@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:21 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/10 17:55:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 16:10:03 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_token	*tokens_new(void)
 	if (!out)
 		action_failed("tokens_new");
 	out->type = _NOT_SET;
+	out->gate = false;
 	out->data = NULL;
 	out->next = NULL;
 	return (out);
