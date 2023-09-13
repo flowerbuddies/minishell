@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 18:59:58 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/13 15:36:49 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:02:04 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	evaluate_env_vars(t_tokenizer *tokenizer)
 			}
 			else
 			{
-				var = vars_find(g_shell.vars, current->data);
+				var = vars_find(current->data);
 				free(current->data);
 				if (var)
 					current->data = ft_strdup(var->value);

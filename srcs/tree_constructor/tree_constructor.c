@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 17:29:06 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:19:43 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,41 +30,13 @@ t_node	*new_node(void)
 	return (out);
 }
 
-void	append_redir_in(t_node *out, t_type type, t_token *redir_str)
+void	append_token(t_token **current, t_token *token, t_type type)
 {
-	while (out->redir_in)
-		out = out->redir_in;
-	out->redir_in = new_node();
-	out->redir_in->type = type;
-	out->redir_in->token = tokens_new();
-	out->redir_in->token->data = ft_strdup(redir_str->data);
-	out->redir_in->token->next = NULL;
-	out->redir_in->token->type = STRING;
-}
-
-void	append_redir_out(t_node *out, t_type type, t_token *redir_str)
-{
-	while (out->redir_out)
-		out = out->redir_out;
-	out->redir_out = new_node();
-	out->redir_out->type = type;
-	out->redir_out->token = tokens_new();
-	out->redir_out->token->data = ft_strdup(redir_str->data);
-	out->redir_out->token->next = NULL;
-	out->redir_out->token->type = STRING;
-}
-
-void	append_arg(t_node *out, t_token *arg_str)
-{
-	t_token	**current;
-
-	current = &out->token;
 	while (*current)
 		current = &((*current)->next);
-
 	*current = tokens_new();
-	(*current)->type = STRING;
-	(*current)->data = ft_strdup(arg_str->data); //TODO: possible leak when called from extract_cmd
+	(*current)->type = type;
+	(*current)->data = ft_strdup(token->data); //TODO: possible leak when called from extract_cmd
 }
 
 t_node	*extract_cmd(t_token *current)
@@ -76,12 +48,12 @@ t_node	*extract_cmd(t_token *current)
 	while (current && !current->gate)
 	{
 		if (current->type == REDIR_IN || current->type == HEREDOC)
-			append_redir_in(out, current->type, current->next);
+			append_token(&out->redir_in, current->next, current->type);
 		else if (current->type == REDIR_OUT
 			|| current->type == REDIR_OUT_APPEND)
-			append_redir_out(out, current->type, current->next);
+			append_token(&out->redir_out, current->next, current->type);
 		else
-			append_arg(out, current);
+			append_token(&out->token, current, current->type);
 		if (current->type != STRING)
 			current = current->next;
 		current = current->next;
@@ -123,35 +95,35 @@ t_node	*construct_ast(t_token *start)
 	//TODO: check for leaks
 }
 
-void	print_ast(t_node *first)
-{
-	t_token	*tmp_token;
-	t_node	*tmp_node;
+// void	print_ast(t_node *first)
+// {
+// 	t_token	*tmp_token;
+// 	t_node	*tmp_node;
 
-	if (!first)
-		return ;
-	if (first->type == PIPE)
-		ft_printf("|\n");
-	else if (first->type == STRING)
-	{
-		tmp_token = first->token;
-		while (tmp_token)
-		{
-			ft_printf("%s ", tmp_token->data);
-			tmp_token = tmp_token->next;
-		}
-		ft_printf("\n\t");
-		tmp_node = first->redir_out;
-		while (tmp_node)
-		{
-			ft_printf("> %s ", tmp_node->token->data);
-			tmp_node = tmp_node->redir_out;
-		}
-		ft_printf("\n");
-	}
-	print_ast(first->left);
-	print_ast(first->right);
-}
+// 	if (!first)
+// 		return ;
+// 	if (first->type == PIPE)
+// 		ft_printf("|\n");
+// 	else if (first->type == STRING)
+// 	{
+// 		tmp_token = first->token;
+// 		while (tmp_token)
+// 		{
+// 			ft_printf("%s ", tmp_token->data);
+// 			tmp_token = tmp_token->next;
+// 		}
+// 		ft_printf("\n\t");
+// 		tmp_node = first->redir_out;
+// 		while (tmp_node)
+// 		{
+// 			ft_printf("> %s ", tmp_node->token->data);
+// 			tmp_node = tmp_node->redir_out;
+// 		}
+// 		ft_printf("\n");
+// 	}
+// 	print_ast(first->left);
+// 	print_ast(first->right);
+// }
 
 void	free_ast(t_node *node)
 {
@@ -159,9 +131,11 @@ void	free_ast(t_node *node)
 		return ;
 	free_ast(node->left);
 	free_ast(node->right);
-	free_ast(node->redir_in);
-	free_ast(node->redir_out);
 	if (node->token)
 		tokens_free(node->token);
+	if (node->redir_in)
+		tokens_free(node->redir_in);
+	if (node->redir_out)
+		tokens_free(node->redir_out);
 	free(node);
 }

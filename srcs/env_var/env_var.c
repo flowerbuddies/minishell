@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/07/10 17:35:34 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/13 19:01:40 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_env_vars(char **ev)
 		while (splits[len])
 			len++;
 		if (len == 1 || len == 2)
-			vars_append(&g_shell.vars, vars_new(splits[0], splits[1]));
+			vars_append(vars_new(splits[0], splits[1]));
 		else
 			while (--len >= 0)
 				free(splits[len]);

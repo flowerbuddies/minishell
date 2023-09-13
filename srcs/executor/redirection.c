@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/13 17:21:40 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 18:23:39 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,26 +64,23 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 	return (fd);
 }
 
-bool	execute_redir(t_node *current)
+bool	execute_redir(t_token *current)
 {
 	int		fd;
-	bool	is_redir_in;
 
 	if (!current)
 		return (true);
-	is_redir_in = (current->type == REDIR_IN || current->type == HEREDOC);
 	fd = -2;
 	while (current)
 	{
-		fd = open_file(fd, current->type, current->token->data);
+		fd = open_file(fd, current->type, current->data);
 		if (fd == -1)
 			return (false);
-		if (is_redir_in)
-			current = current->redir_in;
-		else
-			current = current->redir_out;
+		if (!current->next)
+			break ;
+		current = current->next;
 	}
-	if (is_redir_in)
+	if (current->type == REDIR_IN || current->type == HEREDOC)
 		dup2(fd, STDIN_FILENO);
 	else
 		dup2(fd, STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 20:38:24 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:03:19 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	export(t_token *cmd, bool is_parent)
 	if (!cmd)
 	{
 		if (!is_parent)
-			vars_print(g_shell.vars, true);
+			vars_print(true);
 		return ;
 	}
 	if (!ft_strchr(cmd->data, '='))
@@ -62,11 +62,11 @@ void	export(t_token *cmd, bool is_parent)
 	}
 	if (!is_parent)
 		return (free2d(parts));
-	if (vars_find(g_shell.vars, parts[0]))
-		vars_delete_at(g_shell.vars, parts[0]);
+	if (vars_find(parts[0]))
+		vars_delete_at(parts[0]);
 	if (parts_len == 1)
-		vars_append(&g_shell.vars, vars_new(parts[0], ft_strdup("")));
+		vars_append(vars_new(parts[0], ft_strdup("")));
 	else
-		vars_append(&g_shell.vars, vars_new(parts[0], parts[1]));
+		vars_append(vars_new(parts[0], parts[1]));
 	free(parts);
 }

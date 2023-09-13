@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:02:15 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 17:21:36 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 18:19:09 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**get_envp(t_var *env_vars);
 char	*get_command_path(char *cmd);
 
 // redirection.c
-bool	execute_redir(t_node *node);
+bool	execute_redir(t_token *current);
 int		open_file(int fd_to_close, t_type type, char *file_name);
 
 #endif

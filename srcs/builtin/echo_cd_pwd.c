@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 15:00:46 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:02:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	cd(t_token *cmd, bool is_parent)
 		path = cmd->data;
 	else
 	{
-		home_var = vars_find(g_shell.vars, "HOME");
+		home_var = vars_find("HOME");
 		if (!home_var)
 		{
 			g_shell.exit_status = failure;
@@ -83,9 +83,9 @@ static void	update_pwd_var(char *var_name)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		action_failed("getcwd");
-	pwd_var = vars_find(g_shell.vars, var_name);
+	pwd_var = vars_find(var_name);
 	if (!pwd_var)
-		vars_append(&g_shell.vars, vars_new(ft_strdup(var_name), cwd));
+		vars_append(vars_new(ft_strdup(var_name), cwd));
 	else
 	{
 		free(pwd_var->value);

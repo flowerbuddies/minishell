@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/12 17:29:27 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:02:46 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	init_env_vars(char **ev);
 
 //linked_list/setter.c
 t_var	*vars_new(char *name, char *value);
-void	vars_append(t_var **vars, t_var *var);
-void	vars_delete_at(t_var *vars, char *name);
+void	vars_append(t_var *var);
+void	vars_delete_at(char *name);
 void	vars_free(t_var *var);
 
 //linked_list/getter.c
-t_var	*vars_find(t_var *list, char *name);
-void	vars_print(t_var *vars, bool prepend_declare);
+t_var	*vars_find(char *name);
+void	vars_print(bool prepend_declare);
 
 //path.c
 char	*find_cmd_in_path(char *cmd);

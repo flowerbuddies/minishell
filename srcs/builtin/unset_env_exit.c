@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 20:39:25 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:03:13 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	unset(t_token *cmd)
 	g_shell.exit_status = success;
 	if (!cmd)
 		return ;
-	vars_delete_at(g_shell.vars, cmd->data);
+	vars_delete_at(cmd->data);
 }
 
 void	env(void)
 {
 	g_shell.exit_status = success;
-	vars_print(g_shell.vars, false);
+	vars_print(false);
 }
 
 void	exit_builtin(t_token *cmd)
