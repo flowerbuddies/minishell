@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 14:56:26 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:00:46 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ void	cd(t_token *cmd, bool is_parent)
 		path = home_var->value;
 	}
 	update_pwd_var("OLDPWD");
-	if (is_parent && chdir(path))
+	if (chdir(path))
 	{
 		g_shell.exit_status = failure;
-		ft_putstr_fd("\e[31;1mError:\e[0m No such file or directory\n", 2);
+		if (is_parent)
+			ft_putstr_fd("\e[31;1mError:\e[0m No such file or directory\n", 2);
 		return ;
 	}
 	update_pwd_var("PWD");
