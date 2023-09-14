@@ -16,6 +16,8 @@
     "ios": "c",
     "ostream": "c",
     "__node_handle": "c",
-    "__config": "c"
+    "__config": "c",
+    "array": "c",
+    "vector": "c"
   }
 }

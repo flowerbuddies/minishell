@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 18:33:07 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 18:53:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	execute_builtin(t_token *cmd, bool is_parent)
 		"cd", "export", "unset", "echo", "pwd", "env", "exit", NULL};
 	int			i;
 
-	vars_delete_at("_");
-	vars_append(vars_new(ft_strdup("_"), ft_strdup(cmd->data)));
 	i = -1;
 	while (builtins[++i])
 	{

@@ -6,12 +6,13 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/14 18:39:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 18:51:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "tokenizer.h"
 
 static void	increment_shlvl()
 {
@@ -20,6 +21,14 @@ static void	increment_shlvl()
 
 	vars_delete_at("SHLVL");
 	vars_append(vars_new(ft_strdup("SHLVL"), ft_itoa(current_lvl + 1)));
+}
+
+void	set_underscore_env_var(t_token *cmd)
+{
+	while (cmd->next)
+		cmd = cmd->next;
+	vars_delete_at("_");
+	vars_append(vars_new(ft_strdup("_"), ft_strdup(cmd->data)));
 }
 
 void	init_env_vars(char **ev)

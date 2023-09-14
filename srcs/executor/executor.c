@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 17:35:48 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 18:54:51 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	execute_command(t_node *node)
 	const bool	is_a_builtin = is_builtin(node->token);
 	pid_t		child;
 
+	set_underscore_env_var(node->token);
 	if (is_a_builtin)
 		execute_builtin(node->token, true);
 	child = fork();
@@ -45,12 +46,11 @@ void	execute_command(t_node *node)
 			exit(g_shell.exit_status);
 		if (is_a_builtin)
 			(execute_builtin(node->token, false), exit(g_shell.exit_status));
-		else
-			path = get_command_path(node->token->data);
+		path = get_command_path(node->token->data);
 		execve(path, get_argv(node->token), get_envp(g_shell.vars));
 		exit(g_shell.exit_status);
 	}
-	wait((int *)&g_shell.exit_status);
+	waitpid(child, (int *)&g_shell.exit_status, 0);
 	if (WIFSIGNALED(g_shell.exit_status))
 		g_shell.exit_status = signal_base + WTERMSIG(g_shell.exit_status);
 	else
