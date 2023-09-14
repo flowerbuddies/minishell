@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/13 19:01:40 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:39:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+
+static void	increment_shlvl()
+{
+	const t_var	*shlvl = vars_find("SHLVL");
+	const int	current_lvl = ft_atoi(shlvl->value);
+
+	vars_delete_at("SHLVL");
+	vars_append(vars_new(ft_strdup("SHLVL"), ft_itoa(current_lvl + 1)));
+}
 
 void	init_env_vars(char **ev)
 {
@@ -36,4 +45,5 @@ void	init_env_vars(char **ev)
 		free(splits);
 		ev++;
 	}
+	increment_shlvl();
 }

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 17:48:00 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 18:33:33 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,17 @@ static char	*direct_path(char *cmd)
 
 char	*get_command_path(char *cmd)
 {
-	char	*tmp;
+	char	*path;
 
 	if (ft_strchr(cmd, '/'))
 		return (direct_path(cmd));
-	tmp = find_cmd_in_path(cmd);
-	if (tmp)
-		return (tmp);
+	path = find_cmd_in_path(cmd);
+	if (path)
+	{
+		vars_delete_at("_");
+		vars_append(vars_new(ft_strdup("_"), ft_strdup(path)));
+		return (path);
+	}
 	g_shell.exit_status = not_found;
 	return (print_error("command not found", cmd));
 }
