@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:10:32 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/12 20:18:31 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:12:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ struct s_shell
 
 	t_exit_status	exit_status;
 
-	bool			nl_needed;
+	bool			sigint;
+	bool			sigquit;
+	bool			heredoc_exited;
 	bool			exit_needed;
 }					g_shell;
 
 void	action_failed(char *action);
 bool	streq(const char *s1, const char *s2);
+void	eprintf(const char *s1, const char *s2, const char *s3);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/13 19:02:46 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:55:19 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ENV_VAR_H
 
 # include <stdbool.h>
+# include "tokenizer.h"
 
 typedef enum e_exit_status
 {
@@ -35,6 +36,7 @@ typedef struct s_var
 }					t_var;
 
 //env_var.c
+void	set_underscore_env_var(t_token *cmd);
 void	init_env_vars(char **ev);
 
 //linked_list/setter.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 17:56:54 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:19:23 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/stat.h>
 #include "tokenizer.h"
 #include "builtin.h"
+#include "executor.h"
 
 static char	*direct_path(char *cmd)
 {
@@ -25,35 +26,37 @@ static char	*direct_path(char *cmd)
 
 	if (access(cmd, F_OK) == -1)
 	{
-		printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd);
-		return (g_shell.exit_status = not_found, NULL);
+		g_shell.exit_status = not_found;
+		print_error("command not found", cmd);
+		return (NULL);
 	}
 	if (access(cmd, X_OK) == -1)
 	{
-		printf("\e[31;1mError:\e[0m permission denied on `%s`\n",
-			cmd);
-		return (g_shell.exit_status = not_executable, NULL);
+		g_shell.exit_status = not_executable;
+		print_error("permission denied", cmd);
+		return (NULL);
 	}
 	if (stat(cmd, &path_stat) == -1)
 		action_failed("stat");
 	if (!S_ISREG(path_stat.st_mode))
 	{
-		printf("\e[31;1mError:\e[0m `%s` is not a file\n", cmd);
-		return (g_shell.exit_status = not_executable, NULL);
+		g_shell.exit_status = not_executable;
+		print_error("not a file", cmd);
+		return (NULL);
 	}
 	return (ft_strdup(cmd));
 }
 
 char	*get_command_path(char *cmd)
 {
-	char	*tmp;
+	char	*path;
 
 	if (ft_strchr(cmd, '/'))
 		return (direct_path(cmd));
-	tmp = find_cmd_in_path(cmd);
-	if (tmp)
-		return (tmp);
-	printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd);
+	path = find_cmd_in_path(cmd);
+	if (path)
+		return (path);
 	g_shell.exit_status = not_found;
+	print_error("command not found", cmd);
 	return (NULL);
 }
