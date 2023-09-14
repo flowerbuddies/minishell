@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 19:14:51 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 19:51:11 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	unset(t_token *cmd)
 	g_shell.exit_status = success;
 	if (!cmd)
 		return ;
-	vars_delete_at(cmd->data);
+	while (cmd)
+	{
+		vars_delete_at(cmd->data);
+		cmd = cmd->next;
+	}
 }
 
 void	env(void)
