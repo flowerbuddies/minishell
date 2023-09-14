@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 15:42:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 17:35:48 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,24 @@ void	execute_command(t_node *node)
 {
 	char		*path;
 	const bool	is_a_builtin = is_builtin(node->token);
+	pid_t		child;
 
 	if (is_a_builtin)
 		execute_builtin(node->token, true);
-	else
+	child = fork();
+	if (child == -1)
+		action_failed("fork");
+	if (child == 0)
 	{
-		path = get_command_path(node->token->data);
-		if (!path)
-			return ;
-	}
-	if (fork() == 0)
-	{
-		// error
 		if (!execute_redir(node->redirs))
 			exit(g_shell.exit_status);
 		if (is_a_builtin)
 			(execute_builtin(node->token, false), exit(g_shell.exit_status));
-		if (execve(path, get_argv(node->token), get_envp(g_shell.vars))
-			== -1)
-			action_failed("execve");
+		else
+			path = get_command_path(node->token->data);
+		execve(path, get_argv(node->token), get_envp(g_shell.vars));
+		exit(g_shell.exit_status);
 	}
-	if (!is_a_builtin)
-		free((char *)path);
 	wait((int *)&g_shell.exit_status);
 	if (WIFSIGNALED(g_shell.exit_status))
 		g_shell.exit_status = signal_base + WTERMSIG(g_shell.exit_status);
