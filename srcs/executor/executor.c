@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 22:34:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 15:42:16 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ void	execute_pipe(t_node *node)
 
 void	print_error(char *msg, char *file_name)
 {
-	printf("\e[31;1mError:\e[0m ");
-	printf(msg, file_name);
-	printf("\n");
+	ft_putstr_fd("\e[31;1mError:\e[0m ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(file_name, 2);
+	ft_putchar_fd('\n', 2);
 }
