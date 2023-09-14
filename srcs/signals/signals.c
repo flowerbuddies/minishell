@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 15:56:58 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 17:19:04 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 18:02:52 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include "minishell.h"
+#include <signal.h>
 
 void	sig_interactive_mode(int signal)
 {

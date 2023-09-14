@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:14:03 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 17:24:55 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 18:03:14 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <readline/readline.h>
 #include "libft.h"
 #include "signals.h"
+#include <signal.h>
 #include "executor.h"
 
 static char	*strjoin(char *s1, char *s2)
