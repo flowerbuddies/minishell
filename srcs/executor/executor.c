@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 19:18:22 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ void	execute_command(t_node *node)
 	if (child == 0)
 	{
 		if (!execute_redir(node->redirs))
-			exit(g_shell.exit_status);
+			exit(get_shell()->exit_status);
 		if (is_a_builtin)
-			(execute_builtin(node->token, false), exit(g_shell.exit_status));
+			(execute_builtin(node->token, false), exit(get_shell()->exit_status));
 		path = get_command_path(node->token->data);
-		execve(path, get_argv(node->token), get_envp(g_shell.vars));
-		exit(g_shell.exit_status);
+		execve(path, get_argv(node->token), get_envp(get_shell()->vars));
+		exit(get_shell()->exit_status);
 	}
-	waitpid(child, (int *)&g_shell.exit_status, 0);
-	if (WIFSIGNALED(g_shell.exit_status))
-		g_shell.exit_status = signal_base + WTERMSIG(g_shell.exit_status);
+	waitpid(child, (int *)&get_shell()->exit_status, 0);
+	if (WIFSIGNALED(get_shell()->exit_status))
+		get_shell()->exit_status = signal_base + WTERMSIG(get_shell()->exit_status);
 	else
-		g_shell.exit_status = WEXITSTATUS(g_shell.exit_status);
+		get_shell()->exit_status = WEXITSTATUS(get_shell()->exit_status);
 }
 
 void	execute_pipe(t_node *node)
@@ -74,7 +74,7 @@ void	execute_pipe(t_node *node)
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->left);
-		exit(g_shell.exit_status);
+		exit(get_shell()->exit_status);
 	}
 	pid_right = fork();
 	// error
@@ -84,7 +84,7 @@ void	execute_pipe(t_node *node)
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->right);
-		exit(g_shell.exit_status);
+		exit(get_shell()->exit_status);
 	}
 	close(pip[READ_END]);
 	close(pip[WRITE_END]);
@@ -94,7 +94,7 @@ void	execute_pipe(t_node *node)
 	waitpid(pid_right, &status_code, 0);
 	if (WTERMSIG(status_code) == SIGPIPE) //TODO: test exhaustively
 		ft_putchar_fd('\n', 1);
-	g_shell.exit_status = WEXITSTATUS(status_code);
+	get_shell()->exit_status = WEXITSTATUS(status_code);
 }
 
 void	print_error(char *msg, char *cmd)

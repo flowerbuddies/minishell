@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/14 19:31:09 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,20 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 	if (type == REDIR_IN && access(file_name, F_OK) == -1)
 	{
 		print_error("this file doesn't exist", file_name);
-		g_shell.exit_status = failure;
+		get_shell()->exit_status = failure;
 		return (-1);
 	}
 	if (type == REDIR_IN && access(file_name, R_OK) == -1)
 	{
 		print_error("this file is not working", file_name);
-		g_shell.exit_status = failure;
+		get_shell()->exit_status = failure;
 		return (-1);
 	}
 	fd = open(file_name, flags, DEFAULT_FILE_PERMISSIONS);
 	if (fd == -1)
 	{
 		print_error("this file cannot be opened or created", file_name);
-		g_shell.exit_status = failure;
+		get_shell()->exit_status = failure;
 	}
 	return (fd);
 }

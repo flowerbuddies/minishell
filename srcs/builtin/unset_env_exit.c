@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 19:51:11 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	unset(t_token *cmd)
 {
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	if (!cmd)
 		return ;
 	while (cmd)
@@ -30,7 +30,7 @@ void	unset(t_token *cmd)
 
 void	env(void)
 {
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	vars_print(false);
 }
 
@@ -38,7 +38,7 @@ void	exit_builtin(t_token *cmd)
 {
 	int	i;
 
-	g_shell.exit_needed = true;
+	get_shell()->exit_needed = true;
 	if (!cmd)
 		return ;
 	i = -1;
@@ -47,14 +47,14 @@ void	exit_builtin(t_token *cmd)
 		if (!ft_isdigit(cmd->data[i]))
 		{
 			eprintf("\e[31;1mError:\e[0m numeric argument required\n", NULL, NULL);
-			g_shell.exit_status = 255;
+			get_shell()->exit_status = 255;
 			return ;
 		}
 	}
-	g_shell.exit_status = ft_atoi(cmd->data);
+	get_shell()->exit_status = ft_atoi(cmd->data);
 	if (!cmd->next)
 		return ;
 	eprintf("\e[31;1mError:\e[0m too many arguments\n", NULL, NULL);
-	g_shell.exit_status = 1;
-	g_shell.exit_needed = false;
+	get_shell()->exit_status = 1;
+	get_shell()->exit_needed = false;
 }

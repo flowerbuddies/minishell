@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/14 19:58:22 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	vars_append(t_var *var)
 {
 	t_var	*current;
 
-	g_shell.vars_len++;
-	if (g_shell.vars == NULL)
+	get_shell()->vars_len++;
+	if (get_shell()->vars == NULL)
 	{
-		g_shell.vars = var;
+		get_shell()->vars = var;
 		return ;
 	}
-	current = g_shell.vars;
+	current = get_shell()->vars;
 	while (current->next)
 		current = current->next;
 	current->next = var;
@@ -52,7 +52,7 @@ void	vars_delete_at(char *name)
 	current = vars_find(name);
 	if (!current)
 		return ;
-	g_shell.vars_len--; //TODO: useful, really?
+	get_shell()->vars_len--; //TODO: useful, really?
 	if (current->prev)
 	{
 		current->prev->next = current->next;
@@ -61,7 +61,7 @@ void	vars_delete_at(char *name)
 	}
 	else
 	{
-		g_shell.vars = current->next;
+		get_shell()->vars = current->next;
 		current->prev = NULL;
 	}
 	if (current->name)

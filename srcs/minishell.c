@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 19:25:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,23 @@ void	eprintf(const char *s1, const char *s2, const char *s3)
 	dup2(dupped_stdout, STDOUT_FILENO);
 }
 
+t_shell	*get_shell(void)
+{
+	static t_shell	shell;
+
+	return (&shell);
+}
+
 int	main(int ac, char **av, char **ev)
 {
 	(void) ac;
 	(void) av;
 	rl_catch_signals = 0;
-	g_shell.exit_status = 0;
-	g_shell.sigint = false;
-	g_shell.sigquit = false;
-	g_shell.heredoc_exited = false;
-	g_shell.exit_needed = false;
+	get_shell()->exit_status = 0;
+	get_shell()->sigint = false;
+	get_shell()->sigquit = false;
+	get_shell()->heredoc_exited = false;
+	get_shell()->exit_needed = false;
 	init_env_vars(ev);
 	prompt();
 }

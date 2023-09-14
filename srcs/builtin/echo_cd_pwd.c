@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 19:23:50 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	echo(t_token *cmd)
 	bool	trailing_nl;
 	bool	is_first;
 
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	trailing_nl = true;
 	if (cmd && streq(cmd->data, "-n"))
 	{
@@ -50,7 +50,7 @@ void	cd(t_token *cmd, bool is_parent)
 	char	*path;
 	t_var	*home_var;
 
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	if (cmd)
 		path = cmd->data;
 	else
@@ -58,7 +58,7 @@ void	cd(t_token *cmd, bool is_parent)
 		home_var = vars_find("HOME");
 		if (!home_var)
 		{
-			g_shell.exit_status = failure;
+			get_shell()->exit_status = failure;
 			if (!is_parent)
 				eprintf("\e[31;1mError:\e[0m $HOME not set\n", NULL, NULL);
 			return ;
@@ -68,7 +68,7 @@ void	cd(t_token *cmd, bool is_parent)
 	update_pwd_var("OLDPWD");
 	if (chdir(path))
 	{
-		g_shell.exit_status = failure;
+		get_shell()->exit_status = failure;
 		if (is_parent)
 			eprintf("\e[31;1mError:\e[0m No such file or directory\n", NULL, NULL);
 		return ;
@@ -98,7 +98,7 @@ void	pwd(void)
 {
 	const char	*cwd = getcwd(NULL, 0);
 
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	if (!cwd)
 		action_failed("getcwd");
 	printf("%s\n", cwd);

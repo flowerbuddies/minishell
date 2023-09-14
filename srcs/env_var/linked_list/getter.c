@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:29:00 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/13 19:00:49 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_var	*vars_find(char *name)
 {
 	t_var	*current;
 
-	current = g_shell.vars;
+	current = get_shell()->vars;
 	while (current)
 	{
 		if (streq(current->name, name))
@@ -32,7 +32,7 @@ void	vars_print(bool prepend_declare)
 {
 	t_var	*current;
 
-	current = g_shell.vars;
+	current = get_shell()->vars;
 	while (current)
 	{
 		if (prepend_declare)

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 15:56:58 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 18:02:52 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@ void	sig_interactive_mode(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_shell.exit_status = failure;
+	get_shell()->exit_status = failure;
 	(void) signal;
 }
 
 void	sig_non_interactive_mode(int signal)
 {
 	if (signal == SIGINT)
-		g_shell.sigint = true;
+		get_shell()->sigint = true;
 	else
-		g_shell.sigquit = true;
-	g_shell.exit_status = signal_base + signal;
+		get_shell()->sigquit = true;
+	get_shell()->exit_status = signal_base + signal;
 }
 
 void	sig_heredoc_mode(int signal)
 {
 	(void) signal;
-	g_shell.heredoc_exited = true;
+	get_shell()->heredoc_exited = true;
 	close(STDIN_FILENO);
 }

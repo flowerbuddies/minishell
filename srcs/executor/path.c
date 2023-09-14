@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 19:19:23 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static char	*direct_path(char *cmd)
 
 	if (access(cmd, F_OK) == -1)
 	{
-		g_shell.exit_status = not_found;
+		get_shell()->exit_status = not_found;
 		print_error("command not found", cmd);
 		return (NULL);
 	}
 	if (access(cmd, X_OK) == -1)
 	{
-		g_shell.exit_status = not_executable;
+		get_shell()->exit_status = not_executable;
 		print_error("permission denied", cmd);
 		return (NULL);
 	}
@@ -40,7 +40,7 @@ static char	*direct_path(char *cmd)
 		action_failed("stat");
 	if (!S_ISREG(path_stat.st_mode))
 	{
-		g_shell.exit_status = not_executable;
+		get_shell()->exit_status = not_executable;
 		print_error("not a file", cmd);
 		return (NULL);
 	}
@@ -56,7 +56,7 @@ char	*get_command_path(char *cmd)
 	path = find_cmd_in_path(cmd);
 	if (path)
 		return (path);
-	g_shell.exit_status = not_found;
+	get_shell()->exit_status = not_found;
 	print_error("command not found", cmd);
 	return (NULL);
 }

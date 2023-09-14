@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 20:03:22 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	export(t_token *cmd, bool is_parent)
 	char	**parts;
 	int		parts_len;
 
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	if (!cmd)
 	{
 		if (!is_parent)
@@ -48,18 +48,18 @@ void	export(t_token *cmd, bool is_parent)
 			return ;
 		parts = ft_split(cmd->data, '=');
 		if (!parts)
-			return ((void)(g_shell.exit_status = failure));
+			return ((void)(get_shell()->exit_status = failure));
 		parts_len = len2d(parts);
 		if (parts_len != 1 && parts_len != 2) //TODO(mark): fix export 5f
 		{
-			g_shell.exit_status = failure;
+			get_shell()->exit_status = failure;
 			return (free2d(parts));
 		}
 		if (!is_valid_identifier(parts[0]))
 		{
 			if (!is_parent)
 				eprintf("\e[31;1mError:\e[0m invalid identifier\n", NULL, NULL);
-			g_shell.exit_status = failure;
+			get_shell()->exit_status = failure;
 			return (free2d(parts));
 		}
 		if (!is_parent)
