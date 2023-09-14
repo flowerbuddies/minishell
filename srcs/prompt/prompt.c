@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 17:14:56 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 19:48:07 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "signals.h"
 #include "builtin.h"
 #include <signal.h>
+#include <termios.h>
 
 //TODO: slipt this function into multiple
 void	prompt(void)
@@ -44,7 +45,11 @@ void	prompt(void)
 		}
 		tokenizer.line = readline("MiniHell $ ");
 		if (!tokenizer.line)
-			(vars_free(g_shell.vars), exit(g_shell.exit_status));
+		{
+			printf("exit");
+			vars_free(g_shell.vars);
+			exit(g_shell.exit_status);
+		}
 		if (!tokenizer.line[0])
 		{
 			free(tokenizer.line);
@@ -77,6 +82,10 @@ void	prompt(void)
 		tokens_free(tokenizer.tokens);
 		(add_history(tokenizer.line), free(tokenizer.line));
 		if (g_shell.exit_needed)
-			(vars_free(g_shell.vars), exit(g_shell.exit_status));
+		{
+			printf("exit");
+			vars_free(g_shell.vars);
+			exit(g_shell.exit_status);
+		}
 	}
 }
