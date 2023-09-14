@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cd_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 19:02:16 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:23:50 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static void	update_pwd_var(char *var_name);
 
@@ -36,12 +37,12 @@ void	echo(t_token *cmd)
 		if (is_first)
 			is_first = false;
 		else
-			write(1, " ", 1);
-		write(1, cmd->data, ft_strlen(cmd->data));
+			printf(" ");
+		printf("%s", cmd->data);
 		cmd = cmd->next;
 	}
 	if (trailing_nl)
-		write(1, "\n", 1);
+		printf("\n");
 }
 
 void	cd(t_token *cmd, bool is_parent)
@@ -59,7 +60,7 @@ void	cd(t_token *cmd, bool is_parent)
 		{
 			g_shell.exit_status = failure;
 			if (!is_parent)
-				ft_putstr_fd("\e[31;1mError:\e[0m $HOME not set\n", 2);
+				eprintf("\e[31;1mError:\e[0m $HOME not set\n", NULL, NULL);
 			return ;
 		}
 		path = home_var->value;
@@ -69,7 +70,7 @@ void	cd(t_token *cmd, bool is_parent)
 	{
 		g_shell.exit_status = failure;
 		if (is_parent)
-			ft_putstr_fd("\e[31;1mError:\e[0m No such file or directory\n", 2);
+			eprintf("\e[31;1mError:\e[0m No such file or directory\n", NULL, NULL);
 		return ;
 	}
 	update_pwd_var("PWD");
@@ -100,7 +101,6 @@ void	pwd(void)
 	g_shell.exit_status = success;
 	if (!cwd)
 		action_failed("getcwd");
-	write(1, cwd, ft_strlen(cwd));
-	write(1, "\n", 1);
+	printf("%s\n", cwd);
 	free((char *)cwd);
 }

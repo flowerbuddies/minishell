@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_env_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 19:03:13 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:14:51 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exit_builtin(t_token *cmd)
 	{
 		if (!ft_isdigit(cmd->data[i]))
 		{
-			ft_putstr_fd("\e[31;1mError:\e[0m numeric argument required\n", 2);
+			eprintf("\e[31;1mError:\e[0m numeric argument required\n", NULL, NULL);
 			g_shell.exit_status = 255;
 			return ;
 		}
@@ -50,7 +50,7 @@ void	exit_builtin(t_token *cmd)
 	g_shell.exit_status = ft_atoi(cmd->data);
 	if (!cmd->next)
 		return ;
-	ft_putstr_fd("\e[31;1mError:\e[0m too many arguments\n", 2);
+	eprintf("\e[31;1mError:\e[0m too many arguments\n", NULL, NULL);
 	g_shell.exit_status = 1;
 	g_shell.exit_needed = false;
 }

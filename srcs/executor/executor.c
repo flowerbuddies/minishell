@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 18:54:51 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 19:18:22 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ void	execute_pipe(t_node *node)
 	g_shell.exit_status = WEXITSTATUS(status_code);
 }
 
-void	print_error(char *msg, char *file_name)
+void	print_error(char *msg, char *cmd)
 {
-	ft_putstr_fd("\e[31;1mError:\e[0m ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd(file_name, 2);
-	ft_putchar_fd('\n', 2);
+	eprintf("\e[31;1mError:\e[0m `%s`: %s\n", cmd, msg);
 }

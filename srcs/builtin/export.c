@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 19:03:19 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:14:36 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	export(t_token *cmd, bool is_parent)
 	if (!is_valid_identifier(parts[0]))
 	{
 		if (!is_parent)
-			ft_putstr_fd("\e[31;1mError:\e[0m invalid identifier\n", 2);
+			eprintf("\e[31;1mError:\e[0m invalid identifier\n", NULL, NULL);
 		g_shell.exit_status = failure;
 		return (free2d(parts));
 	}

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 18:53:02 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 19:19:23 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,7 @@
 #include <sys/stat.h>
 #include "tokenizer.h"
 #include "builtin.h"
-
-static void	*print_error(char *msg, char *cmd)
-{
-	ft_putstr_fd("\e[31;1mError:\e[0m `", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd("`: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putchar_fd('\n', 2);
-	return (NULL);
-}
+#include "executor.h"
 
 static char	*direct_path(char *cmd)
 {
@@ -36,19 +27,22 @@ static char	*direct_path(char *cmd)
 	if (access(cmd, F_OK) == -1)
 	{
 		g_shell.exit_status = not_found;
-		return (print_error("command not found", cmd));
+		print_error("command not found", cmd);
+		return (NULL);
 	}
 	if (access(cmd, X_OK) == -1)
 	{
 		g_shell.exit_status = not_executable;
-		return (print_error("permission denied", cmd));
+		print_error("permission denied", cmd);
+		return (NULL);
 	}
 	if (stat(cmd, &path_stat) == -1)
 		action_failed("stat");
 	if (!S_ISREG(path_stat.st_mode))
 	{
 		g_shell.exit_status = not_executable;
-		return (print_error("not a file", cmd));
+		print_error("not a file", cmd);
+		return (NULL);
 	}
 	return (ft_strdup(cmd));
 }
@@ -63,5 +57,6 @@ char	*get_command_path(char *cmd)
 	if (path)
 		return (path);
 	g_shell.exit_status = not_found;
-	return (print_error("command not found", cmd));
+	print_error("command not found", cmd);
+	return (NULL);
 }
