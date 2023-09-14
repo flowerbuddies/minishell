@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cd_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 19:02:16 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	echo(t_token *cmd)
 	bool	trailing_nl;
 	bool	is_first;
 
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	trailing_nl = true;
 	if (cmd && streq(cmd->data, "-n"))
 	{
@@ -49,7 +49,7 @@ void	cd(t_token *cmd, bool is_parent)
 	char	*path;
 	t_var	*home_var;
 
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	if (cmd)
 		path = cmd->data;
 	else
@@ -57,7 +57,7 @@ void	cd(t_token *cmd, bool is_parent)
 		home_var = vars_find("HOME");
 		if (!home_var)
 		{
-			g_shell.exit_status = failure;
+			get_shell()->exit_status = failure;
 			if (!is_parent)
 				ft_putstr_fd("\e[31;1mError:\e[0m $HOME not set\n", 2);
 			return ;
@@ -67,7 +67,7 @@ void	cd(t_token *cmd, bool is_parent)
 	update_pwd_var("OLDPWD");
 	if (chdir(path))
 	{
-		g_shell.exit_status = failure;
+		get_shell()->exit_status = failure;
 		if (is_parent)
 			ft_putstr_fd("\e[31;1mError:\e[0m No such file or directory\n", 2);
 		return ;
@@ -97,7 +97,7 @@ void	pwd(void)
 {
 	const char	*cwd = getcwd(NULL, 0);
 
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	if (!cwd)
 		action_failed("getcwd");
 	write(1, cwd, ft_strlen(cwd));

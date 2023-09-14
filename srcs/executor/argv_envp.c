@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   argv_envp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:13:39 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/14 18:53:39 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**get_envp(t_var *env_vars)
 	int		value_len;
 
 	i = -1;
-	envp = malloc(sizeof(char *) * (g_shell.vars_len + 1));
+	envp = malloc(sizeof(char *) * (get_shell()->vars_len + 1));
 	if (!envp)
 		action_failed("malloc");
 	while (env_vars)
@@ -68,6 +68,6 @@ char	**get_envp(t_var *env_vars)
 		ft_memmove(&envp[i][name_len + 1], env_vars->value, value_len);
 		env_vars = env_vars->next;
 	}
-	envp[g_shell.vars_len] = NULL;
+	envp[get_shell()->vars_len] = NULL;
 	return (envp);
 }

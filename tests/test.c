@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 16:31:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/10 18:48:13 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ bool	streq(const char *s1, const char *s2)
 
 int	main(int ac, char *av[])
 {
-	vars_append(&g_shell.vars, vars_new("TEMP", "VALUE_WOW"));
+	vars_append(&get_shell()->vars, vars_new("TEMP", "VALUE_WOW"));
 	return (munit_suite_main(&tokenizer_suite, NULL, ac, av));
 }

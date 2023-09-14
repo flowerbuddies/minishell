@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 17:56:54 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ static char	*direct_path(char *cmd)
 	if (access(cmd, F_OK) == -1)
 	{
 		printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd);
-		return (g_shell.exit_status = not_found, NULL);
+		return (get_shell()->exit_status = not_found, NULL);
 	}
 	if (access(cmd, X_OK) == -1)
 	{
 		printf("\e[31;1mError:\e[0m permission denied on `%s`\n",
 			cmd);
-		return (g_shell.exit_status = not_executable, NULL);
+		return (get_shell()->exit_status = not_executable, NULL);
 	}
 	if (stat(cmd, &path_stat) == -1)
 		action_failed("stat");
 	if (!S_ISREG(path_stat.st_mode))
 	{
 		printf("\e[31;1mError:\e[0m `%s` is not a file\n", cmd);
-		return (g_shell.exit_status = not_executable, NULL);
+		return (get_shell()->exit_status = not_executable, NULL);
 	}
 	return (ft_strdup(cmd));
 }
@@ -54,6 +54,6 @@ char	*get_command_path(char *cmd)
 	if (tmp)
 		return (tmp);
 	printf("\e[31;1mError:\e[0m command `%s` not found\n", cmd);
-	g_shell.exit_status = not_found;
+	get_shell()->exit_status = not_found;
 	return (NULL);
 }

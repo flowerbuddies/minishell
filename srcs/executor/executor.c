@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 22:34:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,20 @@ void	execute_command(t_node *node)
 	{
 		// error
 		if (!execute_redir(node->redirs))
-			exit(g_shell.exit_status);
+			exit(get_shell()->exit_status);
 		if (is_a_builtin)
-			(execute_builtin(node->token, false), exit(g_shell.exit_status));
-		if (execve(path, get_argv(node->token), get_envp(g_shell.vars))
+			(execute_builtin(node->token, false), exit(get_shell()->exit_status));
+		if (execve(path, get_argv(node->token), get_envp(get_shell()->vars))
 			== -1)
 			action_failed("execve");
 	}
 	if (!is_a_builtin)
 		free((char *)path);
-	wait((int *)&g_shell.exit_status);
-	if (WIFSIGNALED(g_shell.exit_status))
-		g_shell.exit_status = signal_base + WTERMSIG(g_shell.exit_status);
+	wait((int *)&get_shell()->exit_status);
+	if (WIFSIGNALED(get_shell()->exit_status))
+		get_shell()->exit_status = signal_base + WTERMSIG(get_shell()->exit_status);
 	else
-		g_shell.exit_status = WEXITSTATUS(g_shell.exit_status);
+		get_shell()->exit_status = WEXITSTATUS(get_shell()->exit_status);
 }
 
 void	execute_pipe(t_node *node)
@@ -78,7 +78,7 @@ void	execute_pipe(t_node *node)
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->left);
-		exit(g_shell.exit_status);
+		exit(get_shell()->exit_status);
 	}
 	pid_right = fork();
 	// error
@@ -88,7 +88,7 @@ void	execute_pipe(t_node *node)
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->right);
-		exit(g_shell.exit_status);
+		exit(get_shell()->exit_status);
 	}
 	close(pip[READ_END]);
 	close(pip[WRITE_END]);
@@ -98,7 +98,7 @@ void	execute_pipe(t_node *node)
 	waitpid(pid_right, &status_code, 0);
 	if (WTERMSIG(status_code) == SIGPIPE) //TODO: test exhaustively
 		ft_putchar_fd('\n', 1);
-	g_shell.exit_status = WEXITSTATUS(status_code);
+	get_shell()->exit_status = WEXITSTATUS(status_code);
 }
 
 void	print_error(char *msg, char *file_name)

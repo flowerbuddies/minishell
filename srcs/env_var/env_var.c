@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/13 19:01:40 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	init_env_vars(char **ev)
 	char	**splits;
 	int		len;
 
-	g_shell.vars_len = 0;
-	g_shell.vars = NULL;
+	get_shell()->vars_len = 0;
+	get_shell()->vars = NULL;
 	while (*ev)
 	{
 		splits = ft_split(*ev, '=');

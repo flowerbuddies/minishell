@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 00:32:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:48 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	prompt(void)
 	{
 		signal(SIGINT, sig_interactive_mode);
 		signal(SIGQUIT, SIG_IGN);
-		if (g_shell.nl_needed)
+		if (get_shell()->nl_needed)
 		{
 			ft_printf("\n"); // TODO: enable for SIGQUIT
-			g_shell.nl_needed = false;
+			get_shell()->nl_needed = false;
 		}
 		tokenizer.line = readline("MiniHell $ ");
 		if (!tokenizer.line)
-			(vars_free(g_shell.vars), exit(g_shell.exit_status));
+			(vars_free(get_shell()->vars), exit(get_shell()->exit_status));
 		if (!tokenizer.line[0])
 		{
 			free(tokenizer.line);
@@ -62,10 +62,10 @@ void	prompt(void)
 			// TODO: `ls |` leaks --(mark) seems not to leak anymore
 		}
 		else
-			g_shell.exit_status = syntax_error;
+			get_shell()->exit_status = syntax_error;
 		tokens_free(tokenizer.tokens);
 		(add_history(tokenizer.line), free(tokenizer.line));
-		if (g_shell.exit_needed)
-			(vars_free(g_shell.vars), exit(g_shell.exit_status));
+		if (get_shell()->exit_needed)
+			(vars_free(get_shell()->vars), exit(get_shell()->exit_status));
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_env_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 19:03:13 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	unset(t_token *cmd)
 {
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	if (!cmd)
 		return ;
 	vars_delete_at(cmd->data);
@@ -26,7 +26,7 @@ void	unset(t_token *cmd)
 
 void	env(void)
 {
-	g_shell.exit_status = success;
+	get_shell()->exit_status = success;
 	vars_print(false);
 }
 
@@ -34,7 +34,7 @@ void	exit_builtin(t_token *cmd)
 {
 	int	i;
 
-	g_shell.exit_needed = true;
+	get_shell()->exit_needed = true;
 	if (!cmd)
 		return ;
 	i = -1;
@@ -43,14 +43,14 @@ void	exit_builtin(t_token *cmd)
 		if (!ft_isdigit(cmd->data[i]))
 		{
 			ft_putstr_fd("\e[31;1mError:\e[0m numeric argument required\n", 2);
-			g_shell.exit_status = 255;
+			get_shell()->exit_status = 255;
 			return ;
 		}
 	}
-	g_shell.exit_status = ft_atoi(cmd->data);
+	get_shell()->exit_status = ft_atoi(cmd->data);
 	if (!cmd->next)
 		return ;
 	ft_putstr_fd("\e[31;1mError:\e[0m too many arguments\n", 2);
-	g_shell.exit_status = 1;
-	g_shell.exit_needed = false;
+	get_shell()->exit_status = 1;
+	get_shell()->exit_needed = false;
 }

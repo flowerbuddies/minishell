@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 15:56:58 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/10 22:27:22 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	sig_interactive_mode(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_shell.exit_status = failure;
+	get_shell()->exit_status = failure;
 	(void) signal;
 }
 
 void	sig_non_interactive_mode(int signal)
 {
-	g_shell.nl_needed = true;
-	g_shell.exit_status = signal_base + signal;
+	get_shell()->nl_needed = true;
+	get_shell()->exit_status = signal_base + signal;
 }

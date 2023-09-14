@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/13 19:02:00 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 15:37:16 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	vars_append(t_var *var)
 {
 	t_var	*current;
 
-	g_shell.vars_len++;
-	if (g_shell.vars == NULL)
+	get_shell()->vars_len++;
+	if (get_shell()->vars == NULL)
 	{
-		g_shell.vars = var;
+		get_shell()->vars = var;
 		return ;
 	}
-	current = g_shell.vars;
+	current = get_shell()->vars;
 	while (current->next)
 		current = current->next;
 	current->next = var;
@@ -52,11 +52,11 @@ void	vars_delete_at(char *name)
 	current = vars_find(name);
 	if (!current)
 		return ;
-	g_shell.vars_len--; //TODO: useful, really?
+	get_shell()->vars_len--; //TODO: useful, really?
 	if (current->prev)
 		current->prev->next = current->next;
 	else
-		g_shell.vars = current->next;
+		get_shell()->vars = current->next;
 	if (current->name)
 		free(current->name);
 	if (current->value)
