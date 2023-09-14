@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 00:32:16 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 17:14:56 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,16 @@ void	prompt(void)
 	{
 		signal(SIGINT, sig_interactive_mode);
 		signal(SIGQUIT, SIG_IGN);
-		if (g_shell.nl_needed)
+		if (g_shell.sigint)
 		{
-			ft_printf("\n"); // TODO: enable for SIGQUIT
-			g_shell.nl_needed = false;
+			ft_printf("\n");
+			g_shell.sigint = false;
+		}
+		else if (g_shell.sigquit)
+		{
+			ft_printf("Quit: 3\n");
+			rl_redisplay();
+			g_shell.sigquit = false;
 		}
 		tokenizer.line = readline("MiniHell $ ");
 		if (!tokenizer.line)
@@ -52,7 +58,7 @@ void	prompt(void)
 		}
 		if (tokenizer.errored) //TODO: replace this by individual action_failed
 			action_failed("tokenize's mallocs");
-		if (check_syntax(&tokenizer))
+		if (!g_shell.heredoc_exited && check_syntax(&tokenizer))
 		{
 			ast = construct_ast(tokenizer.tokens);
 			signal(SIGINT, sig_non_interactive_mode);
@@ -60,6 +66,11 @@ void	prompt(void)
 			execute(ast);
 			free_ast(ast);
 			// TODO: `ls |` leaks --(mark) seems not to leak anymore
+		}
+		else if (g_shell.heredoc_exited)
+		{
+			g_shell.heredoc_exited = false;
+			g_shell.exit_status = failure;
 		}
 		else
 			g_shell.exit_status = syntax_error;

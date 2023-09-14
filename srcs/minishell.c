@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:33:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/12 20:18:34 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:12:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	main(int ac, char **av, char **ev)
 	(void) av;
 	rl_catch_signals = 0;
 	g_shell.exit_status = 0;
-	g_shell.nl_needed = false;
+	g_shell.sigint = false;
+	g_shell.sigquit = false;
+	g_shell.heredoc_exited = false;
 	g_shell.exit_needed = false;
 	init_env_vars(ev);
 	prompt();

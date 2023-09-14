@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:14:03 by hunam             #+#    #+#             */
-/*   Updated: 2023/07/19 20:46:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/14 17:24:55 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include "libft.h"
+#include "signals.h"
+#include "executor.h"
 
 static char	*strjoin(char *s1, char *s2)
 {
@@ -39,20 +41,28 @@ static char	*strjoin(char *s1, char *s2)
 
 static char	*heredoc(char *delim)
 {
-	char	*input;
-	char	*line;
+	char		*input;
+	char		*line;
+	const int	dupped_stdin = dup(STDIN_FILENO);
 
 	input = NULL;
+	signal(SIGINT, sig_heredoc_mode);
 	while (42)
 	{
 		line = readline("heredoc> ");
-		if (!line)
-			return (free(delim), strjoin(input, NULL));
-		if (streq(line, delim))
-			return (free(line), free(delim), strjoin(input, NULL));
+		if (!line || streq(line, delim))
+		{
+			if (line)
+				free(line);
+			input = strjoin(input, NULL);
+			break ;
+		}
 		input = strjoin(input, strjoin(line, ft_strdup("\n")));
-		//TODO: handle ctrl-c
 	}
+	free(delim);
+	dup2(dupped_stdin, STDIN_FILENO);
+	signal(SIGINT, sig_interactive_mode);
+	return (input);
 }
 
 void	heredocs_prompt_user_input(t_tokenizer *tokenizer)
