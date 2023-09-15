@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:54 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 22:40:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:48:23 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	append_token(t_token **current, t_token *token, t_type type)
 		current = &((*current)->next);
 	*current = tokens_new();
 	(*current)->type = type;
-	(*current)->data = ft_strdup(token->data); //TODO: possible leak when called from extract_cmd
+	(*current)->data = ft_strdup(token->data);
 }
 
 t_node	*extract_cmd(t_token *current)
@@ -54,7 +54,7 @@ t_node	*extract_cmd(t_token *current)
 			current = current->next;
 		current = current->next;
 	}
-	if (out->token == NULL) //TODO: what's this? possible leak when setting data?
+	if (out->token == NULL)
 	{
 		out->token = tokens_new();
 		out->token->type = STRING;
@@ -63,7 +63,7 @@ t_node	*extract_cmd(t_token *current)
 	return (out);
 }
 
-t_node	*extract_pipes(t_token *start)
+t_node	*construct_ast(t_token *start)
 {
 	t_node	*out;
 	t_token	*current;
@@ -76,50 +76,14 @@ t_node	*extract_pipes(t_token *start)
 			out = new_node();
 			out->type = PIPE;
 			current->gate = true;
-			out->left = extract_pipes(start);
-			out->right = extract_pipes(current->next);
+			out->left = construct_ast(start);
+			out->right = construct_ast(current->next);
 			return (out);
 		}
 		current = current->next;
 	}
 	return (extract_cmd(start));
 }
-
-t_node	*construct_ast(t_token *start)
-{
-	return (extract_pipes(start));
-	//TODO: check for leaks
-}
-
-// void	print_ast(t_node *first)
-// {
-// 	t_token	*tmp_token;
-// 	t_node	*tmp_node;
-
-// 	if (!first)
-// 		return ;
-// 	if (first->type == PIPE)
-// 		ft_printf("|\n");
-// 	else if (first->type == STRING)
-// 	{
-// 		tmp_token = first->token;
-// 		while (tmp_token)
-// 		{
-// 			ft_printf("%s ", tmp_token->data);
-// 			tmp_token = tmp_token->next;
-// 		}
-// 		ft_printf("\n\t");
-// 		tmp_node = first->redir_out;
-// 		while (tmp_node)
-// 		{
-// 			ft_printf("> %s ", tmp_node->token->data);
-// 			tmp_node = tmp_node->redir_out;
-// 		}
-// 		ft_printf("\n");
-// 	}
-// 	print_ast(first->left);
-// 	print_ast(first->right);
-// }
 
 void	free_ast(t_node *node)
 {
