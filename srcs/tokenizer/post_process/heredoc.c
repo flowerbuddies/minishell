@@ -6,18 +6,18 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:14:03 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 18:03:14 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 16:14:29 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 #include "minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
 #include "libft.h"
 #include "signals.h"
-#include <signal.h>
 #include "executor.h"
+#include <signal.h>
+#include <stdio.h>
+#include <readline/readline.h>
 
 static char	*strjoin(char *s1, char *s2)
 {

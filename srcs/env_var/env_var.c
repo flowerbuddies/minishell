@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:53:49 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:25:23 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "tokenizer.h"
 
-static void	increment_shlvl()
+static void	increment_shlvl(void)
 {
 	const t_var	*shlvl = vars_find("SHLVL");
 	const int	current_lvl = ft_atoi(shlvl->value);

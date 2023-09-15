@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:20:39 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 22:43:15 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:47:19 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_node
 // tree_constructor.c
 t_node	*new_node(void);
 t_node	*construct_ast(t_token *token);
-void	print_ast(t_node *first);
 void	free_ast(t_node *first);
 
 #endif

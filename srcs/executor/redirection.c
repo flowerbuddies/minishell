@@ -6,17 +6,17 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 16:20:54 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include "minishell.h"
 #include "tokenizer.h"
+#include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include "libft.h"
 
 static int	get_heredoc_fd(char *content)
 {
@@ -27,6 +27,23 @@ static int	get_heredoc_fd(char *content)
 	write(tmp_pipe[1], content, ft_strlen(content));
 	close(tmp_pipe[1]);
 	return (tmp_pipe[0]);
+}
+
+static bool	check_access(t_type type, char *file_name)
+{
+	if (type == REDIR_IN && access(file_name, F_OK) == -1)
+	{
+		print_error("this file doesn't exist", file_name);
+		get_shell()->exit_status = failure;
+		return (true);
+	}
+	if (type == REDIR_IN && access(file_name, R_OK) == -1)
+	{
+		print_error("this file is not working", file_name);
+		get_shell()->exit_status = failure;
+		return (true);
+	}
+	return (false);
 }
 
 int	open_file(int fd_to_close, t_type type, char *file_name)
@@ -43,18 +60,8 @@ int	open_file(int fd_to_close, t_type type, char *file_name)
 		flags = O_CREAT | O_WRONLY | O_APPEND;
 	else if (type == REDIR_IN)
 		flags = O_RDONLY;
-	if (type == REDIR_IN && access(file_name, F_OK) == -1)
-	{
-		print_error("this file doesn't exist", file_name);
-		get_shell()->exit_status = failure;
+	if (check_access(type, file_name))
 		return (-1);
-	}
-	if (type == REDIR_IN && access(file_name, R_OK) == -1)
-	{
-		print_error("this file is not working", file_name);
-		get_shell()->exit_status = failure;
-		return (-1);
-	}
 	fd = open(file_name, flags, DEFAULT_FILE_PERMISSIONS);
 	if (fd == -1)
 	{

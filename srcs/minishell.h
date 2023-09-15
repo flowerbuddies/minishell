@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:10:32 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/14 20:10:36 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:50:30 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "env_var.h"
-# include <unistd.h>
 
 typedef struct s_shell
 {

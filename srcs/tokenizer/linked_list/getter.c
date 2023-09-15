@@ -6,12 +6,12 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:24 by marmulle          #+#    #+#             */
-/*   Updated: 2023/07/19 19:37:02 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 16:14:44 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "tokenizer.h"
+#include <stdio.h>
 
 t_token	*tokens_at(t_token *tokens, int idx)
 {

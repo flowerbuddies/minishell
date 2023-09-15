@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:21 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/13 16:10:03 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:14:48 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "tokenizer.h"
 #include "minishell.h"
+#include <stdlib.h>
 
 t_token	*tokens_new(void)
 {
@@ -49,7 +49,6 @@ void	tokens_append(t_tokenizer *tokenizer, t_type type, char *data)
 	current->next->next = NULL;
 }
 
-// Will intentionally segfault when trying to access illegal token
 void	tokens_delete_at(t_tokenizer *tokenizer, int idx)
 {
 	t_token	*current;

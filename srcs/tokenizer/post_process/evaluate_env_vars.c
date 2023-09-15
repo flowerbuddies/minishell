@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 18:59:58 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 16:08:11 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ void	evaluate_env_vars(t_tokenizer *tokenizer)
 		{
 			current->type = STRING;
 			if (current->data[0] == '?' && current->data[1] == '\0')
-			{
-				free(current->data);
-				current->data = ft_itoa(get_shell()->exit_status);
-			}
+				(free(current->data), current->data
+					= ft_itoa(get_shell()->exit_status));
 			else
 			{
 				var = vars_find(current->data);

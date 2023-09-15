@@ -6,15 +6,15 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 15:40:28 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/14 18:55:19 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 16:21:28 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_VAR_H
 # define ENV_VAR_H
 
-# include <stdbool.h>
 # include "tokenizer.h"
+# include <stdbool.h>
 
 typedef enum e_exit_status
 {
