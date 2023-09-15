@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:11:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 20:13:21 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:44:25 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	prompt(void)
 			free(tokenizer.line);
 			continue ;
 		}
-		if (tokenizer.errored) //TODO: replace this by individual action_failed
+		if (tokenizer.errored)
 			action_failed("tokenize's mallocs");
 		if (!get_shell()->heredoc_exited && check_syntax(&tokenizer))
 		{

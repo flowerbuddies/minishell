@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:00:39 by mfm               #+#    #+#             */
-/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:26:24 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	vars_delete_at(char *name)
 	current = vars_find(name);
 	if (!current)
 		return ;
-	get_shell()->vars_len--; //TODO: useful, really?
+	get_shell()->vars_len--;
 	if (current->prev)
 	{
 		current->prev->next = current->next;

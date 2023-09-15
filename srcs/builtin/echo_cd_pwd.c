@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cd_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 01:40:20 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:05:32 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ void	echo(t_token *cmd)
 		printf("\n");
 }
 
+static void	cd_error(bool is_parent)
+{
+	get_shell()->exit_status = failure;
+	if (is_parent)
+		eprintf("\e[31;1mError:\e[0m No such file or directory\n", NULL, NULL);
+	else
+		eprintf("\e[31;1mError:\e[0m $HOME not set\n", NULL, NULL);
+}
+
 void	cd(t_token *cmd, bool is_parent)
 {
 	char	*path;
@@ -57,22 +66,12 @@ void	cd(t_token *cmd, bool is_parent)
 	{
 		home_var = vars_find("HOME");
 		if (!home_var)
-		{
-			get_shell()->exit_status = failure;
-			if (!is_parent)
-				eprintf("\e[31;1mError:\e[0m $HOME not set\n", NULL, NULL);
-			return ;
-		}
+			return (cd_error(is_parent));
 		path = home_var->value;
 	}
 	update_pwd_var("OLDPWD");
 	if (chdir(path))
-	{
-		get_shell()->exit_status = failure;
-		if (is_parent)
-			eprintf("\e[31;1mError:\e[0m No such file or directory\n", NULL, NULL);
-		return ;
-	}
+		return (cd_error(is_parent));
 	update_pwd_var("PWD");
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:42:56 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ void	execute(t_node *ast)
 	return (execute_command(ast));
 }
 
+static void	set_command_exit_status(void)
+{
+	if (WIFSIGNALED(get_shell()->exit_status))
+		get_shell()->exit_status = signal_base
+		+ WTERMSIG(get_shell()->exit_status);
+	else
+		get_shell()->exit_status = WEXITSTATUS(get_shell()->exit_status);
+}
+
 void	execute_command(t_node *node)
 {
 	char		*path;
@@ -45,16 +54,28 @@ void	execute_command(t_node *node)
 		if (!execute_redir(node->redirs))
 			exit(get_shell()->exit_status);
 		if (is_a_builtin)
-			(execute_builtin(node->token, false), exit(get_shell()->exit_status));
+			(execute_builtin(node->token, false),
+				exit(get_shell()->exit_status));
 		path = get_command_path(node->token->data);
 		execve(path, get_argv(node->token), get_envp(get_shell()->vars));
 		exit(get_shell()->exit_status);
 	}
 	waitpid(child, (int *)&get_shell()->exit_status, 0);
-	if (WIFSIGNALED(get_shell()->exit_status))
-		get_shell()->exit_status = signal_base + WTERMSIG(get_shell()->exit_status);
-	else
-		get_shell()->exit_status = WEXITSTATUS(get_shell()->exit_status);
+	set_command_exit_status();
+}
+
+void	do_thing(pid_t pid_left, bool is_left)
+{
+	if (pid_left == -1)
+		action_failed("fork");
+	if (pid_left == 0)
+	{
+		dup2(pip[WRITE_END], STDOUT_FILENO);
+		close(pip[READ_END]);
+		close(pip[WRITE_END]);
+		execute(node->left);
+		exit(get_shell()->exit_status);
+	}
 }
 
 void	execute_pipe(t_node *node)
@@ -67,20 +88,22 @@ void	execute_pipe(t_node *node)
 	if (pipe(pip) == -1)
 		action_failed("pipe");
 	pid_left = fork();
-	// error
+	if (pid_left == -1)
+		action_failed("fork");
 	if (pid_left == 0)
 	{
-		dup2(pip[WRITE_END], STDOUT_FILENO); //error
+		dup2(pip[WRITE_END], STDOUT_FILENO);
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->left);
 		exit(get_shell()->exit_status);
 	}
 	pid_right = fork();
-	// error
+	if (pid_right == -1)
+		action_failed("fork");
 	if (pid_right == 0)
 	{
-		dup2(pip[READ_END], STDIN_FILENO); //error
+		dup2(pip[READ_END], STDIN_FILENO);
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
 		execute(node->right);
@@ -92,7 +115,7 @@ void	execute_pipe(t_node *node)
 	if (WTERMSIG(status_code) == SIGPIPE)
 		ft_putchar_fd('\n', 1);
 	waitpid(pid_right, &status_code, 0);
-	if (WTERMSIG(status_code) == SIGPIPE) //TODO: test exhaustively
+	if (WTERMSIG(status_code) == SIGPIPE)
 		ft_putchar_fd('\n', 1);
 	get_shell()->exit_status = WEXITSTATUS(status_code);
 }
