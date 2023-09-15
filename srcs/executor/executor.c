@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/15 15:52:39 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:21:14 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include "minishell.h"
+#include "libft.h"
+#include "builtin.h"
 #include <unistd.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "libft.h"
-#include "builtin.h"
 
 void	execute(t_node *ast)
 {

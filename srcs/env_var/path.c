@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/13 19:01:55 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:21:25 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "env_var.h"
+#include "builtin.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include "builtin.h"
 
 static void	free_2d(const char **obj)
 {

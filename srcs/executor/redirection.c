@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 19:42:29 by marmulle          #+#    #+#             */
-/*   Updated: 2023/09/15 15:55:46 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:20:54 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 #include "minishell.h"
 #include "tokenizer.h"
+#include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include "libft.h"
 
 static int	get_heredoc_fd(char *content)
 {

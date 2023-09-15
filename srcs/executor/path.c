@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/15 15:52:27 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:21:05 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "env_var.h"
-#include <dirent.h>
-#include <stdio.h>
-#include <sys/stat.h>
 #include "tokenizer.h"
 #include "builtin.h"
 #include "executor.h"
+#include <dirent.h>
+#include <stdio.h>
+#include <sys/stat.h>
 
 static char	*direct_path(char *cmd)
 {
