@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 18:23:44 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/15 15:42:56 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/09/15 15:52:39 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,29 @@ void	execute_command(t_node *node)
 	set_command_exit_status();
 }
 
-void	do_thing(pid_t pid_left, bool is_left)
+static void	execute_side(t_node *node, int pip[2], pid_t pid, bool is_left)
 {
-	if (pid_left == -1)
+	if (pid == -1)
 		action_failed("fork");
-	if (pid_left == 0)
+	if (pid == 0)
 	{
-		dup2(pip[WRITE_END], STDOUT_FILENO);
+		if (is_left)
+			dup2(pip[WRITE_END], STDOUT_FILENO);
+		else
+			dup2(pip[READ_END], STDIN_FILENO);
 		close(pip[READ_END]);
 		close(pip[WRITE_END]);
-		execute(node->left);
+		if (is_left)
+			execute(node->left);
+		else
+			execute(node->right);
 		exit(get_shell()->exit_status);
 	}
 }
 
 void	execute_pipe(t_node *node)
 {
-	pid_t	pip[2];
+	int		pip[2];
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		status_code;
@@ -88,27 +94,9 @@ void	execute_pipe(t_node *node)
 	if (pipe(pip) == -1)
 		action_failed("pipe");
 	pid_left = fork();
-	if (pid_left == -1)
-		action_failed("fork");
-	if (pid_left == 0)
-	{
-		dup2(pip[WRITE_END], STDOUT_FILENO);
-		close(pip[READ_END]);
-		close(pip[WRITE_END]);
-		execute(node->left);
-		exit(get_shell()->exit_status);
-	}
+	execute_side(node, pip, pid_left, true);
 	pid_right = fork();
-	if (pid_right == -1)
-		action_failed("fork");
-	if (pid_right == 0)
-	{
-		dup2(pip[READ_END], STDIN_FILENO);
-		close(pip[READ_END]);
-		close(pip[WRITE_END]);
-		execute(node->right);
-		exit(get_shell()->exit_status);
-	}
+	execute_side(node, pip, pid_right, false);
 	close(pip[READ_END]);
 	close(pip[WRITE_END]);
 	waitpid(pid_left, &status_code, 0);
@@ -118,9 +106,4 @@ void	execute_pipe(t_node *node)
 	if (WTERMSIG(status_code) == SIGPIPE)
 		ft_putchar_fd('\n', 1);
 	get_shell()->exit_status = WEXITSTATUS(status_code);
-}
-
-void	print_error(char *msg, char *cmd)
-{
-	eprintf("\e[31;1mError:\e[0m `%s`: %s\n", cmd, msg);
 }

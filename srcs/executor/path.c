@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 19:26:35 by hunam             #+#    #+#             */
-/*   Updated: 2023/09/14 20:11:45 by hunam            ###   ########.fr       */
+/*   Updated: 2023/09/15 15:52:27 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,9 @@ char	*get_command_path(char *cmd)
 	get_shell()->exit_status = not_found;
 	print_error("command not found", cmd);
 	return (NULL);
+}
+
+void	print_error(char *msg, char *cmd)
+{
+	eprintf("\e[31;1mError:\e[0m `%s`: %s\n", cmd, msg);
 }
