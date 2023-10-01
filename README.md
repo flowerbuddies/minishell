@@ -11,8 +11,9 @@
 
 - Advanced parsing
 - Deep understanding of Bash
-  - Async pipes
+  - Pipes
   - Redirectors
+  - Async execution
   - Heredocs
   - Environment variable
   - Builtins
