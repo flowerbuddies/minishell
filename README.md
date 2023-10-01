@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Minishell</h1>
-  <b>A Unix shell supporting a subset of Bash features with high fidelity.</b>
+  <b>A Unix shell that faithfully emulates a subset of Bash's features.</b>
 </div>
 
 ## 📚 Usage
