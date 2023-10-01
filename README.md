@@ -5,7 +5,7 @@
 
 ## 📚 Usage
 
-![MiniShell Demo](https://github.com/flowerbuddies/minishell/assets/38606542/1e6612c1-f9a1-4c91-b8c1-9eb7072ca1ee)
+![MiniShell Demo](https://github.com/flowerbuddies/minishell/assets/38606542/c234db8c-066d-4b53-85ed-e83d85fcbfa2)
 
 ## 📋 Topics
 
