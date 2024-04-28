@@ -20,7 +20,7 @@
   - User input
   - Syntax checking
 - Advanced I/O manipulation
-- CI/CD
+- Continuous integration
 - Unit testing
 - UNIX signals
 
